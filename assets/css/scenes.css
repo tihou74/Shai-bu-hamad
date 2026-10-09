@@ -1,0 +1,205 @@
+/* ==========================================================================
+   scenes.css — the set pieces.
+
+   Loaded after styles.css, which holds the design system. Split the way
+   al-zaman-al-jameel splits its CSS: tokens and components in one file, the
+   big staged moments in another, so a scene can be reworked without risking
+   the system underneath it.
+
+   Load order matters. Nothing here redefines a token; it only adds blocks.
+   ========================================================================== */
+
+/* ------------------------------------------------------- 1. image grading */
+
+/* The venue photographs were shot under bright mall lighting, which is honest
+   but flat. Grading them warm and down lets white text sit on top without a
+   translucent plate — and a plate over a photo is the tell of a template. */
+.grade img {
+  filter: brightness(.74) contrast(1.12) saturate(1.08) sepia(.1);
+}
+.grade--deep img { filter: brightness(.48) contrast(1.2) saturate(1.05) sepia(.14); }
+
+/* ------------------------------------------------------------ 2. marquee */
+
+/* A slow band of the name and the brand star, used as a divider with a pulse.
+   The track is forced to `direction: ltr` on purpose: this is the RTL trap
+   that cost real debugging time on the previous project. Inside an RTL
+   document a negative translateX moves content the opposite way to what you
+   expect, and the band appears frozen. Pinning the track to LTR makes the
+   sign unambiguous; the glyphs inside each item keep their own direction. */
+.marquee {
+  overflow: hidden;
+  padding-block: var(--s-5);
+  background: var(--brown-dark);
+  border-block: 1px solid color-mix(in srgb, var(--sand) 14%, transparent);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.marquee__track {
+  direction: ltr;
+  display: flex;
+  align-items: center;
+  gap: var(--s-6);
+  width: max-content;
+  animation: slide 42s linear infinite;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__item {
+  display: flex; align-items: center; gap: var(--s-6);
+  font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+  font-weight: 200; letter-spacing: .04em;
+  color: color-mix(in srgb, var(--sand) 62%, transparent);
+  white-space: nowrap;
+}
+.marquee__item::after {
+  content: ""; flex: none; width: .6em; height: .6em;
+  background: var(--brown-soft);
+  -webkit-mask: url("../img/star.svg") center/contain no-repeat;
+          mask: url("../img/star.svg") center/contain no-repeat;
+}
+/* The track holds the list twice, so -50% lands exactly on the seam. */
+@keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ------------------------------------------- 3. full-viewport type moment */
+.shout {
+  min-height: 86svh;
+  display: grid; place-items: center;
+  text-align: center;
+  background: var(--brown);
+  position: relative; overflow: hidden;
+}
+.shout__inner { position: relative; width: var(--page); }
+.shout h2 {
+  font-size: var(--t-display); font-weight: 100;
+  line-height: 1.05; color: var(--cream);
+  margin-inline: auto; max-width: 16ch;
+  text-wrap: balance;
+}
+.shout p {
+  margin: var(--s-6) auto 0;
+  color: color-mix(in srgb, var(--sand) 76%, transparent);
+  max-width: 46ch;
+}
+/* two oversized stars, barely there, to stop the panel reading as a flat fill */
+.shout::before, .shout::after {
+  content: ""; position: absolute; aspect-ratio: 1;
+  background: var(--brown-soft); opacity: .1; pointer-events: none;
+  -webkit-mask: url("../img/star.svg") center/contain no-repeat;
+          mask: url("../img/star.svg") center/contain no-repeat;
+}
+.shout::before { width: min(54vw, 520px); inset-block-start: -14%; inset-inline-start: -10%; }
+.shout::after  { width: min(38vw, 360px); inset-block-end: -12%; inset-inline-end: -8%; }
+
+/* ------------------------------------------------- 4. sticky scroll scene */
+
+/* One image column that holds still while the text beside it scrolls, with
+   the image swapping as each block takes the viewport. It is the cheapest way
+   to make a short page feel directed rather than listed. */
+.sticky-scene { position: relative; }
+.sticky-scene__grid { display: grid; gap: var(--s-6); }
+
+@media (min-width: 920px) {
+  .sticky-scene__grid { grid-template-columns: 1fr 1fr; gap: var(--s-9); align-items: start; }
+}
+
+.sticky-scene__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--arch);
+  overflow: hidden;
+  background: var(--brown-dark);
+}
+@media (min-width: 920px) {
+  .sticky-scene__media {
+    position: sticky; inset-block-start: 14vh;
+    height: 72vh; aspect-ratio: auto;
+  }
+}
+.sticky-scene__media figure {
+  position: absolute; inset: 0; margin: 0;
+  opacity: 0; transform: scale(1.04);
+  transition: opacity .9s var(--ease), transform 1.4s var(--ease);
+}
+.sticky-scene__media figure.is-active { opacity: 1; transform: none; }
+.sticky-scene__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.sticky-scene__steps > * { padding-block: var(--s-7); }
+@media (min-width: 920px) {
+  .sticky-scene__steps > * {
+    min-height: 68vh;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+}
+.sticky-scene__steps h3 { font-size: var(--t-h2); margin-block-end: var(--s-4); }
+.step__n {
+  font-size: var(--t-small); letter-spacing: .24em;
+  color: var(--brown-soft); margin-block-end: var(--s-3);
+}
+
+/* --------------------------------------------------- 5. menu with images */
+.dish {
+  position: relative; overflow: hidden;
+  border-radius: 2px;
+  background: var(--brown-dark);
+  min-height: 340px;
+  display: flex; align-items: flex-end;
+  isolation: isolate;
+}
+.dish img {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.4s var(--ease);
+}
+.dish::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgb(26 17 7 / .9) 6%, rgb(26 17 7 / .25) 58%, transparent);
+}
+.dish:hover img { transform: scale(1.07); }
+.dish__body { padding: var(--s-6); width: 100%; }
+.dish__body h3 { color: var(--cream); font-size: var(--t-h3); }
+.dish__body .card__en { color: color-mix(in srgb, var(--sand) 72%, transparent); }
+.dish__body p { color: color-mix(in srgb, var(--sand) 82%, transparent); margin-block: var(--s-2) 0; }
+
+/* ------------------------------------------------- 6. horizontal strip */
+
+/* A scrollable row of the interiors. Native overflow scrolling is used rather
+   than a JS carousel: it is accessible, works on touch, and the scroll
+   direction already follows the document's RTL without any sign juggling. */
+.strip {
+  display: flex; gap: var(--s-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block-end: var(--s-4);
+  scrollbar-width: thin;
+}
+.strip > * {
+  flex: 0 0 min(78vw, 520px);
+  scroll-snap-align: center;
+  aspect-ratio: 16 / 10;
+  border-radius: 2px; overflow: hidden;
+  margin: 0;
+}
+.strip img { width: 100%; height: 100%; object-fit: cover; }
+.strip__hint {
+  margin-block-start: var(--s-3);
+  font-size: var(--t-small); letter-spacing: .14em; color: var(--brown-soft);
+}
+
+/* ------------------------------------------------------ 7. detail inset */
+
+/* A small framed photo that overlaps the panel edge — the trick that keeps a
+   two-column block from reading as two rectangles. */
+.inset {
+  position: relative;
+  border-radius: var(--arch);
+  overflow: hidden;
+  box-shadow: 0 30px 70px -34px rgb(26 17 7 / .75);
+}
+@media (min-width: 920px) {
+  .inset--lift { margin-block-start: calc(var(--s-9) * -1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  .sticky-scene__media figure { transition: none; }
+}

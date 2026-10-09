@@ -109,6 +109,29 @@
     });
   }
 
+  /* ---------------------------------------------------- sticky scene */
+  // Each text block owns an index; as it takes the middle of the viewport the
+  // matching figure in the sticky column fades in. CSS holds the column still,
+  // so this only decides which photograph is showing.
+  var sceneMedia = document.querySelector("[data-scene-media]");
+  if (sceneMedia && hasIO) {
+    var figures = sceneMedia.querySelectorAll("[data-scene]");
+    var steps = document.querySelectorAll("[data-scene-step]");
+
+    var sceneObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var wanted = entry.target.getAttribute("data-scene-step");
+        figures.forEach(function (fig) {
+          fig.classList.toggle("is-active",
+            fig.getAttribute("data-scene") === wanted);
+        });
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+
+    steps.forEach(function (step) { sceneObserver.observe(step); });
+  }
+
   /* ---------------------------------------------------- menu filtering */
   var filters = document.querySelectorAll(".filter");
   var items = document.querySelectorAll("[data-category]");
