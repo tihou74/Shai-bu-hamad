@@ -6,15 +6,14 @@
 <title>شاي بو حمد | Shai Bu Hamad — ضيافة قطرية في الدوحة</title>
 
 <!-- ===========================================================================
-     ASSET RIGHTS — READ BEFORE PUBLISHING
-     The photographs on this page were extracted from the owner's own brand
-     profile (content/profile/profile-2026.pdf) and show the owner's own
-     premises. Still unconfirmed, and tracked outside this repository:
-       · whether the photographer's contract transfers commercial web rights
-       · the falcon artwork in the decor (not used here)
-       · music, if any, inside media/video/deco-03.mp4
-     Fonts: Alexandria (Google Fonts, SIL OFL — cleared). The brand's own
-     URW Geometric Arabic is commercial and still needs a webfont licence.
+     ASSET NOTES
+     Photography: the owner's own, extracted from content/profile/profile-2026.pdf
+     at full resolution and confirmed by the owner as his to use.
+     Five interior renders were stored CMYK-inverted in that file and had to be
+     rebuilt (tools/imgfix.py); their whites stay hot, so they are graded down
+     wherever they appear rather than shown raw.
+     Fonts: Alexandria (Google Fonts, SIL OFL). The brand's own URW Geometric
+     Arabic is commercial and still needs a webfont licence — docs/brand.md.
      =========================================================================== -->
 
 <meta name="description" content="شاي بو حمد — ضيافة قطرية تجمع أصالة التراث الخليجي بأناقة الذوق القطري. فرعان في الدوحة: West Walk بالوعب و Gulf Mall بالغرافة.">
@@ -25,9 +24,6 @@
 <meta property="og:description" content="تجربة فريدة لا تضاهى — ضيافة قطرية في West Walk و Gulf Mall.">
 <meta property="og:image" content="assets/img/photo/storefront.jpg">
 
-<!-- Google Fonts is the single third party this site allows, and the CSP names
-     it explicitly rather than loosening to a wildcard. Everything else —
-     scripts, images, media — stays 'self'. -->
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -35,8 +31,9 @@
 <link rel="icon" href="brand/logo/logo-primary.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500;600&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=2">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
+<link rel="stylesheet" href="assets/css/styles.css?v=3">
+<link rel="stylesheet" href="assets/css/scenes.css?v=3">
 </head>
 
 <body>
@@ -50,11 +47,10 @@
   </a>
   <nav class="nav" aria-label="التنقّل الرئيسي">
     <a href="#story">القصّة</a>
-    <a href="#vision">الرؤية</a>
     <a href="#atmosphere">الأجواء</a>
     <a href="#menu">المنيو</a>
+    <a href="#vision">الرؤية</a>
     <a href="#branches">الفروع</a>
-    <a href="#contact">تواصل</a>
   </nav>
   <a class="btn btn--solid" href="#branches">زورنا</a>
 </header>
@@ -63,7 +59,7 @@
 
   <!-- ====================================================== 1 · hero (dark) -->
   <section class="hero" id="top">
-    <div class="hero__media">
+    <div class="hero__media grade--deep">
       <img src="assets/img/photo/storefront.jpg" alt="واجهة شاي بو حمد" width="1745" height="1062" fetchpriority="high">
     </div>
 
@@ -71,10 +67,8 @@
       <div class="hero__mark">
         <img src="brand/logo/logo-primary.png" alt="شاي بو حمد · Shai Bu Hamad" width="1554" height="460">
       </div>
-      <h1>تجربة فريدة لا تضاهى</h1>
-      <p>
-        عبق التراث الخليجي وأناقة الذوق القطري — في مكان واحد، بأجواء متعدّدة.
-      </p>
+      <h1>الشاي عندنا ليس مشروبًا — بل دعوة للجلوس</h1>
+      <p>ضيافة قطرية تجمع عبق التراث الخليجي بأناقة الذوق المعاصر، في قلب الدوحة.</p>
       <ul class="hero__meta">
         <li>تأسّس 2025</li>
         <li class="lat">WEST WALK</li>
@@ -85,7 +79,26 @@
     <span class="hero__scroll lat" aria-hidden="true">SCROLL</span>
   </section>
 
-  <!-- ===================================================== 2 · story (sand) -->
+  <!-- =============================================== 2 · marquee (dark band) -->
+  <div class="marquee" aria-hidden="true">
+    <!-- The list is repeated twice so the -50% keyframe lands on the seam. -->
+    <div class="marquee__track">
+      <span class="marquee__item">شاي بو حمد</span>
+      <span class="marquee__item lat">SHAI BU HAMAD</span>
+      <span class="marquee__item">كرك</span>
+      <span class="marquee__item">قهوة عربية</span>
+      <span class="marquee__item">قوري المجلس</span>
+      <span class="marquee__item lat">DOHA</span>
+      <span class="marquee__item">شاي بو حمد</span>
+      <span class="marquee__item lat">SHAI BU HAMAD</span>
+      <span class="marquee__item">كرك</span>
+      <span class="marquee__item">قهوة عربية</span>
+      <span class="marquee__item">قوري المجلس</span>
+      <span class="marquee__item lat">DOHA</span>
+    </div>
+  </div>
+
+  <!-- ===================================================== 3 · story (sand) -->
   <section class="sec sec--sand" id="story">
     <div class="mark-star" aria-hidden="true"></div>
     <div class="shell grid grid--aside">
@@ -93,8 +106,8 @@
         <p class="eyebrow" data-reveal>القصّة</p>
         <h2 class="statement" data-reveal>محطّة بارزة في عالم الضيافة بدولة قطر</h2>
         <p class="lede" data-reveal data-delay="1">
-          يبرز هذا المطعم القطري كتجربة فريدة، تأسّس ليقدّم مزيجًا رائعًا من عبق
-          التراث الخليجي وأناقة الذوق القطري.
+          تأسّس شاي بو حمد ليقدّم مزيجًا رائعًا من عبق التراث الخليجي وأناقة
+          الذوق القطري.
         </p>
         <p data-reveal data-delay="2">
           مانحًا رُوّاده مستوى رفيعًا من الخدمة وأشهى المأكولات التي تمزج بين
@@ -104,98 +117,106 @@
         </p>
       </div>
 
-      <figure class="figure figure--tall arch tilt" data-tilt data-reveal data-delay="1">
+      <figure class="figure figure--tall inset tilt" data-tilt data-reveal data-delay="1">
         <img src="assets/img/photo/pour.jpg" alt="صبّ الشاي من الدلّة في كوب زجاجي" width="887" height="1063" loading="lazy">
       </figure>
     </div>
   </section>
 
-  <!-- ================================================= 3 · vision (brown) -->
-  <section class="sec sec--brown" id="vision">
-    <div class="dado" aria-hidden="true"></div>
-    <div class="shell grid grid--2">
-      <div data-reveal>
-        <p class="eyebrow">الرؤية</p>
-        <h3 class="statement">وجهة رائدة تحتفي بأصالة النكهة الخليجية</h3>
-        <p>
-          طموحنا أن نرسّخ مكانتنا كوجهة رائدة تحتفي بأصالة النكهة الخليجية ودفء
-          الضيافة القطرية، مع التطلّع الدائم لتقديم تجارب طعام فريدة ومبتكرة
-          تلبّي تطلّعات ضيوفنا المستقبلية.
-        </p>
-      </div>
-      <div data-reveal data-delay="1">
-        <p class="eyebrow">مهمّتنا</p>
-        <h3 class="statement">خدمات استثنائية، وتجربة لا تُنسى</h3>
-        <p>
-          نسعى جاهدين للارتقاء بمفهوم الضيافة من خلال تقديم خدمات استثنائية
-          تلبّي كافة احتياجات زوارنا الكرام. نلتزم بأعلى معايير الجودة والتميّز
-          في كل ما نقدّمه، ونتعامل مع كل ضيف باهتمام وتقدير ليحظى بتجربة طعام
-          لا تُنسى، تترك أثرًا جميلًا في ذاكرته.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- =============================================== 4 · atmosphere (cream) -->
-  <section class="sec sec--cream" id="atmosphere">
-    <div class="shell">
-      <div class="grid grid--aside">
-        <div>
-          <p class="eyebrow" data-reveal>الأجواء</p>
-          <h2 class="statement" data-reveal>معايير عالمية تمنحك شعورًا بالفخامة والدفء في كل زاوية</h2>
-          <p data-reveal data-delay="1">
-            منذ لحظة وصولك ستغمرك أجواء من الأصالة الدافئة والترحاب الحار. لمسات
-            فنية تعكس عراقة التراث الخليجي وأناقة التصميم القطري، تخلق تجربة
-            بصرية فريدة قبل تذوّق أشهى الأطباق وأطيب المشروبات.
-          </p>
-          <p data-reveal data-delay="2">
-            إضاءة هادئة وديكورات أنيقة وجلسات مريحة — سواء كنت تبحث عن لقاء
-            حميم أو مساحة لإنجاز بعض أعمالك.
-          </p>
-        </div>
-
-        <div class="reel" data-reveal data-delay="1">
-          <!-- muted + playsinline are what actually permit autoplay; the clip
-               is 480x848, so it is framed vertically on purpose. -->
-          <video src="media/video/deco-03.mp4" muted loop playsinline autoplay
-                 preload="metadata" aria-label="لقطة من أجواء المكان"></video>
-        </div>
-      </div>
-
-      <div class="gallery" data-reveal>
-        <figure class="figure">
-          <img src="assets/img/photo/interior.jpg" alt="الصالة الداخلية بسقف الخشب المشرّح" width="846" height="1159" loading="lazy">
-        </figure>
-        <figure class="figure">
-          <img src="assets/img/photo/tea-detail.jpg" alt="كوب شاي وقوري نحاسي" width="1075" height="793" loading="lazy">
-        </figure>
-        <figure class="figure">
-          <img src="assets/img/photo/storefront.jpg" alt="جدار الصور والجلسات" width="1745" height="1062" loading="lazy">
-        </figure>
-        <figure class="figure">
-          <img src="assets/img/photo/pour.jpg" alt="تفاصيل الزيّ والخدمة" width="887" height="1063" loading="lazy">
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================================================== 5 · band (dark) -->
-  <section class="band" id="walk">
-    <div class="band__media" data-parallax>
-      <img src="assets/img/photo/interior.jpg" alt="" width="846" height="1159" loading="lazy">
-    </div>
-    <div class="band__inner">
+  <!-- ===================================================== 4 · shout (brown) -->
+  <section class="shout">
+    <div class="shout__inner">
       <h2 data-reveal>مكان واحد… بأجواء متعدّدة</h2>
-      <p class="lede" data-reveal data-delay="1">
-        لا تكتمل الجلسة إلا مع كوب من الشاي أو الكرك بنكهته الغنية.
-      </p>
-      <p data-reveal data-delay="2">
-        <a class="btn btn--light" href="#menu">تصفّح المنيو</a>
+      <p data-reveal data-delay="1">
+        لا تكتمل الجلسة إلا مع كوب من الشاي أو الكرك بنكهته الغنية — لتعيش
+        لحظات من الدفء والذوق الرفيع.
       </p>
     </div>
   </section>
 
-  <!-- ===================================================== 6 · menu (sand) -->
+  <!-- ============================================ 5 · atmosphere (cream) -->
+  <section class="sec sec--cream sticky-scene" id="atmosphere">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">الأجواء</p>
+        <h2 class="statement">معايير عالمية في كل زاوية</h2>
+      </div>
+
+      <div class="sticky-scene__grid">
+        <!-- The image column holds still while the text beside it scrolls; the
+             photograph swaps as each block takes the viewport. -->
+        <div class="sticky-scene__media grade" data-scene-media>
+          <figure class="is-active" data-scene="0">
+            <img src="assets/img/photo/interior.jpg" alt="الصالة وسقف الخشب المشرّح" width="846" height="1159" loading="lazy">
+          </figure>
+          <figure data-scene="1">
+            <img src="assets/img/photo/majlis-01.jpg" alt="جلسات المجلس والدلال النحاسيّة" width="1600" height="830" loading="lazy">
+          </figure>
+          <figure data-scene="2">
+            <img src="assets/img/photo/majlis-03.jpg" alt="تفاصيل الإضاءة والفوانيس" width="1600" height="830" loading="lazy">
+          </figure>
+          <figure data-scene="3">
+            <img src="assets/img/photo/tea-detail.jpg" alt="كوب الشاي والقوري النحاسي" width="1075" height="793" loading="lazy">
+          </figure>
+        </div>
+
+        <div class="sticky-scene__steps">
+          <div data-scene-step="0">
+            <p class="step__n lat">01</p>
+            <h3>الأصالة الدافئة</h3>
+            <p>
+              منذ لحظة وصولك ستغمرك أجواء من الأصالة الدافئة والترحاب الحار،
+              ولمسات فنية تعكس عراقة التراث الخليجي وأناقة التصميم القطري.
+            </p>
+          </div>
+          <div data-scene-step="1">
+            <p class="step__n lat">02</p>
+            <h3>المجلس</h3>
+            <p>
+              جلسات مريحة بتصاميم تعكس التناغم الثقافي — للقاء حميم، أو
+              لمساحة تُنجز فيها بعض أعمالك على مهل.
+            </p>
+          </div>
+          <div data-scene-step="2">
+            <p class="step__n lat">03</p>
+            <h3>الإضاءة والتفاصيل</h3>
+            <p>
+              إضاءة هادئة وديكورات أنيقة تخلق أجواءً جذّابة، فتكون التجربة
+              بصريّة قبل أن تكون تجربة طعام.
+            </p>
+          </div>
+          <div data-scene-step="3">
+            <p class="step__n lat">04</p>
+            <h3>الصبّة</h3>
+            <p>
+              ومع كل قصّة من أطباقنا المحضّرة بشغف، ستستشعر تمازج النكهات
+              الأصيلة التي تحكي قصة هذه الوجهة المميزة.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== 6 · strip (dark) -->
+  <section class="sec sec--darkest">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">جولة</p>
+        <h2 class="statement">تصاميم تعكس التناغم الثقافي</h2>
+      </div>
+      <div class="strip grade" data-reveal>
+        <figure><img src="assets/img/photo/majlis-01.jpg" alt="المجلس — لقطة عامّة" width="1600" height="830" loading="lazy"></figure>
+        <figure><img src="assets/img/photo/majlis-02.jpg" alt="الجلسات الجانبيّة" width="1600" height="830" loading="lazy"></figure>
+        <figure><img src="assets/img/photo/majlis-04.jpg" alt="الكراسي بنقوش السدو" width="1600" height="830" loading="lazy"></figure>
+        <figure><img src="assets/img/photo/majlis-05.jpg" alt="زاوية التحضير" width="1600" height="831" loading="lazy"></figure>
+        <figure><img src="assets/img/photo/storefront.jpg" alt="الواجهة وجدار الصور" width="1745" height="1062" loading="lazy"></figure>
+      </div>
+      <p class="strip__hint" data-reveal>اسحب للجانب ←</p>
+    </div>
+  </section>
+
+  <!-- ====================================================== 7 · menu (sand) -->
   <section class="sec sec--sand" id="menu">
     <div class="dado dado--quiet" aria-hidden="true"></div>
     <div class="shell">
@@ -206,6 +227,33 @@
           لتمتزج النكهات بشكل مثالي وتتناغم مع أطباقنا الشهية — ولمحبّي القهوة
           العربية الأصيلة، خلطتنا الخاصة تُبهر الذوق الرفيع.
         </p>
+      </div>
+
+      <div class="grid grid--3" data-reveal>
+        <article class="dish">
+          <img src="assets/img/photo/karak-pour.jpg" alt="" width="552" height="661" loading="lazy">
+          <div class="dish__body">
+            <h3>الكرك</h3>
+            <p class="card__en lat">KARAK</p>
+            <p>كوب الكرك بنكهته الغنية — لا تكتمل الجلسة إلا به.</p>
+          </div>
+        </article>
+        <article class="dish">
+          <img src="assets/img/photo/cappuccino.jpg" alt="" width="487" height="549" loading="lazy">
+          <div class="dish__body">
+            <h3>كابتشينو بو حمد</h3>
+            <p class="card__en lat">CAPPUCCINO</p>
+            <p>بشعار البيت مرسومًا على الرغوة.</p>
+          </div>
+        </article>
+        <article class="dish">
+          <img src="assets/img/photo/tea-detail.jpg" alt="" width="1075" height="793" loading="lazy">
+          <div class="dish__body">
+            <h3>قوري شاي المجلس</h3>
+            <p class="card__en lat">MAJLIS TEA POT</p>
+            <p>يُقدَّم على طريقة المجلس القطري، للجلسات الطويلة والمشاركة.</p>
+          </div>
+        </article>
       </div>
 
       <!-- MENU:START — generated by tools/build_menu.py from data/menu.json.
@@ -278,8 +326,33 @@
     </div>
   </section>
 
-  <!-- ============================================== 7 · branches (darkest) -->
-  <section class="sec sec--darkest" id="branches">
+  <!-- ==================================================== 8 · vision (brown) -->
+  <section class="sec sec--brown" id="vision">
+    <div class="dado" aria-hidden="true"></div>
+    <div class="shell grid grid--2">
+      <div data-reveal>
+        <p class="eyebrow">الرؤية</p>
+        <h3 class="statement">وجهة رائدة تحتفي بأصالة النكهة الخليجية</h3>
+        <p>
+          طموحنا أن نرسّخ مكانتنا كوجهة رائدة تحتفي بأصالة النكهة الخليجية ودفء
+          الضيافة القطرية، مع التطلّع الدائم لتقديم تجارب طعام فريدة ومبتكرة
+          تلبّي تطلّعات ضيوفنا المستقبلية.
+        </p>
+      </div>
+      <div data-reveal data-delay="1">
+        <p class="eyebrow">مهمّتنا</p>
+        <h3 class="statement">خدمات استثنائية، وتجربة لا تُنسى</h3>
+        <p>
+          نلتزم بأعلى معايير الجودة والتميّز في كل ما نقدّمه، ونتعامل مع كل ضيف
+          باهتمام وتقدير ليحظى بتجربة طعام لا تُنسى، تترك أثرًا جميلًا في
+          ذاكرته.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= 9 · branches (cream) -->
+  <section class="sec sec--cream" id="branches">
     <div class="shell">
       <div data-reveal>
         <p class="eyebrow">الفروع</p>
@@ -288,7 +361,7 @@
 
       <div class="grid grid--2">
         <article class="branch" data-reveal>
-          <div class="branch__media arch tilt" data-tilt>
+          <div class="branch__media inset grade tilt" data-tilt>
             <img src="assets/img/photo/storefront.jpg" alt="واجهة الفرع" width="1745" height="1062" loading="lazy">
           </div>
           <div class="branch__body">
@@ -304,8 +377,8 @@
         </article>
 
         <article class="branch" data-reveal data-delay="1">
-          <div class="branch__media arch tilt" data-tilt>
-            <img src="assets/img/photo/interior.jpg" alt="الجلسات الداخلية" width="846" height="1159" loading="lazy">
+          <div class="branch__media inset grade tilt" data-tilt>
+            <img src="assets/img/photo/majlis-02.jpg" alt="الجلسات الداخلية" width="1600" height="830" loading="lazy">
           </div>
           <div class="branch__body">
             <h3>Gulf Mall</h3>
@@ -321,31 +394,35 @@
       </div>
 
       <p class="figure__cap" data-reveal>
-        <span class="todo">الصور عامّة من أرشيف العلامة — في انتظار صورة خاصّة بكل فرع</span>
+        <span class="todo">الصور من أرشيف العلامة — في انتظار صورة خاصّة بكل فرع</span>
       </p>
-    </div>
-  </section>
-
-  <!-- =================================================== 8 · contact (cream) -->
-  <section class="sec sec--cream" id="contact">
-    <div class="shell grid grid--split">
-      <div data-reveal>
-        <p class="eyebrow">تواصل</p>
-        <h2 class="statement">تابعنا</h2>
-        <p>شركة مطاعم شاي بو حمد لتقديم الوجبات و المشروبات</p>
-      </div>
-      <ul class="social" data-reveal data-delay="1">
-        <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">INSTAGRAM</a></li>
-        <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank">TIKTOK</a></li>
-        <li><a href="https://facebook.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">FACEBOOK</a></li>
-        <li><a href="https://snapchat.com/add/shai.buhamad" rel="noopener noreferrer" target="_blank">SNAPCHAT</a></li>
-      </ul>
     </div>
   </section>
 
 </main>
 
-<footer class="foot">
+<!-- ======================================================= 10 · foot (dark) -->
+<footer class="foot" id="contact">
+  <div class="shell">
+    <div class="grid grid--split" style="margin-block-end:var(--s-8)">
+      <div>
+        <h4>تابعنا</h4>
+        <ul class="social">
+          <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">INSTAGRAM</a></li>
+          <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank">TIKTOK</a></li>
+          <li><a href="https://facebook.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">FACEBOOK</a></li>
+          <li><a href="https://snapchat.com/add/shai.buhamad" rel="noopener noreferrer" target="_blank">SNAPCHAT</a></li>
+        </ul>
+      </div>
+      <div class="reel">
+        <!-- muted + playsinline are what actually permit autoplay; the clip is
+             480x848, so it is framed vertically on purpose. -->
+        <video src="media/video/deco-03.mp4" muted loop playsinline autoplay
+               preload="none" aria-label="لقطة من أجواء المكان"></video>
+      </div>
+    </div>
+  </div>
+
   <div class="shell foot__grid">
     <div>
       <h4>شاي بو حمد</h4>
@@ -359,7 +436,7 @@
       </ul>
     </div>
     <div>
-      <h4>تابعنا</h4>
+      <h4>حسابات</h4>
       <ul>
         <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">@shaibuhamad.qa</a></li>
         <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank">@shaibuhamadqtr</a></li>
@@ -367,12 +444,13 @@
       </ul>
     </div>
   </div>
+
   <div class="shell foot__legal">
     <span>© <span id="year">2026</span> شاي بو حمد — جميع الحقوق محفوظة</span>
     <span class="lat">DOHA · QATAR</span>
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=2"></script>
+<script src="assets/js/app.js?v=3"></script>
 </body>
 </html>
