@@ -1,0 +1,88 @@
+{
+  "_note": "Single source of truth for the menu. Adding an item or changing a price means editing this file only — no HTML, no CSS, no code. Items listed here were taken from the brand profile (content/profile/profile-2026.pdf); prices are not in the profile and are marked null until supplied.",
+  "currency": "ر.ق",
+  "categories": [
+    { "id": "tea",      "ar": "الشاي والكرك",   "en": "Tea & Karak" },
+    { "id": "coffee",   "ar": "القهوة",          "en": "Coffee" },
+    { "id": "cold",     "ar": "المشروبات الباردة", "en": "Cold Drinks" },
+    { "id": "savoury",  "ar": "المأكولات",       "en": "Food" },
+    { "id": "bakery",   "ar": "المعجنات",        "en": "Bakery" }
+  ],
+  "items": [
+    {
+      "id": "qoori-majlis",
+      "category": "tea",
+      "ar": "قوري شاي المجلس",
+      "en": "Majlis Tea Pot",
+      "desc": "قوري شاي يُقدَّم على طريقة المجلس القطري، للجلسات الطويلة والمشاركة",
+      "price": null,
+      "featured": true
+    },
+    {
+      "id": "karak",
+      "category": "tea",
+      "ar": "كرك",
+      "en": "Karak",
+      "desc": "كوب الكرك بنكهته الغنية — لا تكتمل الجلسة إلا به",
+      "price": null,
+      "featured": true
+    },
+    {
+      "id": "arabic-coffee",
+      "category": "coffee",
+      "ar": "قهوة عربية",
+      "en": "Arabic Coffee",
+      "desc": "خلطتنا الخاصة، لمحبّي القهوة العربية الأصيلة",
+      "price": null,
+      "featured": true
+    },
+    {
+      "id": "pomegranate",
+      "category": "cold",
+      "ar": "عصير الرمان الطازج",
+      "en": "Fresh Pomegranate",
+      "desc": "رمان طازج، يُعصر عند الطلب",
+      "price": null
+    },
+    {
+      "id": "shake-tayebeen",
+      "category": "cold",
+      "ar": "شيك الطيبين",
+      "en": "Al Tayebeen Shake",
+      "desc": "من خلطاتنا المبتكرة الخاصة",
+      "price": null
+    },
+    {
+      "id": "sandwich-cheese",
+      "category": "savoury",
+      "ar": "سندويش جبن",
+      "en": "Cheese Sandwich",
+      "desc": "سندويش محشو ساخن بالجبن",
+      "price": null
+    },
+    {
+      "id": "sandwich-meat",
+      "category": "savoury",
+      "ar": "سندويش لحم",
+      "en": "Meat Sandwich",
+      "desc": "سندويش محشو ساخن باللحم",
+      "price": null
+    },
+    {
+      "id": "sandwich-zaatar",
+      "category": "savoury",
+      "ar": "سندويش زعتر",
+      "en": "Zaatar Sandwich",
+      "desc": "سندويش محشو ساخن بالزعتر",
+      "price": null
+    },
+    {
+      "id": "pastries",
+      "category": "bakery",
+      "ar": "معجنات",
+      "en": "Pastries",
+      "desc": "تشكيلة معجنات بكل أنواعها",
+      "price": null
+    }
+  ]
+}
