@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160">
+  <!-- Tiling star lattice, matching the pattern on the brown panel of the
+       brand profile. Stars sit on a half-drop grid so the repeat reads as a
+       woven field rather than rows. Colour is baked in because CSS
+       background-image cannot inherit currentColor. -->
+  <defs>
+    <path id="s" d="M40 8 Q44.8 35.2 72 40 Q44.8 44.8 40 72 Q35.2 44.8 8 40 Q35.2 35.2 40 8 Z"/>
+  </defs>
+  <g fill="#8B6739">
+    <use href="#s"/>
+    <use href="#s" x="80"/>
+    <use href="#s" y="80"/>
+    <use href="#s" x="80" y="80"/>
+    <use href="#s" x="40" y="40"/>
+    <use href="#s" x="-40" y="40"/>
+    <use href="#s" x="120" y="40"/>
+    <use href="#s" x="40" y="-40"/>
+    <use href="#s" x="40" y="120"/>
+  </g>
+</svg>

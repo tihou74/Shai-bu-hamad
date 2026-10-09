@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- The four-pointed star taken from the brand profile: concave-sided
+       diamond, drawn with quadratic curves pulled hard toward the centre. -->
+  <path d="M50 0 Q56 44 100 50 Q56 56 50 100 Q44 56 0 50 Q44 44 50 0 Z"
+        fill="currentColor"/>
+</svg>

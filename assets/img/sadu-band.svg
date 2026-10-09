@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="72" viewBox="0 0 240 72">
+  <!-- Original Al-Sadu-inspired band, authored from scratch rather than traced
+       from a photograph, so it carries no third-party rights and scales to any
+       size for ~2KB instead of a 425KB JPEG.
+
+       Geometry follows the traditional grammar — a cream field of opposed
+       triangles with diamonds between the apexes, framed by charcoal rails —
+       but the palette is pulled back to the brand's own browns and sand, with
+       one restrained terracotta row. The full-saturation red/orange of real
+       sadu reads as noise at a 44px web band.
+
+       Tiles seamlessly on the x-axis at 240px. -->
+  <defs>
+    <g id="unit">
+      <path d="M0 24 L15 50 L30 24 Z" fill="#241F1C"/>
+      <path d="M15 28 L23 37 L15 46 L7 37 Z" fill="#8B6739"/>
+    </g>
+    <g id="dash">
+      <rect x="0"  y="8" width="7" height="8" fill="#A33521" opacity=".75"/>
+      <rect x="15" y="8" width="7" height="8" fill="#8B6739"/>
+    </g>
+  </defs>
+
+  <rect width="240" height="72" fill="#EDE4D4"/>
+
+  <!-- opposed triangle + diamond field -->
+  <use href="#unit"/><use href="#unit" x="30"/><use href="#unit" x="60"/>
+  <use href="#unit" x="90"/><use href="#unit" x="120"/><use href="#unit" x="150"/>
+  <use href="#unit" x="180"/><use href="#unit" x="210"/>
+
+  <!-- single accent row, top only, so the band has a direction and a quiet side -->
+  <use href="#dash"/><use href="#dash" x="30"/><use href="#dash" x="60"/>
+  <use href="#dash" x="90"/><use href="#dash" x="120"/><use href="#dash" x="150"/>
+  <use href="#dash" x="180"/><use href="#dash" x="210"/>
+
+  <!-- rails -->
+  <rect y="0"  width="240" height="6" fill="#241F1C"/>
+  <rect y="20" width="240" height="2" fill="#241F1C"/>
+  <rect y="52" width="240" height="2" fill="#241F1C"/>
+  <rect y="66" width="240" height="6" fill="#241F1C"/>
+</svg>

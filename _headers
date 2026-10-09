@@ -1,0 +1,25 @@
+# Security headers for Cloudflare Pages / Netlify.
+# A static site already removes most of the attack surface — there is no
+# server to exploit, no database to inject, no admin login to brute force.
+# These headers close what is left.
+#
+# GitHub Pages cannot serve custom headers. The <meta> CSP in index.html is the
+# fallback there, but frame-ancestors and HSTS only work as real headers, so
+# Cloudflare Pages is the better host. See docs/security.md.
+
+/*
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self'; script-src 'self'; font-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+
+# Long cache for fingerprinted assets; the ?v= query in index.html is what
+# forces a refresh when they change.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate

@@ -3,3 +3,6 @@ Thumbs.db
 *.tmp
 .safe.png
 *.safe.png
+.preview/
+.palette-*.html
+docs/evidence/rights-review.md
