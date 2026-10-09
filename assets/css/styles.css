@@ -1,83 +1,70 @@
 /* ==========================================================================
    شاي بو حمد · Shai Bu Hamad
-   Design system + page styles.
 
-   Every colour below was measured from the brand assets, not estimated:
-   tools/palette.py read the actual pixels of the logo and the brand profile.
-   See docs/brand.md for the full derivation.
+   Colours were measured from the brand assets, not estimated — tools/palette.py
+   read the real pixels of the logo and the profile. See docs/brand.md.
 
-   Written RTL-first with logical properties (inline-start/end, margin-inline)
-   so the Arabic layout is the source of truth and the English build is a
-   direction flip rather than a rewrite.
+   Three rules carried over from the al-zaman-al-jameel build, because they were
+   learned the hard way there:
+
+   1. No two adjacent sections get the same surface. A page of identical
+      panels reads as a template no matter how good each panel is.
+   2. A pattern tiled across a whole section reads as bathroom tile. Patterns
+      belong in a dado across the lower third, with a rail closing it, and a
+      smooth surface above for text to sit on.
+   3. `background-attachment: fixed` is banned — it forces a full repaint every
+      frame and makes scrolling stutter. Parallax goes through transform.
+
+   Written RTL-first with logical properties so the Arabic layout is the source
+   of truth and English is a direction flip, not a rewrite.
    ========================================================================== */
 
 /* --------------------------------------------------------------- 1. tokens */
 :root {
-  /* Brand colours — measured, see docs/brand.md */
-  --brown:        #654321;  /* primary; brown panel + logo             */
-  --brown-deep:   #4A3118;  /* derived shade for depth                  */
-  --brown-soft:   #8B6739;  /* the gold-brown of the star lattice       */
-  --sand:         #D6CCB8;  /* the brand background, 90% of the cover   */
-  --sand-light:   #E6DFD2;  /* derived tint                             */
-  --sand-dark:    #C3B69D;  /* derived shade for borders                */
-  --ink:          #2E3739;  /* heading ink, faint blue-green cast       */
+  --brown:        #654321;
+  --brown-deep:   #422C13;
+  --brown-dark:   #2A1C0C;
+  --brown-soft:   #8B6739;
+  --sand:         #D6CCB8;
+  --sand-light:   #E6DFD2;
+  --sand-dark:    #C3B69D;
+  --ink:          #2E3739;
   --cream:        #FBF8F3;
-  --accent:       #A33521;  /* sadu red, used sparingly                 */
+  --accent:       #A33521;
 
-  /* Semantic roles — components reference these, never raw colours, so a
-     palette change is a one-line edit. */
-  --bg:           var(--sand);
-  --bg-alt:       var(--cream);
-  --bg-invert:    var(--brown);
-  --fg:           var(--ink);
-  --fg-muted:     #5C5247;
-  --fg-invert:    var(--sand);
-  --rule:         var(--sand-dark);
+  --bg:       var(--sand);
+  --fg:       var(--ink);
+  --fg-muted: #5C5247;
+  --rule:     var(--sand-dark);
 
-  /* Type. The brand profile embeds URW Geometric Arabic (display) and
-     Raleway (Latin) — see docs/brand.md. Those are commercial/webfont
-     licensed separately, so the stack degrades to the best Arabic faces
-     already present on Qatari devices until the licensed files land in
-     brand/fonts/ and the @font-face block below is switched on. */
-  --font-display: "URW Geometric Arabic", "Shai Display", "Noto Kufi Arabic",
-                  "Dubai", "Tahoma", system-ui, sans-serif;
-  --font-body:    "Big Vesta Arabic", "IBM Plex Sans Arabic",
-                  "Noto Sans Arabic", "Dubai", "Segoe UI", Tahoma, sans-serif;
-  --font-latin:   "Raleway", "Helvetica Neue", Arial, sans-serif;
+  /* Alexandria is the closest freely licensed match to the brand's URW
+     Geometric Arabic: geometric, monoline, low contrast, and it carries the
+     very light weights the identity depends on. Loaded from Google Fonts,
+     which is the one third party this site allows — see docs/security.md for
+     why that trade was made. */
+  --font: "Alexandria", "URW Geometric Arabic", "Noto Kufi Arabic",
+          "Dubai", Tahoma, system-ui, sans-serif;
 
-  /* Fluid scale: clamp() means no breakpoint jumps between phone and desktop */
-  --t-hero:   clamp(2.75rem, 9vw,  7rem);
-  --t-h1:     clamp(2rem,    5vw,  3.5rem);
-  --t-h2:     clamp(1.5rem,  3.4vw, 2.25rem);
-  --t-h3:     clamp(1.15rem, 2vw,  1.5rem);
-  --t-body:   clamp(1rem,    1.1vw, 1.125rem);
-  --t-small:  .875rem;
+  --t-hero:  clamp(2.5rem, 7.5vw, 6rem);
+  --t-h1:    clamp(1.9rem, 4.4vw, 3.4rem);
+  --t-h2:    clamp(1.5rem, 3vw,   2.2rem);
+  --t-h3:    clamp(1.1rem, 1.8vw, 1.4rem);
+  --t-body:  clamp(1rem,   1.05vw, 1.1rem);
+  --t-small: .82rem;
 
-  /* Spacing — a 4px base, named by intent */
-  --s-1: .25rem;  --s-2: .5rem;   --s-3: .75rem;  --s-4: 1rem;
-  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 3rem;    --s-8: 4rem;
-  --s-9: 6rem;    --s-10: 8rem;
+  --s-1: .25rem; --s-2: .5rem;  --s-3: .75rem; --s-4: 1rem;
+  --s-5: 1.5rem; --s-6: 2rem;   --s-7: 3rem;   --s-8: 4rem;
+  --s-9: 6rem;   --s-10: 9rem;
 
-  --measure: 62ch;          /* comfortable Arabic reading width */
-  --page:    min(1280px, 100% - 2.5rem);
+  --measure: 58ch;
+  --page:    min(1320px, 100% - 2.5rem);
 
-  /* Motion: deliberately unhurried. The brand sells a long sit with tea,
-     not a transaction, and the timing should say the same thing. */
-  --ease:      cubic-bezier(.22, .61, .36, 1);
-  --dur:       .7s;
-  --dur-quick: .28s;
+  --ease:  cubic-bezier(.22, .61, .36, 1);
+  --dur:   .8s;
+  --quick: .3s;
 
-  --radius: 2px;            /* the identity is geometric, not rounded */
-  --arch:   50% 50% 0 0 / 28% 28% 0 0;   /* the brand arch, as a radius */
+  --arch: 50% 50% 0 0 / 30% 30% 0 0;
 }
-
-/* Enable once licensed webfonts are placed in brand/fonts/.
-@font-face {
-  font-family: "Shai Display";
-  src: url("../../brand/fonts/urw-geometric-arabic-light.woff2") format("woff2");
-  font-weight: 300; font-display: swap;
-}
-*/
 
 /* ------------------------------------------------------------ 2. baseline */
 *, *::before, *::after { box-sizing: border-box; }
@@ -85,428 +72,389 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  /* The header is fixed, so anchor jumps would otherwise land with the
-     section heading hidden underneath it. */
-  scroll-padding-block-start: 6rem;
+  scroll-padding-block-start: 5.5rem;   /* the header is fixed */
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--fg);
-  font-family: var(--font-body);
+  font-family: var(--font);
   font-size: var(--t-body);
-  line-height: 1.85;            /* Arabic needs more leading than Latin */
-  text-rendering: optimizeLegibility;
+  font-weight: 300;
+  line-height: 1.95;              /* Arabic needs more leading than Latin */
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 
 h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 300;             /* the identity is a light monoline */
-  line-height: 1.25;
   margin: 0;
-  color: var(--ink);
+  font-weight: 200;               /* the identity is a light monoline */
+  line-height: 1.3;
+  letter-spacing: -.01em;
 }
 
 p { margin: 0 0 var(--s-4); max-width: var(--measure); }
 a { color: inherit; text-decoration: none; }
 img, svg, video { display: block; max-width: 100%; }
 ul { margin: 0; padding: 0; list-style: none; }
+:focus-visible { outline: 2px solid var(--brown-soft); outline-offset: 4px; }
 
-:focus-visible {
-  outline: 2px solid var(--brown);
-  outline-offset: 3px;
-}
-
-.lat { font-family: var(--font-latin); letter-spacing: .22em; }
+.lat { letter-spacing: .24em; font-weight: 200; }
 
 .skip-link {
-  position: absolute;
-  inset-block-start: -100%;
-  inset-inline-start: var(--s-4);
-  z-index: 100;
-  padding: var(--s-3) var(--s-5);
-  background: var(--brown);
-  color: var(--sand);
+  position: absolute; inset-block-start: -100%;
+  inset-inline-start: var(--s-4); z-index: 100;
+  padding: var(--s-3) var(--s-5); background: var(--brown); color: var(--sand);
 }
 .skip-link:focus { inset-block-start: var(--s-4); }
 
-/* ------------------------------------------------------------- 3. layout */
+/* A single film-grain plate over the whole page. It costs one composited
+   layer and is what keeps large flat sand areas from looking like plastic. */
+.grain {
+  position: fixed; inset: 0; z-index: 200; pointer-events: none;
+  opacity: .32; mix-blend-mode: multiply;
+  background-image: url("../img/grain.svg");
+  background-size: 180px;
+}
+
+/* -------------------------------------------------------------- 3. layout */
 .shell { width: var(--page); margin-inline: auto; }
 
-.section {
-  padding-block: var(--s-9);
+.sec {
   position: relative;
-  scroll-margin-block-start: 5rem;
+  padding-block: var(--s-9);
+  scroll-margin-block-start: 4.5rem;
+  overflow: hidden;
 }
-.section--tight { padding-block: var(--s-8); }
-.section--invert { background: var(--bg-invert); color: var(--fg-invert); }
-.section--invert h2, .section--invert h3 { color: var(--sand); }
-.section--cream { background: var(--bg-alt); }
+
+/* Surface variants. The page alternates between them — never two of the same
+   kind back to back. */
+.sec--sand   { background: var(--sand); }
+.sec--cream  { background: var(--cream); }
+.sec--brown  { background: var(--brown); color: var(--sand); }
+.sec--darkest{ background: var(--brown-dark); color: var(--sand); }
+.sec--brown h2, .sec--brown h3, .sec--darkest h2, .sec--darkest h3 { color: var(--cream); }
+.sec--brown p, .sec--darkest p { color: color-mix(in srgb, var(--sand) 84%, transparent); }
 
 .eyebrow {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-  margin-block-end: var(--s-4);
-  font-size: var(--t-small);
-  letter-spacing: .18em;
-  color: var(--brown-soft);
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-block-end: var(--s-5);
+  font-size: var(--t-small); font-weight: 300;
+  letter-spacing: .2em; color: var(--brown-soft);
 }
+.sec--brown .eyebrow, .sec--darkest .eyebrow { color: var(--sand-dark); }
 .eyebrow::before {
-  content: "";
-  width: 1em; height: 1em;
+  content: ""; flex: none; width: .85em; height: .85em;
   background: currentColor;
-  /* the brand star, reused as the universal section marker */
   -webkit-mask: url("../img/star.svg") center/contain no-repeat;
           mask: url("../img/star.svg") center/contain no-repeat;
-  flex: none;
 }
 
 .grid { display: grid; gap: var(--s-6); }
-@media (min-width: 860px) {
-  .grid--2 { grid-template-columns: repeat(2, 1fr); }
-  .grid--3 { grid-template-columns: repeat(3, 1fr); }
-  .grid--split { grid-template-columns: 1fr 1fr; align-items: center; gap: var(--s-8); }
+@media (min-width: 900px) {
+  .grid--2     { grid-template-columns: repeat(2, 1fr); }
+  .grid--3     { grid-template-columns: repeat(3, 1fr); }
+  .grid--split { grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
+  .grid--aside { grid-template-columns: 1.15fr .85fr; gap: var(--s-8); align-items: center; }
 }
 
-/* --------------------------------------------------- 4. brand decoration */
+.statement { font-size: var(--t-h1); max-width: 26ch; }
+.lede { font-size: clamp(1.05rem, 1.5vw, 1.25rem); color: var(--fg-muted); }
+.sec--brown .lede, .sec--darkest .lede { color: color-mix(in srgb, var(--sand) 90%, transparent); }
 
-/* Star lattice field, lifted from the brown panel in the brand profile. */
-.lattice {
-  position: absolute;
-  inset: 0;
-  background: url("../img/lattice.svg") 0 0 / 150px repeat;
-  opacity: .14;
-  pointer-events: none;
-}
-.lattice--corner {
-  /* Logical, not physical: in RTL this must sit on the right-hand side.
-     `inset: 0 auto auto 0` would pin it to the left in both directions. */
-  inset: auto auto auto auto;
-  inset-block-start: 0;
-  inset-inline-start: 0;
-  width: min(42vw, 420px);
-  aspect-ratio: 1;
-  /* fade the field out diagonally so it reads as a watermark, not wallpaper */
-  -webkit-mask: linear-gradient(135deg, #000 10%, transparent 72%);
-          mask: linear-gradient(135deg, #000 10%, transparent 72%);
-}
+/* ------------------------------------------------- 4. pattern as a dado */
 
-/* The woven band. An original SVG (see assets/img/sadu-band.svg) rather than
-   the photographed textile — no third-party rights, and ~2KB instead of 425KB. */
-.sadu {
-  /* Height drives the tile scale (background-size: auto 100%). Below ~40px
-     the 240x72 tile compresses to roughly 130px wide and the weave turns into
-     visual noise, so the band is kept generous. */
-  height: 44px;
-  background: url("../img/sadu-band.svg") center/auto 100% repeat-x;
+/* The star lattice, and the sadu band closing it off — placed only across the
+   lower third. Tiling it over a whole panel was the mistake that got the last
+   build called tile. `background-position-x: 50%` matters: with a fixed tile
+   width, `0` crops the two edges unevenly and the panel looks off-centre. */
+.dado {
+  position: absolute; inset-block-end: 0; inset-inline: 0;
+  height: 34%; pointer-events: none;
 }
-.sadu--thin { height: 28px; }
+.dado::before {
+  content: ""; position: absolute; inset: 0;
+  background: url("../img/lattice.svg") 50% 100% / 140px repeat;
+  opacity: .16;
+  -webkit-mask: linear-gradient(transparent, #000 55%);
+          mask: linear-gradient(transparent, #000 55%);
+}
+.dado::after {                       /* the rail that closes the dado */
+  content: ""; position: absolute;
+  inset-block-end: 0; inset-inline: 0; height: 40px;
+  background: url("../img/sadu-band.svg") 50% / auto 100% repeat-x;
+  opacity: .9;
+}
+.dado--quiet::after { display: none; }
 
-/* Scalloped edge: the arch repeat used along image edges in the profile. */
-.scallop {
-  height: 26px;
-  background: var(--bg);
-  -webkit-mask: radial-gradient(26px at 50% 0, transparent 99%, #000) 0 0/52px 100%;
-          mask: radial-gradient(26px at 50% 0, transparent 99%, #000) 0 0/52px 100%;
-}
-
-/* The brand arch, applied to any media block. */
-.arch { border-radius: var(--arch); overflow: hidden; }
-
-/* ------------------------------------------------------------- 5. header */
-.header {
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline: 0;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-5);
-  padding: var(--s-5) max(var(--s-5), calc(50vw - var(--page) / 2));
-  transition: padding var(--dur-quick) var(--ease),
-              background var(--dur-quick) var(--ease),
-              box-shadow var(--dur-quick) var(--ease);
-}
-.header.is-condensed {
-  padding-block: var(--s-3);
-  background: color-mix(in srgb, var(--sand) 92%, transparent);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 1px 0 var(--rule);
-}
-.header__logo img {
-  height: clamp(30px, 4vw, 44px);
-  width: auto;
-  transition: height var(--dur-quick) var(--ease);
-}
-.header.is-condensed .header__logo img { height: 28px; }
-
-.nav { display: none; gap: var(--s-6); font-size: var(--t-small); letter-spacing: .06em; }
-@media (min-width: 900px) { .nav { display: flex; } }
-.nav a { position: relative; padding-block: var(--s-1); }
-.nav a::after {
-  content: "";
-  position: absolute;
-  inset-block-end: 0;
-  inset-inline-start: 0;
-  width: 100%; height: 1px;
-  background: var(--brown);
-  transform: scaleX(0);
-  transform-origin: inline-start;
-  transition: transform var(--dur-quick) var(--ease);
-}
-.nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); }
-
-/* Scroll progress drawn as tea filling a glass — the one flourish the brand
-   earns, because the product is literally a poured drink. */
-.pour {
-  position: fixed;
-  inset-block-start: 0;
-  inset-inline: 0;
-  height: 3px;
-  z-index: 60;
-  background: var(--brown);
-  transform-origin: inline-start;
-  transform: scaleX(var(--progress, 0));
-  transition: transform .1s linear;
-}
-
-/* --------------------------------------------------------------- 6. hero */
-.hero {
-  min-height: 100svh;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  padding-block: var(--s-10) var(--s-8);
-}
-.hero__inner { position: relative; z-index: 2; width: var(--page); }
-
-.hero__mark {
-  width: min(78vw, 620px);
-  margin-inline: auto;
-  margin-block-end: var(--s-6);
-}
-.hero__tag {
-  font-family: var(--font-display);
-  font-size: var(--t-h2);
-  color: var(--brown);
-  margin-block-end: var(--s-3);
-}
-.hero__sub {
-  max-width: 48ch;
-  margin-inline: auto;
-  color: var(--fg-muted);
-}
-.hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--s-3) var(--s-6);
-  margin-block-start: var(--s-7);
-  font-size: var(--t-small);
-  letter-spacing: .14em;
-  color: var(--brown-soft);
-}
-.hero__sadu { position: absolute; inset-block-end: 0; inset-inline: 0; z-index: 1; }
-
-/* A slow vertical drift, like steam off a glass. Purely decorative. */
-.hero__steam {
-  position: absolute;
-  inset-block-end: -10%;
-  inset-inline-start: 50%;
-  width: min(70vw, 680px);
-  aspect-ratio: 1;
-  translate: -50% 0;
-  background: radial-gradient(circle at 50% 70%,
-              color-mix(in srgb, var(--cream) 70%, transparent), transparent 62%);
-  animation: steam 14s var(--ease) infinite alternate;
-  pointer-events: none;
-}
-@keyframes steam {
-  from { transform: translateY(4%)  scale(1);    opacity: .55; }
-  to   { transform: translateY(-6%) scale(1.14); opacity: .85; }
-}
-
-/* ---------------------------------------------------------- 7. text slabs */
-.lede { font-size: clamp(1.1rem, 1.7vw, 1.35rem); color: var(--fg-muted); }
-
-.statement {
-  font-family: var(--font-display);
-  font-size: var(--t-h1);
-  line-height: 1.35;
-  max-width: 30ch;
-}
-
-.pillar { position: relative; padding-inline-start: var(--s-6); }
-.pillar::before {
-  content: "";
-  position: absolute;
-  inset-block-start: .55em;
-  inset-inline-start: 0;        /* in RTL this resolves to the right edge */
-  width: .7em; height: .7em;
-  background: var(--brown-soft);
+/* A lone star, used as a large quiet watermark */
+.mark-star {
+  position: absolute; inset-block-start: -4%; inset-inline-start: -6%;
+  width: min(46vw, 460px); aspect-ratio: 1; pointer-events: none;
+  background: var(--brown-soft); opacity: .07;
   -webkit-mask: url("../img/star.svg") center/contain no-repeat;
           mask: url("../img/star.svg") center/contain no-repeat;
 }
-.pillar h3 { margin-block-end: var(--s-2); }
-.section--invert .pillar p { color: color-mix(in srgb, var(--sand) 82%, transparent); }
 
-/* -------------------------------------------------------------- 8. cards */
-.card {
-  background: var(--cream);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius);
-  padding: var(--s-6);
-  display: flex;
-  flex-direction: column;
-  gap: var(--s-3);
-  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+/* -------------------------------------------------------------- 5. header */
+.header {
+  position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--s-5);
+  padding: var(--s-5) max(var(--s-5), calc(50vw - var(--page) / 2));
+  transition: padding var(--quick) var(--ease), background var(--quick) var(--ease),
+              box-shadow var(--quick) var(--ease);
 }
-.card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -24px rgb(37 26 14 / .45); }
-.card__price {
-  font-family: var(--font-latin);
-  letter-spacing: .1em;
-  color: var(--brown);
-  margin-block-start: auto;
+.header__logo img {
+  height: clamp(28px, 3.6vw, 40px); width: auto;
+  transition: height var(--quick) var(--ease), filter var(--quick) var(--ease);
+  /* Over the dark hero photo the brown wordmark would disappear, so it is
+     lifted to cream until the header gets its own background. */
+  filter: brightness(0) invert(1) opacity(.92);
 }
-.card__price span { font-size: var(--t-small); color: var(--fg-muted); }
+.header.is-stuck {
+  padding-block: var(--s-3);
+  background: color-mix(in srgb, var(--sand) 94%, transparent);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 1px 0 var(--rule);
+}
+.header.is-stuck .header__logo img { filter: none; height: 26px; }
 
-/* Menu filter */
-.filters { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-end: var(--s-6); }
-.filter {
-  font: inherit;
-  font-size: var(--t-small);
-  padding: var(--s-2) var(--s-5);
-  background: transparent;
-  color: var(--fg-muted);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all var(--dur-quick) var(--ease);
+.nav { display: none; gap: var(--s-6); font-size: var(--t-small); letter-spacing: .08em; }
+@media (min-width: 980px) { .nav { display: flex; } }
+.nav a { position: relative; padding-block: var(--s-1); color: var(--cream); transition: color var(--quick); }
+.header.is-stuck .nav a { color: var(--fg); }
+.nav a::after {
+  content: ""; position: absolute; inset-block-end: 0; inset-inline-start: 0;
+  width: 100%; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: inline-start;
+  transition: transform var(--quick) var(--ease);
 }
-.filter:hover { border-color: var(--brown-soft); color: var(--brown); }
-.filter[aria-pressed="true"] {
-  background: var(--brown);
-  border-color: var(--brown);
-  color: var(--sand);
+.nav a:hover::after, .nav a[aria-current="true"]::after { transform: scaleX(1); }
+
+/* Scroll progress as tea filling a glass. transform-origin: inline-start
+   handles RTL on its own — no sign flipping, unlike a translateX indicator. */
+.pour {
+  position: fixed; inset-block-start: 0; inset-inline: 0; height: 2px; z-index: 60;
+  background: var(--brown-soft);
+  transform: scaleX(var(--progress, 0)); transform-origin: inline-start;
+  transition: transform .1s linear;
 }
 
-/* Branch cards carry the arch, so the architecture of the two malls shows up
-   in the layout itself. */
-.branch { position: relative; overflow: hidden; border-radius: var(--arch); }
-.branch__media {
-  aspect-ratio: 4 / 5;
-  background: var(--brown-deep) url("../img/lattice.svg") 0 0/130px repeat;
-  display: grid;
-  place-items: center;
+/* ---------------------------------------------------------------- 6. hero */
+.hero {
+  position: relative; min-height: 100svh;
+  display: grid; align-items: end;
+  padding-block: var(--s-10) var(--s-8);
+  overflow: hidden; isolation: isolate;
 }
-.branch__media p {
-  color: color-mix(in srgb, var(--sand) 60%, transparent);
-  font-size: var(--t-small);
-  text-align: center;
-  padding: var(--s-5);
-  margin: 0;
+.hero__media { position: absolute; inset: 0; z-index: -2; }
+.hero__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  /* Framed low on purpose: the venue's own illuminated sign sits near the top
+     of this photograph, and letting it share the frame with the overlaid
+     wordmark put two versions of the logo on one screen. */
+  object-position: 50% 62%;
+  /* a very slow push-in, so the first screen is never completely still */
+  animation: kenburns 26s var(--ease) infinite alternate;
 }
-.branch__body { padding: var(--s-6) var(--s-5) var(--s-7); text-align: center; }
-.branch__body h3 { font-size: var(--t-h3); margin-block-end: var(--s-2); }
-.branch dl { margin: var(--s-4) 0 0; font-size: var(--t-small); }
-.branch dt { color: var(--brown-soft); letter-spacing: .1em; margin-block-start: var(--s-3); }
-.branch dd { margin: 0; color: var(--fg-muted); }
+@keyframes kenburns {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.14); }
+}
+/* Two overlays, not one: a warm wash to pull the photo into the palette, and
+   a bottom-weighted scrim so the text has contrast wherever the photo is
+   bright. A single flat overlay either kills the photo or fails the text. */
+.hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    /* bottom scrim: carries the headline */
+    linear-gradient(to top, rgb(26 17 7 / .94) 0%, rgb(26 17 7 / .62) 40%, rgb(26 17 7 / .18) 72%),
+    /* top scrim: carries the nav, and pushes the photo's own signage back */
+    linear-gradient(to bottom, rgb(26 17 7 / .55), transparent 26%),
+    /* warm wash: pulls the photograph into the brand palette */
+    linear-gradient(rgb(101 67 33 / .36), rgb(101 67 33 / .36));
+}
 
-/* --------------------------------------------------------------- 9. media */
-.showcase { display: grid; gap: var(--s-6); align-items: center; }
-@media (min-width: 860px) { .showcase { grid-template-columns: 1fr 1.2fr; } }
+.hero__inner { position: relative; width: var(--page); margin-inline: auto; }
+.hero__mark { width: min(54vw, 300px); margin-block-end: var(--s-5); }
+.hero__mark img { filter: brightness(0) invert(1); opacity: .96; }
 
-/* The supplied clip is 480x848 portrait, so it is framed as a vertical panel
-   rather than stretched across a desktop hero where it would look soft. */
+.hero h1 {
+  font-size: var(--t-hero); color: var(--cream);
+  max-width: 20ch; margin-block-end: var(--s-5);
+}
+.hero p { color: color-mix(in srgb, var(--cream) 86%, transparent); max-width: 44ch; }
+
+.hero__meta {
+  display: flex; flex-wrap: wrap; gap: var(--s-3) var(--s-6);
+  margin-block-start: var(--s-7);
+  font-size: var(--t-small); letter-spacing: .18em;
+  color: color-mix(in srgb, var(--sand) 80%, transparent);
+}
+.hero__meta li { display: flex; align-items: center; gap: var(--s-3); }
+.hero__meta li + li::before {
+  content: ""; width: .5em; height: .5em; background: var(--brown-soft);
+  -webkit-mask: url("../img/star.svg") center/contain no-repeat;
+          mask: url("../img/star.svg") center/contain no-repeat;
+}
+
+.hero__scroll {
+  position: absolute; inset-block-end: var(--s-5); inset-inline-end: 0;
+  font-size: var(--t-small); letter-spacing: .2em;
+  color: color-mix(in srgb, var(--sand) 65%, transparent);
+  writing-mode: vertical-rl;
+}
+
+/* --------------------------------------------------------------- 7. media */
+.arch { border-radius: var(--arch); overflow: hidden; }
+
+.figure { position: relative; }
+.figure img { width: 100%; height: 100%; object-fit: cover; }
+.figure--tall  { aspect-ratio: 3 / 4; }
+.figure--portrait { aspect-ratio: 4 / 5; }
+.figure--wide  { aspect-ratio: 16 / 10; }
+.figure__cap {
+  margin-block-start: var(--s-3); font-size: var(--t-small);
+  letter-spacing: .08em; color: var(--fg-muted);
+}
+
+/* Full-bleed band with transform parallax (never background-attachment) */
+.band { position: relative; min-height: 76svh; display: grid; place-items: center; overflow: hidden; }
+.band__media { position: absolute; inset: -12% 0; z-index: -2; will-change: transform; }
+.band__media img { width: 100%; height: 100%; object-fit: cover; }
+.band__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(rgb(26 17 7 / .72), rgb(26 17 7 / .82));
+}
+.band__inner { position: relative; width: var(--page); text-align: center; }
+.band h2 { color: var(--cream); font-size: var(--t-h1); margin-inline: auto; max-width: 24ch; }
+.band p { color: color-mix(in srgb, var(--cream) 84%, transparent); margin-inline: auto; }
+
+/* Asymmetric gallery — equal tiles would read as a stock grid */
+.gallery { display: grid; gap: var(--s-4); grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 900px) {
+  .gallery { grid-template-columns: repeat(4, 1fr); grid-auto-rows: 180px; }
+  .gallery > :nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery > :nth-child(2) { grid-column: span 2; grid-row: span 1; }
+  .gallery > :nth-child(3) { grid-column: span 1; grid-row: span 1; }
+  .gallery > :nth-child(4) { grid-column: span 1; grid-row: span 1; }
+}
+.gallery .figure { height: 100%; border-radius: 2px; overflow: hidden; }
+.gallery img { transition: transform 1.2s var(--ease); }
+.gallery .figure:hover img { transform: scale(1.06); }
+
+/* The clip is 480x848 portrait, so it is framed vertically rather than
+   stretched across a desktop hero where it would look soft. */
 .reel {
-  width: min(100%, 320px);
-  aspect-ratio: 480 / 848;
-  margin-inline: auto;
-  border-radius: var(--arch);
-  overflow: hidden;
-  background: var(--brown-deep);
-  box-shadow: 0 30px 60px -30px rgb(37 26 14 / .6);
+  width: min(100%, 300px); aspect-ratio: 480/848; margin-inline: auto;
+  border-radius: var(--arch); overflow: hidden; background: var(--brown-dark);
+  box-shadow: 0 34px 70px -34px rgb(26 17 7 / .7);
 }
 .reel video { width: 100%; height: 100%; object-fit: cover; }
 
-/* -------------------------------------------------------------- 10. CTAs */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-3);
-  padding: var(--s-3) var(--s-6);
-  border: 1px solid var(--brown);
-  border-radius: 999px;
-  font-size: var(--t-small);
-  letter-spacing: .1em;
-  transition: all var(--dur-quick) var(--ease);
+/* --------------------------------------------------------------- 8. cards */
+.card {
+  position: relative;
+  background: var(--cream); border: 1px solid var(--rule); border-radius: 2px;
+  padding: var(--s-6);
+  display: flex; flex-direction: column; gap: var(--s-2);
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-.btn:hover { background: var(--brown); color: var(--sand); }
-.btn--solid { background: var(--brown); color: var(--sand); }
+.sec--brown .card, .sec--darkest .card {
+  background: color-mix(in srgb, var(--cream) 7%, transparent);
+  border-color: color-mix(in srgb, var(--sand) 22%, transparent);
+}
+.card:hover { transform: translateY(-5px); box-shadow: 0 22px 46px -28px rgb(42 28 12 / .5); }
+.card h3 { font-size: var(--t-h3); }
+.card__en { font-size: var(--t-small); letter-spacing: .2em; color: var(--brown-soft); }
+.card__price { margin-block-start: auto; padding-block-start: var(--s-3); color: var(--brown); letter-spacing: .06em; }
+.sec--brown .card__price { color: var(--sand); }
+
+.filters { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-block-end: var(--s-6); }
+.filter {
+  font: inherit; font-size: var(--t-small);
+  padding: var(--s-2) var(--s-5);
+  background: transparent; color: var(--fg-muted);
+  border: 1px solid var(--rule); border-radius: 999px; cursor: pointer;
+  transition: all var(--quick) var(--ease);
+}
+.filter:hover { border-color: var(--brown-soft); color: var(--brown); }
+.filter[aria-pressed="true"] { background: var(--brown); border-color: var(--brown); color: var(--cream); }
+
+.branch { overflow: hidden; }
+.branch__media { aspect-ratio: 4/3; }
+.branch__media img { width: 100%; height: 100%; object-fit: cover; }
+.branch__body { padding-block-start: var(--s-5); }
+.branch h3 { font-size: var(--t-h2); }
+.branch dl { margin: var(--s-4) 0 0; font-size: var(--t-small); }
+.branch dt { color: var(--brown-soft); letter-spacing: .12em; margin-block-start: var(--s-3); }
+.branch dd { margin: 0; color: var(--fg-muted); }
+
+/* ---------------------------------------------------------------- 9. CTAs */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-3) var(--s-6);
+  border: 1px solid currentColor; border-radius: 999px;
+  font-size: var(--t-small); letter-spacing: .12em;
+  transition: all var(--quick) var(--ease);
+}
+.btn--solid { background: var(--brown); border-color: var(--brown); color: var(--cream); }
 .btn--solid:hover { background: var(--brown-deep); border-color: var(--brown-deep); }
-.btn--ghost-invert { border-color: color-mix(in srgb, var(--sand) 45%, transparent); color: var(--sand); }
-.btn--ghost-invert:hover { background: var(--sand); color: var(--brown); border-color: var(--sand); }
+.btn--light { color: var(--cream); }
+.btn--light:hover { background: var(--cream); color: var(--brown); }
 
 .social { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .social a {
-  font-family: var(--font-latin);
-  font-size: var(--t-small);
-  letter-spacing: .12em;
-  padding: var(--s-2) var(--s-4);
-  border: 1px solid color-mix(in srgb, var(--sand) 40%, transparent);
-  border-radius: 999px;
-  transition: all var(--dur-quick) var(--ease);
+  font-size: var(--t-small); letter-spacing: .16em;
+  padding: var(--s-2) var(--s-5);
+  border: 1px solid color-mix(in srgb, var(--sand) 38%, transparent);
+  border-radius: 999px; transition: all var(--quick) var(--ease);
 }
 .social a:hover { background: var(--sand); color: var(--brown); }
 
-/* ------------------------------------------------------------ 11. footer */
-.footer { background: var(--brown-deep); color: var(--sand); padding-block: var(--s-8) var(--s-6); }
-.footer a:hover { color: var(--cream); text-decoration: underline; text-underline-offset: .3em; }
-.footer__grid { display: grid; gap: var(--s-7); }
-@media (min-width: 760px) { .footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
-.footer h4 { color: var(--sand); font-size: var(--t-small); letter-spacing: .16em; margin-block-end: var(--s-4); }
-.footer li { margin-block-end: var(--s-2); font-size: var(--t-small); color: color-mix(in srgb, var(--sand) 78%, transparent); }
-.footer__legal {
-  margin-block-start: var(--s-7);
-  padding-block-start: var(--s-5);
-  border-block-start: 1px solid color-mix(in srgb, var(--sand) 20%, transparent);
-  font-size: var(--t-small);
-  color: color-mix(in srgb, var(--sand) 60%, transparent);
+/* ------------------------------------------------------------- 10. footer */
+.foot { background: var(--brown-dark); color: var(--sand); padding-block: var(--s-8) var(--s-6); position: relative; }
+.foot a:hover { color: var(--cream); }
+.foot__grid { display: grid; gap: var(--s-7); }
+@media (min-width: 780px) { .foot__grid { grid-template-columns: 1.5fr 1fr 1fr; } }
+.foot h4 { font-size: var(--t-small); letter-spacing: .2em; margin-block-end: var(--s-4); color: var(--sand-dark); }
+.foot li, .foot p { font-size: var(--t-small); color: color-mix(in srgb, var(--sand) 76%, transparent); margin-block-end: var(--s-2); }
+.foot__legal {
+  margin-block-start: var(--s-7); padding-block-start: var(--s-5);
+  border-block-start: 1px solid color-mix(in srgb, var(--sand) 16%, transparent);
+  font-size: var(--t-small); color: color-mix(in srgb, var(--sand) 56%, transparent);
   display: flex; flex-wrap: wrap; gap: var(--s-4); justify-content: space-between;
 }
 
-/* Visible marker for anything still awaiting real data. Deliberately loud:
-   placeholder content must never be mistaken for finished content. */
+/* Loud on purpose: placeholder data must never be mistaken for real data. */
 .todo {
-  display: inline-block;
-  padding: 0 .5em;
-  border-radius: var(--radius);
-  background: #FFF3C4;
-  color: #7A4B00;
-  font-size: var(--t-small);
+  display: inline-block; padding: 0 .5em; border-radius: 2px;
+  background: #FFF3C4; color: #7A4B00; font-size: var(--t-small);
   border: 1px dashed #C89B2E;
 }
 
-/* ------------------------------------------------- 12. reveal on scroll */
+/* ------------------------------------------------ 11. motion / reveal */
 [data-reveal] {
-  opacity: 0;
-  transform: translateY(22px);
+  opacity: 0; transform: translateY(26px);
   transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 [data-reveal].is-visible { opacity: 1; transform: none; }
+[data-reveal][data-delay="1"] { transition-delay: .09s; }
+[data-reveal][data-delay="2"] { transition-delay: .18s; }
+[data-reveal][data-delay="3"] { transition-delay: .27s; }
 
-/* Respect the OS setting, and make sure nothing stays invisible if JS never
-   runs — content must survive without JavaScript. */
+/* Subtle mouse tilt on media. Kept small — past 6deg it stops looking
+   expensive and starts looking like a toy. */
+.tilt { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s var(--ease); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001s !important; transition-duration: .001s !important; }
   [data-reveal] { opacity: 1; transform: none; }
+  .hero__media img { animation: none; transform: none; }
 }
+/* Content must survive with JavaScript switched off. */
 .no-js [data-reveal] { opacity: 1; transform: none; }
+.no-js .grain { display: none; }
