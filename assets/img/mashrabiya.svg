@@ -1,0 +1,21 @@
+<!-- The perforated ledge light that runs through both branches: a row of
+     pointed-oval (ogee) openings in a cream frame, lit warm from behind.
+     Traced from media/photos/west-walk/deco-04.jpeg, where the strip is most
+     clearly readable.
+
+     The frame colour is baked in because this file is used as a background
+     image, which cannot inherit currentColor. In the venue the frame is the
+     same cream in both branches, so there is nothing to parameterise. The
+     openings are real holes (fill-rule: evenodd) so whatever sits behind the
+     element shows through them — that is what makes the glow look lit rather
+     than painted. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="38" height="60" viewBox="0 0 38 60">
+  <path fill="#FBF8F3" fill-rule="evenodd" d="
+    M0 0 h38 v60 H0 Z
+    M19 9
+      C25 17.5 30.5 23 30.5 30
+      C30.5 37 25 42.5 19 51
+      C13 42.5 7.5 37 7.5 30
+      C7.5 23 13 17.5 19 9
+    Z"/>
+</svg>
