@@ -4,7 +4,7 @@
   "_note_menuUrl": "The real menu with prices lives on the owner's QR platform, and it is the same menu for both branches (confirmed by the owner). While menuUrl is set, build_menu.py stops rendering the price line and renders a link-out block instead, because nine cards each reading 'price pending' is worse than no prices at all. Delete menuUrl and fill in the price fields to go back to prices on the page.",
   "menuUrl": "https://shai-bu-hamad.yallaqrcodes.com/branch/1/",
 
-  "_note_items": "Item names came from the brand profile (content/profile/profile-2026.pdf), not from the QR menu — that platform could not be read from this sandbox. They stay in the HTML because a menu is the most searched part of a restaurant site and a crawler has to find it here. If any item below is no longer served, delete it: the page must not promise what the kitchen stopped making.",
+  "_note_items": "NOT RENDERED while menuUrl is set — the owner asked for the item cards to come off the page and the menu link to stand alone. These names were read out of the 2026 profile PDF, never checked against the live QR menu (that platform is unreachable from the build sandbox), and carried no prices, so the page was making nine unverified promises. They are kept here rather than deleted because they are still the only machine-readable list of what the house serves: add prices and remove menuUrl and the cards and category filters come straight back.",
   "currency": "ر.ق",
   "categories": [
     { "id": "tea",      "ar": "الشاي والكرك",   "en": "Tea & Karak" },

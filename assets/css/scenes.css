@@ -176,6 +176,11 @@
 
 .intro__logo {
   width: min(74vw, 460px);          /* comfortably above the collapse point */
+  /* Explicit even though the base `img` rule now carries it, because this is
+     the rule that sets a width with no height and this is where the bug was:
+     the height="355" attribute stayed in force and crushed a 3.38 wordmark
+     into 0.81. Anyone editing the width here should see the pairing. */
+  height: auto;
   margin-inline: auto;
   opacity: 0;
   transform: translateY(14px) scale(.97);
