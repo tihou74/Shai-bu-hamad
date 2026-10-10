@@ -473,7 +473,29 @@ ul { margin: 0; padding: 0; list-style: none; }
 .branch h3 { font-size: var(--t-h2); }
 .branch dl { margin: var(--s-4) 0 0; font-size: var(--t-small); }
 .branch dt { color: var(--brown-soft); letter-spacing: .12em; margin-block-start: var(--s-3); }
-.branch dd { margin: 0; color: var(--fg-muted); }
+.branch dd { margin: 0; color: var(--fg-muted); line-height: 1.9; }
+/* Friday is a separate line under the weekday range rather than a second
+   <dt>: it is the same fact — when the branch is open — so it belongs to the
+   same term. */
+.branch__note { color: var(--brown-soft); }
+/* The number is the one thing in this card a visitor acts on, so it is sized
+   up and underlined on approach, and padded out to clear the 44px minimum tap
+   height. At var(--s-1) of block padding it measured 39px — close enough to
+   look fine and not close enough to be reliable under a thumb, so it is
+   var(--s-2) and measured again at 47px. A phone number that is awkward to
+   hit is a phone number that does not get dialled. */
+.branch__tel {
+  display: inline-block;
+  margin-block-start: var(--s-1);
+  padding-block: var(--s-2);
+  font-size: var(--t-body);
+  letter-spacing: .08em;
+  color: var(--brown);
+  border-block-end: 1px solid transparent;
+  transition: border-color var(--quick) var(--ease);
+}
+.branch__tel:hover,
+.branch__tel:focus-visible { border-block-end-color: currentColor; }
 
 /* ---------------------------------------------------------------- 9. CTAs */
 .btn {
