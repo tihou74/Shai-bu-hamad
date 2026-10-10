@@ -51,9 +51,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=7">
-<link rel="stylesheet" href="assets/css/scenes.css?v=7">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=7">
+<link rel="stylesheet" href="assets/css/styles.css?v=8">
+<link rel="stylesheet" href="assets/css/scenes.css?v=8">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=8">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -411,11 +411,31 @@
            cinematic.css for why a translated track is the wrong tool in RTL. -->
       <div class="rail grade" role="group" aria-label="جولة في الفرعين" tabindex="0">
         <figure><img src="media/photos/west-walk/deco-01.jpeg" alt="West Walk — الصالة والسدو المعلّق" width="1600" height="1200" loading="lazy"></figure>
+        <!-- The first photograph on this page with a person in it, and the
+             reason it earns a place: every other frame is an empty room, and
+             an empty room reads as a showroom. A figure standing at the wall
+             gives the sculpture its scale and the room its purpose. He is
+             shot from behind — no face, nobody identifiable — which is also
+             the only version of this that needs no permission from anyone.
+             Uploaded as media/photos/4.jpeg; not filed under a branch folder
+             because which branch this wall is in was never stated. -->
+        <figure><img src="media/photos/line-art-wall.jpeg" alt="زائر يقف أمام مجسّم خطّي على جدار خشبي مشرّح" width="900" height="1600" loading="lazy"></figure>
         <figure><img src="media/photos/west-walk/deco-04.jpeg" alt="West Walk — الشعار المُضاء ولوحة الصقر" width="1200" height="1600" loading="lazy"></figure>
         <figure><img src="media/photos/gulf-mall/deco-02.jpeg" alt="Gulf Mall — الواجهة وسقف الخشب المشرّح" width="1600" height="1200" loading="lazy"></figure>
         <figure><img src="media/photos/west-walk/deco-05.jpeg" alt="West Walk — بار الشاي والسموَر" width="1200" height="1600" loading="lazy"></figure>
         <figure><img src="media/photos/gulf-mall/deco-03.jpeg" alt="Gulf Mall — فانوس قديم وشعار البيت خلفه" width="1080" height="1350" loading="lazy"></figure>
         <figure><img src="media/photos/west-walk/deco-03.jpeg" alt="West Walk — مرآة المها والعملات القديمة" width="1200" height="1600" loading="lazy"></figure>
+        <!-- Cut out of the three-panel collage uploaded as media/photos/
+             2.jpeg. The collage itself is not on this page: it is three
+             photographs mashed into one frame with an Instagram handle burnt
+             into the corner, which is right for a feed and wrong for a site
+             that is selling the room. This panel was worth rescuing — a
+             push-button telephone, a studded mabkhara and a glass of tea on
+             the counter is the page's whole argument in one frame — and the
+             crop stops above the burnt-in handle rather than covering it up.
+             598x976 is all the collage left to work with; the originals of
+             all three panels are still worth asking for. -->
+        <figure><img src="media/photos/vintage-telephone-tea.jpeg" alt="هاتف قديم ومبخرة مزخرفة وكوب شاي على طرف البار" width="598" height="976" loading="lazy"></figure>
         <figure><img src="media/photos/west-walk/deco-02.jpeg" alt="West Walk — صفّ الجلسات ومساند السدو" width="1200" height="1600" loading="lazy"></figure>
       </div>
       <p class="rail__hint">اسحب للجانب</p>
@@ -450,22 +470,44 @@
          Left out, and why: deco-03.mp4 (the wall calligraphy — opens on
          several seconds of black) and menu-nakhi-sambosa.mp4 (the samosa
          filling — same). Both are good footage. Trim the dead opening off
-         the front of each and they belong here. -->
+         the front of each and they belong here.
+
+         UPDATE: every clip now carries a `poster`, baked at build time by
+         tools/vidposter.py. preload="none" means the browser paints nothing
+         but the card's background colour until a clip scrolls into view, so
+         the row used to open as a set of brown rectangles; now it opens as
+         photographs. This does not revive the per-clip in-point idea — that
+         still depends on the host answering Range requests at runtime, which
+         is still unproven. A poster is decided here, once, and shipped as a
+         file, so it cannot degrade on someone else's server. -->
     <div class="reels" role="group" aria-label="مقاطع من الفرعين" tabindex="0">
       <figure class="reel-card reel-card--lead">
         <video src="media/video/menu-breakfast.mp4"
+               poster="media/photos/menu-breakfast-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="أحد العاملين يحمل صينيّة الطلب إلى الطاولة"></video>
         <figcaption><strong>الطلب يوصل</strong><span class="lat">ORDER UP</span></figcaption>
       </figure>
+      <!-- Uploaded as media/photos/3.mp4; renamed on the way into
+           media/video/ because a bare number tells the next person nothing.
+           720x1280, 3.2s, and the steadiest pan in the set. -->
+      <figure class="reel-card">
+        <video src="media/video/nostalgia-wall.mp4"
+               poster="media/photos/nostalgia-wall-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="فانوس معلّق وطبق مزخرف ومعلّقات على جدار الذكريات"></video>
+        <figcaption><strong>جدار الذكريات</strong><span class="lat">THE WALL</span></figcaption>
+      </figure>
       <figure class="reel-card">
         <video src="media/video/deco-04.mp4"
+               poster="media/photos/deco-04-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="جولة في فرع Gulf Mall"></video>
         <figcaption><strong>جولة في Gulf Mall</strong><span class="lat">GULF MALL</span></figcaption>
       </figure>
       <figure class="reel-card">
         <video src="media/video/west-walk-deco-01.mp4"
+               poster="media/photos/west-walk-deco-01-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="من واجهة West Walk إلى داخل الصالة"></video>
         <figcaption><strong>من الباب إلى الكوب</strong><span class="lat">WEST WALK</span></figcaption>
@@ -473,6 +515,7 @@
       <figure class="reel-card">
         <!-- 720x1280: the sharpest clip in the set. -->
         <video src="media/video/west-walk-deco-02.mp4"
+               poster="media/photos/west-walk-deco-02-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="البشوت والدراعات معلّقة على المشجب"></video>
         <figcaption><strong>على المشجب</strong><span class="lat">THE HOOKS</span></figcaption>
@@ -480,12 +523,14 @@
       <figure class="reel-card">
         <!-- 720x1280. -->
         <video src="media/video/menu-mixed-breakfast.mp4"
+               poster="media/photos/menu-mixed-breakfast-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="سفرة الفطور من أعلى"></video>
         <figcaption><strong>سفرة الفطور</strong><span class="lat">THE SPREAD</span></figcaption>
       </figure>
       <figure class="reel-card">
         <video src="media/video/menu-toast-karak.mp4"
+               poster="media/photos/menu-toast-karak-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="توست الجبن مع الكرك"></video>
         <figcaption><strong>توست جبن بالكرك</strong><span class="lat">TOAST &amp; KARAK</span></figcaption>
@@ -577,6 +622,41 @@
             <span class="lat">BALALEET</span>
           </figcaption>
         </figure>
+      </div>
+
+      <!-- Uploaded as media/photos/1.jpeg, and the best thing in the batch.
+
+           The photograph is doing the page's own argument without being
+           asked to: the hospitality this site keeps asserting in words is
+           here written in cocoa on the foam of a cup. That is why this block
+           is placed second in the menu rather than dropped into the plates
+           grid — "حياك" on a drink is not a menu item, it is the greeting,
+           and the whole page is about the greeting.
+
+           The figure comes before the body in the source so it takes the
+           first grid column, which in RTL is the right-hand one. The pour
+           feature above has it the other way round, so the two alternate
+           down the section instead of stacking into one lopsided column. No
+           modifier class needed — DOM order is the whole mechanism. -->
+      <div class="feature" style="margin-block-start: var(--s-8)">
+        <figure class="topshot" data-settle>
+          <img src="media/photos/menu/hayyak-cappuccino.jpeg"
+               alt="كابتشينو كُتبت على رغوته كلمة حياك، وبجانبه حلى على قاعدة فضيّة ومنديل يحمل رسم البيت"
+               width="900" height="1600" loading="lazy">
+        </figure>
+        <div class="feature__body" data-rise>
+          <h3 class="statement">«حياك» — مكتوبة على الكوب</h3>
+          <p class="card__en lat">HAYYAK</p>
+          <p class="lede">
+            الترحيب عندنا لا يُقال على الباب فقط — يُكتب على الرغوة قبل أن
+            يوصل الكوب الطاولة.
+          </p>
+          <p>
+            وعلى نفس الصينيّة: حلى على قاعدة فضيّة، ومنديل يحمل رسم البيت —
+            رجلٌ بالغترة ممسكٌ فنجاله. التفاصيل الصغيرة هي ما يُفرّق المكان
+            عن غيره، لا اللافتة على الواجهة.
+          </p>
+        </div>
       </div>
 
       <!-- MENU:START — generated by tools/build_menu.py from data/menu.json.
@@ -774,6 +854,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=7"></script>
+<script src="assets/js/app.js?v=8"></script>
 </body>
 </html>
