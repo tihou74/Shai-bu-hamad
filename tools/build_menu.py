@@ -27,25 +27,28 @@ def esc(s):
 
 def render(menu):
     cur = esc(menu.get("currency", ""))
+    live = (menu.get("menuUrl") or "").strip()
     out = []
 
-    out.append('      <div class="filters" role="group" aria-label="تصفية المنيو">')
-    out.append('        <button class="filter" type="button" data-filter="all" '
-               'aria-pressed="true">الكل</button>')
-    for c in menu["categories"]:
-        out.append(f'        <button class="filter" type="button" '
-                   f'data-filter="{esc(c["id"])}" aria-pressed="false">'
-                   f'{esc(c["ar"])}</button>')
-    out.append("      </div>")
+    # The category filters only exist to narrow a long priced list. With the
+    # prices living on the QR platform the buttons would filter nine cards
+    # that all say the same amount of nothing, so they are not rendered while
+    # menuUrl is set. app.js reads `.filter` with querySelectorAll and calls
+    # forEach on the result, which is a no-op on an empty NodeList — removing
+    # the buttons needs no change there, and was checked rather than assumed.
+    if not live:
+        out.append('      <div class="filters" role="group" aria-label="تصفية المنيو">')
+        out.append('        <button class="filter" type="button" data-filter="all" '
+                   'aria-pressed="true">الكل</button>')
+        for c in menu["categories"]:
+            out.append(f'        <button class="filter" type="button" '
+                       f'data-filter="{esc(c["id"])}" aria-pressed="false">'
+                       f'{esc(c["ar"])}</button>')
+        out.append("      </div>")
 
     out.append('      <ul class="grid grid--3">')
     for it in menu["items"]:
         price = it.get("price")
-        if price is None:
-            price_html = ('<span class="todo">السعر في انتظار البيانات</span>')
-        else:
-            price_html = f'{esc(str(price))} <span>{cur}</span>'
-
         out.append(f'        <li class="card" data-category="{esc(it["category"])}"'
                    f'{" data-featured" if it.get("featured") else ""} data-reveal>')
         out.append(f'          <h3>{esc(it["ar"])}</h3>')
@@ -53,9 +56,48 @@ def render(menu):
             out.append(f'          <p class="lat">{esc(it["en"])}</p>')
         if it.get("desc"):
             out.append(f'          <p>{esc(it["desc"])}</p>')
-        out.append(f'          <p class="card__price">{price_html}</p>')
+
+        # No price line at all while the menu is hosted elsewhere. The earlier
+        # version printed a dashed "price pending" badge on every card, which
+        # repeated nine times down the section and read as an unfinished site.
+        # The names stay because a menu is the most searched part of a
+        # restaurant site and a crawler has to find it in this HTML.
+        if not live:
+            price_html = ('<span class="todo">السعر في انتظار البيانات</span>'
+                          if price is None
+                          else f'{esc(str(price))} <span>{cur}</span>')
+            out.append(f'          <p class="card__price">{price_html}</p>')
         out.append("        </li>")
     out.append("      </ul>")
+
+    if live:
+        # target="_blank" with rel="noopener": the menu is somebody else's
+        # domain, and a visitor halfway down a long page should not lose it to
+        # a sideways navigation. `noopener` also denies the opened page a
+        # handle on this one.
+        out.append('')
+        out.append('      <aside class="menu-live" data-reveal>')
+        out.append('        <div>')
+        out.append('          <h3>المنيو الكامل بالأسعار</h3>')
+        out.append('          <p>نفس المنيو في الفرعين — West Walk و Gulf Mall.</p>')
+        out.append('        </div>')
+        out.append(f'        <a class="btn btn--solid menu-live__cta" href="{esc(live)}"'
+                   ' target="_blank" rel="noopener">')
+        out.append('          افتح المنيو')
+        # An inline SVG rather than the character "↗". The glyph is missing
+        # from some font stacks and falls back to a tofu box — it rendered as
+        # an empty square in review here — and a button that ships a visible
+        # placeholder square is worse than a button with no icon. Stroked
+        # paths use currentColor, so it follows the button's own colour on
+        # hover with nothing extra.
+        out.append('          <svg class="menu-live__arrow" viewBox="0 0 16 16" '
+                   'width="13" height="13" fill="none" stroke="currentColor" '
+                   'stroke-width="1.6" stroke-linecap="round" '
+                   'stroke-linejoin="round" aria-hidden="true" focusable="false">')
+        out.append('            <path d="M5 11 11 5"/><path d="M6 5h5v5"/>')
+        out.append('          </svg>')
+        out.append('        </a>')
+        out.append('      </aside>')
 
     return "\n".join(out)
 
@@ -82,11 +124,15 @@ def main():
     with open(PAGE, "w", encoding="utf-8") as fh:
         fh.write(page)
 
-    missing = sum(1 for i in menu["items"] if i.get("price") is None)
+    live = (menu.get("menuUrl") or "").strip()
     print(f"rendered {len(menu['items'])} items "
           f"across {len(menu['categories'])} categories")
-    if missing:
-        print(f"note: {missing} items still have no price", file=sys.stderr)
+    if live:
+        print(f"prices: linked out to {live} (price lines and filters omitted)")
+    else:
+        missing = sum(1 for i in menu["items"] if i.get("price") is None)
+        if missing:
+            print(f"note: {missing} items still have no price", file=sys.stderr)
     return 0
 
 
