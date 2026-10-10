@@ -51,9 +51,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=10">
-<link rel="stylesheet" href="assets/css/scenes.css?v=10">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=10">
+<link rel="stylesheet" href="assets/css/styles.css?v=11">
+<link rel="stylesheet" href="assets/css/scenes.css?v=11">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=11">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -62,6 +62,112 @@
      than it saves. The video is deliberately NOT preloaded. -->
 <link rel="preload" as="image" href="media/photos/west-walk/deco-05.jpeg" media="(max-width: 700px)">
 <link rel="preload" as="image" href="media/photos/west-walk/deco-01.jpeg" media="(min-width: 700.01px)">
+
+<!-- Structured data: the two branches as machine-readable places.
+
+     This is what puts opening hours, a phone number and a menu link into the
+     Google result itself instead of leaving them buried in the page — and it
+     is the one thing that partly repays what was lost when the item cards
+     came off. The cards carried "كرك" and "قهوة عربية" as text; `hasMenu`
+     hands the crawler the real menu instead, which is better data because it
+     is the menu the owner actually maintains.
+
+     Two notes on honesty, since structured data that contradicts the page is
+     treated as spam:
+
+     - Hours and numbers here are exactly the ones printed in the branches
+       section. If one changes, both change.
+     - West Walk closes for Friday prayer. There is no vocabulary for "shut
+       for half an hour at a time that moves through the year", and inventing
+       a fixed time would be publishing a wrong one, so Friday is left as the
+       full range here and the closure is stated in words on the page.
+
+     It survives `script-src 'self'` with no 'unsafe-inline': a script element
+     with a non-JavaScript type is a data block, never prepared for
+     execution, so CSP's inline check is not reached. Verified in the browser
+     against the live meta CSP rather than taken on faith. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "#org",
+      "name": "شاي بو حمد",
+      "alternateName": "Shai Bu Hamad",
+      "legalName": "شركة مطاعم شاي بو حمد لتقديم الوجبات و المشروبات",
+      "foundingDate": "2025",
+      "logo": "brand/logo/logo-primary.png",
+      "sameAs": [
+        "https://instagram.com/shaibuhamad.qa",
+        "https://tiktok.com/@shaibuhamadqtr",
+        "https://facebook.com/shaibuhamad.qa",
+        "https://snapchat.com/add/shai.buhamad"
+      ]
+    },
+    {
+      "@type": "CafeOrCoffeeShop",
+      "name": "شاي بو حمد — West Walk",
+      "parentOrganization": { "@id": "#org" },
+      "image": "media/photos/west-walk/deco-01.jpeg",
+      "telephone": "+974 3037 3888",
+      "servesCuisine": ["قطري", "خليجي", "قهوة وشاي"],
+      "priceRange": "$$",
+      "hasMenu": "https://shai-bu-hamad.yallaqrcodes.com/branch/1/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "شارع السدر، الوعب",
+        "addressLocality": "الدوحة",
+        "addressCountry": "QA"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Saturday", "Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday"
+          ],
+          "opens": "07:00",
+          "closes": "01:00"
+        }
+      ]
+    },
+    {
+      "@type": "CafeOrCoffeeShop",
+      "name": "شاي بو حمد — Gulf Mall",
+      "parentOrganization": { "@id": "#org" },
+      "image": "media/photos/gulf-mall/deco-02.jpeg",
+      "telephone": "+974 7109 3000",
+      "servesCuisine": ["قطري", "خليجي", "قهوة وشاي"],
+      "priceRange": "$$",
+      "hasMenu": "https://shai-bu-hamad.yallaqrcodes.com/branch/1/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "الغرافة",
+        "addressLocality": "الدوحة",
+        "addressCountry": "QA"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Saturday", "Sunday", "Monday",
+            "Tuesday", "Wednesday", "Thursday"
+          ],
+          "opens": "07:00",
+          "closes": "23:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Friday",
+          "opens": "13:00",
+          "closes": "23:00"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 
 <body>
@@ -719,11 +825,25 @@
           <div class="branch__body">
             <h3>West Walk</h3>
             <p>الوعب — شارع السدر، الدوحة</p>
+            <!-- Hours and number supplied by the owner, October 2026.
+
+                 `dir="ltr"` on the number is not decoration. A phone number
+                 is a run of Latin digits inside an RTL paragraph, and without
+                 an explicit direction the bidi algorithm reorders the groups
+                 around the separators — the number renders with its parts in
+                 the wrong order and a customer dials a wrong number.
+
+                 `tel:` with the full +974 country code, because most of the
+                 traffic here is a phone and the point of a number on a
+                 restaurant page is that it is tapped, not read. -->
             <dl>
               <dt>ساعات العمل</dt>
-              <dd><span class="todo">في انتظار البيانات</span></dd>
+              <dd>كل أيام الأسبوع · 7:00 صباحاً — 1:00 بعد منتصف الليل</dd>
+              <dd class="branch__note">مغلق وقت صلاة الجمعة</dd>
               <dt>الهاتف</dt>
-              <dd><span class="todo">في انتظار البيانات</span></dd>
+              <dd>
+                <a class="branch__tel lat" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+              </dd>
             </dl>
           </div>
         </article>
@@ -737,9 +857,12 @@
             <p>الغرافة، الدوحة</p>
             <dl>
               <dt>ساعات العمل</dt>
-              <dd><span class="todo">في انتظار البيانات</span></dd>
+              <dd>السبت — الخميس · 7:00 صباحاً — 11:00 مساءً</dd>
+              <dd>الجمعة · 1:00 ظهراً — 11:00 مساءً</dd>
               <dt>الهاتف</dt>
-              <dd><span class="todo">في انتظار البيانات</span></dd>
+              <dd>
+                <a class="branch__tel lat" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+              </dd>
             </dl>
           </div>
         </article>
@@ -783,8 +906,14 @@
     <div>
       <h4>الفروع</h4>
       <ul>
-        <li>West Walk — الوعب، شارع السدر</li>
-        <li>Gulf Mall — الغرافة</li>
+        <li>
+          West Walk — الوعب، شارع السدر<br>
+          <a class="lat" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+        </li>
+        <li>
+          Gulf Mall — الغرافة<br>
+          <a class="lat" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+        </li>
       </ul>
     </div>
     <div>
@@ -803,6 +932,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=10"></script>
+<script src="assets/js/app.js?v=11"></script>
 </body>
 </html>
