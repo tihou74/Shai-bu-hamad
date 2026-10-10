@@ -481,6 +481,28 @@
   object-position: 50% 42%;
 }
 
+/* The overhead cup shot, which needs a different crop from .pourshot even
+   though both are portrait. The source is 9:16 and everything that matters
+   sits in its top 70%: the card, the dessert on its stand, the printed
+   napkin, then the cup. The bottom third is the guest's lap and the table
+   column. So the frame is held at 4:5 and pinned to the top of the image
+   rather than its centre — centring it would crop away the dessert at one
+   end and the written foam at the other, keeping only the part with nothing
+   in it. */
+.topshot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4 / 5;
+  max-height: 74svh;
+  background: var(--brown-deep);
+}
+.topshot > img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 2%;
+}
+
 /* ------------------------------------------------------------ the smoke ---
    Steam off the poured glass, moving, asked for explicitly.
 
