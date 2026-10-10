@@ -32,18 +32,33 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=3">
-<link rel="stylesheet" href="assets/css/scenes.css?v=3">
+<link rel="stylesheet" href="assets/css/styles.css?v=4">
+<link rel="stylesheet" href="assets/css/scenes.css?v=4">
 </head>
 
 <body>
 <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+
+<!-- Opening curtain. Hidden by CSS until JavaScript opts in, so a visitor
+     without JS is never left behind a curtain that cannot lift. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__inner">
+    <img class="intro__logo" src="assets/img/logo-cream.png"
+         alt="" width="1200" height="355">
+    <span class="intro__rule"></span>
+    <p class="intro__tag lat">DOHA · QATAR</p>
+  </div>
+</div>
+
 <div class="grain" aria-hidden="true"></div>
 <div class="pour" aria-hidden="true"></div>
 
 <header class="header" id="header">
   <a class="header__logo" href="#top" aria-label="شاي بو حمد — الرئيسية">
-    <img src="brand/logo/logo-primary.png" alt="شاي بو حمد" width="1554" height="460">
+    <!-- Arabic-only variant: the full lockup's hairline Latin row is not
+         legible at header size. Two real files instead of a CSS filter. -->
+    <img class="on-dark" src="assets/img/mark-cream.png" alt="شاي بو حمد" width="1000" height="210">
+    <img class="on-light" src="assets/img/mark-brown.png" alt="" width="1000" height="210" aria-hidden="true">
   </a>
   <nav class="nav" aria-label="التنقّل الرئيسي">
     <a href="#story">القصّة</a>
@@ -64,9 +79,7 @@
     </div>
 
     <div class="hero__inner">
-      <div class="hero__mark">
-        <img src="brand/logo/logo-primary.png" alt="شاي بو حمد · Shai Bu Hamad" width="1554" height="460">
-      </div>
+      <p class="eyebrow eyebrow--light">شاي بو حمد · الدوحة</p>
       <h1>الشاي عندنا ليس مشروبًا — بل دعوة للجلوس</h1>
       <p>ضيافة قطرية تجمع عبق التراث الخليجي بأناقة الذوق المعاصر، في قلب الدوحة.</p>
       <ul class="hero__meta">
@@ -404,7 +417,7 @@
 <!-- ======================================================= 10 · foot (dark) -->
 <footer class="foot" id="contact">
   <div class="shell">
-    <div class="grid grid--split" style="margin-block-end:var(--s-8)">
+    <div class="grid grid--split foot__top">
       <div>
         <h4>تابعنا</h4>
         <ul class="social">
@@ -451,6 +464,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=3"></script>
+<script src="assets/js/app.js?v=4"></script>
 </body>
 </html>

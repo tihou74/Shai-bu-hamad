@@ -203,3 +203,91 @@
   .marquee__track { animation: none; }
   .sticky-scene__media figure { transition: none; }
 }
+
+/* ======================================================= 8. intro curtain */
+
+/* The wordmark is a delicate monoline lockup. Measured at small sizes it
+   collapses: at 150px the strokes go muddy and the hairline Latin row stops
+   being legible, which is what the client was seeing. The fix is not a
+   sharper filter — it is to stop using the full lockup small, and to give it
+   one moment at a size where it is actually beautiful.
+
+   So the page opens on a curtain: the logo alone on the darkest brand brown,
+   large, over the star lattice. Then the curtain lifts and the photography
+   takes over. The hero no longer carries a wordmark at all.
+
+   `display: none` is the default on purpose — JavaScript opts in. A visitor
+   without JS must never be left staring at a curtain that cannot lift. */
+.intro { display: none; }
+
+.intro.is-playing {
+  display: grid;
+  place-items: center;
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: var(--brown-dark);
+  transition: transform 1.1s cubic-bezier(.76, 0, .24, 1),
+              opacity .9s ease;
+}
+.intro.is-playing::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: url("../img/lattice.svg") 50% / 170px repeat;
+  opacity: .12;
+}
+.intro__inner { position: relative; text-align: center; }
+
+.intro__logo {
+  width: min(74vw, 460px);          /* comfortably above the collapse point */
+  margin-inline: auto;
+  opacity: 0;
+  transform: translateY(14px) scale(.97);
+  animation: introMark 1.5s var(--ease) forwards;
+}
+@keyframes introMark {
+  to { opacity: 1; transform: none; }
+}
+
+/* A hairline that draws itself under the mark — the only motion that reads as
+   "being poured" without animating a literal cup. */
+.intro__rule {
+  display: block;
+  height: 1px;
+  width: min(74vw, 460px);
+  margin: var(--s-6) auto 0;
+  background: var(--brown-soft);
+  transform: scaleX(0);
+  transform-origin: center;
+  animation: introRule 1.5s .5s var(--ease) forwards;
+}
+@keyframes introRule { to { transform: scaleX(1); } }
+
+.intro__tag {
+  margin-block-start: var(--s-5);
+  font-size: var(--t-small);
+  letter-spacing: .34em;
+  color: color-mix(in srgb, var(--sand) 52%, transparent);
+  opacity: 0;
+  animation: introMark 1.2s .9s var(--ease) forwards;
+}
+
+.intro.is-leaving { transform: translateY(-101%); }
+
+/* While the curtain is up the page must not scroll behind it. */
+.is-intro-locked { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* No curtain at all: an entrance animation is exactly what this setting
+     asks us to skip, and the content behind it is the point. */
+  .intro.is-playing { display: none; }
+}
+
+/* ------------------------------------------------------- 9. small helpers */
+
+/* These exist as classes rather than inline style attributes because the CSP
+   sets `style-src` without 'unsafe-inline' — an inline style attribute is
+   silently dropped by the browser, which is a very quiet way to ship a
+   broken layout. */
+.eyebrow--light { color: var(--sand-dark); }
+.foot__top { margin-block-end: var(--s-8); }

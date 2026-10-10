@@ -12,6 +12,43 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hasIO = "IntersectionObserver" in window;
 
+  /* ------------------------------------------------------ intro curtain */
+  // Plays once per browsing session. Nobody wants a title sequence every
+  // time they tap back, and reduced-motion users should never see one.
+  (function intro() {
+    var el = document.getElementById("intro");
+    if (!el) return;
+
+    var seen = false;
+    try { seen = sessionStorage.getItem("sbh-intro") === "1"; } catch (e) { seen = false; }
+    if (seen || reduce) {
+      el.remove();
+      return;
+    }
+
+    el.classList.add("is-playing");
+    document.documentElement.classList.add("is-intro-locked");
+
+    function lift() {
+      el.classList.add("is-leaving");
+      document.documentElement.classList.remove("is-intro-locked");
+      try { sessionStorage.setItem("sbh-intro", "1"); } catch (e) { /* private mode */ }
+      // Removed rather than left stacked: a fixed full-screen element that
+      // stays in the tree keeps its compositing layer alive for nothing.
+      window.setTimeout(function () { el.remove(); }, 1300);
+    }
+
+    var timer = window.setTimeout(lift, 2400);
+    // Any intent to move on skips the rest of it.
+    ["wheel", "touchstart", "keydown", "click"].forEach(function (evt) {
+      window.addEventListener(evt, function once() {
+        window.clearTimeout(timer);
+        lift();
+        window.removeEventListener(evt, once);
+      }, { passive: true, once: true });
+    });
+  })();
+
   /* ---------------------------------------------------- reveal on scroll */
   var revealables = document.querySelectorAll("[data-reveal]");
   if (!hasIO || reduce) {
