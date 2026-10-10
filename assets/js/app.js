@@ -98,39 +98,6 @@
     cards.forEach(function (v) { io.observe(v); });
   })();
 
-  /* ---------------------------------------------------------- tassels */
-  // The tasselled cords off the West Walk ceiling swags. Spacing is what
-  // makes them read: one every ~34px looks like a fringe, one every 90px
-  // looks like a few threads came loose, which is what a hard-coded 14
-  // across a 1265px panel gave.
-  (function tassels() {
-    var rows = document.querySelectorAll("[data-tassels]");
-    if (!rows.length) return;
-
-    var SPACING = 34;
-
-    function fill(row) {
-      var width = row.clientWidth;
-      if (!width) return;
-      var wanted = Math.max(6, Math.round(width / SPACING));
-      if (row.childElementCount === wanted) return;      // nothing to do
-      row.textContent = "";
-      var frag = document.createDocumentFragment();
-      for (var i = 0; i < wanted; i++) frag.appendChild(document.createElement("i"));
-      row.appendChild(frag);
-    }
-
-    rows.forEach(fill);
-
-    // Re-space on resize, debounced — rebuilding on every resize event would
-    // thrash the DOM for an ornament.
-    var timer;
-    window.addEventListener("resize", function () {
-      window.clearTimeout(timer);
-      timer = window.setTimeout(function () { rows.forEach(fill); }, 180);
-    }, { passive: true });
-  })();
-
   /* ------------------------------------------------------ pearl strand */
   // Lights every pearl up to the section being read, and marks the current
   // one. Cumulative rather than one-at-a-time: a strand that fills says how

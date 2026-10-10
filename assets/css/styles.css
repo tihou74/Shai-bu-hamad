@@ -191,11 +191,27 @@ ul { margin: 0; padding: 0; list-style: none; }
    wide, which turned the comb-and-diamond motif into grey mush; the band read
    as a smudge rather than as a textile. At ~70px the motif is legible, which
    is the only reason to put a pattern on a page at all. */
+/* The drawn SVG band is gone too. Redrawing it stripe-for-stripe off the real
+   cloth still did not satisfy, and the reason is not the drawing — it is that
+   a flat vector of a woven textile has none of the thread, slub and shadow
+   that make the real thing read as cloth. So there is one sadu source in the
+   project now, and it is the photograph of the owner's own piece.
+
+   Sized the same way as .sadu: `auto 340%` makes each pass about 340px wide,
+   big enough for the bead rows and black combs to be legible. `auto 100%`
+   would squeeze a pass into ~100px and turn the motif back into grey mush,
+   which is what the 40px version did. */
 .dado::after {
   content: ""; position: absolute;
   inset-block-end: 0; inset-inline: 0;
-  height: clamp(52px, 7vw, 74px);
-  background: url("../img/sadu-band.svg") 50% / auto 100% repeat-x;
+  height: clamp(54px, 7vw, 78px);
+  background-image: url("../../media/photos/sadu-textile.jpeg");
+  background-size: auto 340%;
+  background-position: 50% 50%;
+  background-repeat: repeat-x;
+  box-shadow:
+    inset 0 1px 0 rgb(23 20 15 / .9),
+    inset 0 -1px 0 rgb(23 20 15 / .9);
 }
 .dado--quiet::after { display: none; }
 

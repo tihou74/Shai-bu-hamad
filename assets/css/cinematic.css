@@ -92,62 +92,13 @@
   opacity: 0;
 }
 
-/* ============================================= 1d. the ceiling tassels =====
-   West Walk hangs its sadu swags from the ceiling with black tasselled cords
-   — media/photos/west-walk/deco-01.jpeg. They are the first thing in the
-   frame, so they open a section here too, and they sway.
-
-   Built from two pseudo-elements rather than an image: the skirt is a
-   repeating gradient of threads with a taper mask, which stays crisp at any
-   size and costs nothing. Each tassel gets its own delay so the row never
-   swings in unison, which is what gives a fake away.
-
-   Count is set by app.js from the element's width rather than hard-coded. The
-   first attempt put 14 in the markup, which across a 1265px panel left one
-   every 90px — far too sparse to read as a fringe; it looked like a few
-   stray threads. One every ~34px reads as the real thing. */
-.tassels {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  height: clamp(44px, 6vw, 68px);
-  padding-inline: var(--s-4);
-  pointer-events: none;
-  overflow: hidden;
-}
-.tassels i {
-  position: relative;
-  flex: 0 0 auto;
-  width: 13px; height: 100%;
-  transform-origin: 50% 0;
-}
-.tassels i::before {                 /* the knot at the top */
-  content: "";
-  position: absolute; inset-block-start: 0; inset-inline-start: 3px;
-  width: 8px; height: 9px;
-  background: #17140F;
-  border-radius: 0 0 4px 4px;
-}
-.tassels i::after {                  /* the threads */
-  content: "";
-  position: absolute;
-  inset-block-start: 8px; inset-inline: 0; inset-block-end: 0;
-  background: repeating-linear-gradient(90deg,
-              #17140F 0 1.5px, transparent 1.5px 3.5px);
-  -webkit-mask: linear-gradient(#000 62%, transparent);
-          mask: linear-gradient(#000 62%, transparent);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .tassels i { animation: sway 5.5s ease-in-out infinite; }
-  .tassels i:nth-child(3n)   { animation-duration: 6.8s; animation-delay: -1.9s; }
-  .tassels i:nth-child(3n+1) { animation-duration: 4.9s; animation-delay: -3.4s; }
-  .tassels i:nth-child(4n)   { animation-delay: -2.6s; }
-}
-@keyframes sway {
-  0%, 100% { transform: rotate(-2.6deg); }
-  50%      { transform: rotate(2.6deg);  }
-}
+/* The swaying ceiling tassels that lived here are removed. They were built
+   from a repeating-gradient skirt on a pseudo-element, and at the size a
+   page band allows they rendered as thin black scratches rather than as
+   cords — the owner's word for the result was a disaster, and looking at the
+   render he was right. The real tassels in deco-01 are thick, soft and
+   photographed; a CSS approximation of them is not worth having. If they
+   belong on the page later it will be as a cropped photograph. */
 
 /* ============================================== 1e. the pearl strand =======
    Before oil, Qatar's living was pearl diving — the Corniche still carries
@@ -232,6 +183,61 @@
   transition: opacity .25s var(--ease);
 }
 .strand a:hover span, .strand a:focus-visible span { opacity: 1; }
+
+/* ======================================================= 1f. the chapters ==
+   The opening the page did not have.
+
+   The owner's note was that there was no beginning — nothing tying Qatari
+   heritage and the old ways to this restaurant and to now. The profile copy
+   could not do it: it is corporate prose about standards and aspirations. So
+   this is four chapters that walk from the desert majlis to a shop in Doha,
+   each one carrying a photograph that is literally the evidence for it — the
+   banquette, the brass dallah, the cloth itself, the lit shopfront.
+
+   The numerals are outlined rather than filled. At this size a solid numeral
+   competes with the headline beside it for the same attention; an outline
+   reads as a chapter marker, which is its job. */
+.chapters { display: grid; gap: var(--s-9); }
+
+.chapter { display: grid; gap: var(--s-5); align-items: center; }
+@media (min-width: 900px) {
+  .chapter { grid-template-columns: 1fr 1fr; gap: var(--s-8); }
+  /* Alternate which side the photograph takes, so four rows do not read as a
+     list. `order` and not `direction`, so RTL is untouched. */
+  .chapter:nth-child(even) .chapter__media { order: 2; }
+}
+
+.chapter__media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 68svh;
+  overflow: hidden;
+  border-radius: var(--edge);
+  background: var(--brown-deep);
+}
+.chapter__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.chapter__n {
+  display: block;
+  margin: 0 0 var(--s-2);
+  font-size: clamp(3.4rem, 8vw, 7rem);
+  font-weight: 200;
+  line-height: .9;
+  letter-spacing: -.03em;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--glow) 62%, transparent);
+}
+.chapter h3 {
+  font-size: var(--t-h1);
+  max-width: 22ch;
+  margin-block-end: var(--s-4);
+  text-wrap: balance;
+}
+.chapter p { max-width: 46ch; }
+
+/* The closing chapter is the present, so it gets the warm rule that the
+   others do not — a visual full stop. */
+.chapter--now .chapter__body { border-inline-start: 2px solid var(--glow); padding-inline-start: var(--s-5); }
 
 /* ====================================================== 2. the light bar ===
    The perforated ledge light that runs through both branches. Used as a
@@ -473,6 +479,58 @@
   /* The glass sits low in the source frame; without this the crop clips the
      saucer and keeps the empty wall above it. */
   object-position: 50% 42%;
+}
+
+/* ------------------------------------------------------------ the smoke ---
+   Steam off the poured glass, moving, asked for explicitly.
+
+   An earlier attempt drew three thin SVG strokes at half opacity and was
+   deleted as invisible. The lesson was about form, not opacity: smoke has no
+   outline. It is soft volumes that rise, drift sideways, swell and thin. Five
+   blurred plumes on five different clocks and five different drifts do that;
+   a stroked path cannot, at any opacity.
+
+   Masked so the plumes thin out before the top edge — smoke that stops on a
+   hard line reads as a graphic. */
+.smoke {
+  position: absolute;
+  inset-block: 4% 44%;
+  inset-inline-start: 48%;
+  width: min(58%, 200px);
+  translate: -50% 0;
+  pointer-events: none;
+  -webkit-mask: linear-gradient(to top, #000 6%, rgb(0 0 0 / .9) 44%, transparent 97%);
+          mask: linear-gradient(to top, #000 6%, rgb(0 0 0 / .9) 44%, transparent 97%);
+}
+.smoke span {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 50%;
+  width: 52%;
+  aspect-ratio: 1;
+  translate: -50% 0;                 /* composes with the keyframe transform */
+  border-radius: 50%;
+  background: radial-gradient(circle,
+              rgb(255 255 255 / .62) 0%,
+              rgb(255 255 255 / .26) 42%,
+              rgb(255 255 255 / 0)   70%);
+  filter: blur(7px);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .smoke span { animation: plume 6.5s linear infinite; }
+  .smoke span:nth-child(1) { --dx:  14%; animation-duration: 6.5s; }
+  .smoke span:nth-child(2) { --dx: -18%; animation-duration: 8.2s; animation-delay: -1.6s; }
+  .smoke span:nth-child(3) { --dx:  26%; animation-duration: 7.1s; animation-delay: -3.2s; }
+  .smoke span:nth-child(4) { --dx: -10%; animation-duration: 9.4s; animation-delay: -4.9s; }
+  .smoke span:nth-child(5) { --dx:   4%; animation-duration: 5.8s; animation-delay: -2.4s; }
+}
+@keyframes plume {
+  0%   { opacity: 0;  transform: translate(0, 0)                 scale(.45); }
+  14%  { opacity: .8; }
+  55%  { opacity: .5; }
+  100% { opacity: 0;  transform: translate(var(--dx, 0), -250%)  scale(2.1); }
 }
 
 /* ========================================================= 6b. the reels ===
@@ -735,7 +793,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .lightbar::before { opacity: .9; }        /* lamp already on, never animates */
-  .tassels i        { animation: none; }    /* hanging still */
   /* Reels keep their poster frame; app.js parks each one on its in-point and
      never calls play(). */
 }
