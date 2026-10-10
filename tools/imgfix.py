@@ -109,8 +109,22 @@ const load = (src) => new Promise((res, rej) => {
       if (job.filter) ctx.filter = job.filter;
       ctx.drawImage(im, sx, sy, sw, sh, 0, 0, dw, dh);
 
-      const blob = await new Promise(r =>
-        canvas.toBlob(r, 'image/jpeg', job.quality || 0.86));
+      // Recolour a transparent logo by filling its alpha channel. This is the
+      // honest way to get a white wordmark: `filter: brightness(0) invert(1)`
+      // in CSS mangles the antialiased edges of thin monoline letterforms and
+      // leaves the hairline Latin row almost invisible.
+      if (job.tint) {
+        ctx.filter = 'none';
+        ctx.globalCompositeOperation = 'source-in';
+        ctx.fillStyle = job.tint;
+        ctx.fillRect(0, 0, dw, dh);
+        ctx.globalCompositeOperation = 'source-over';
+      }
+
+      const png = /\.png$/i.test(job.out);      // PNG keeps the alpha channel
+      const blob = await new Promise(r => png
+        ? canvas.toBlob(r, 'image/png')
+        : canvas.toBlob(r, 'image/jpeg', job.quality || 0.86));
       await fetch('/__save?name=' + encodeURIComponent(job.out),
                   { method: 'POST', body: blob });
       log.push(job.out + ' ' + dw + 'x' + dh);

@@ -207,20 +207,26 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: padding var(--quick) var(--ease), background var(--quick) var(--ease),
               box-shadow var(--quick) var(--ease);
 }
+/* Two real files, swapped — not one file pushed through a CSS filter.
+   `brightness(0) invert(1)` mangles the antialiased edges of a thin monoline
+   mark, and both files are tiny and cached anyway.
+   The header uses the Arabic-only variant: the full lockup's hairline Latin
+   row stops being legible below roughly 240px. */
 .header__logo img {
-  height: clamp(28px, 3.6vw, 40px); width: auto;
-  transition: height var(--quick) var(--ease), filter var(--quick) var(--ease);
-  /* Over the dark hero photo the brown wordmark would disappear, so it is
-     lifted to cream until the header gets its own background. */
-  filter: brightness(0) invert(1) opacity(.92);
+  height: clamp(22px, 2.6vw, 30px); width: auto;
+  transition: height var(--quick) var(--ease);
 }
+.header__logo .on-dark  { display: block; }
+.header__logo .on-light { display: none; }
+.header.is-stuck .header__logo .on-dark  { display: none; }
+.header.is-stuck .header__logo .on-light { display: block; }
 .header.is-stuck {
   padding-block: var(--s-3);
   background: color-mix(in srgb, var(--sand) 94%, transparent);
   backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 var(--rule);
 }
-.header.is-stuck .header__logo img { filter: none; height: 26px; }
+.header.is-stuck .header__logo img { height: 22px; }
 
 .nav { display: none; gap: var(--s-6); font-size: var(--t-small); letter-spacing: .08em; }
 @media (min-width: 980px) { .nav { display: flex; } }
@@ -280,12 +286,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .hero__inner { position: relative; width: var(--page); margin-inline: auto; }
 
-/* The wordmark is deliberately small here. At 54vw on a phone it filled the
-   screen and pushed the headline below the fold — which is exactly what the
-   client's own screenshot showed. The header already carries the logo, so
-   this is a signature, not a billboard. */
-.hero__mark { width: min(38vw, 190px); margin-block-end: var(--s-5); opacity: .95; }
-.hero__mark img { filter: brightness(0) invert(1); }
+/* There is deliberately no wordmark in the hero any more. It was being shown
+   at a size where the monoline strokes collapse, and it was competing with
+   the venue's own illuminated sign inside the photograph. The mark now gets
+   the intro curtain to itself, at a size that flatters it. */
 
 .hero h1 {
   font-size: var(--t-hero); font-weight: 100;
@@ -300,7 +304,6 @@ ul { margin: 0; padding: 0; list-style: none; }
    rather than anything being dropped. */
 @media (max-width: 640px) {
   .hero { padding-block: var(--s-8) var(--s-6); }
-  .hero__mark { width: 132px; margin-block-end: var(--s-4); }
   .hero h1 { font-size: clamp(1.85rem, 7.6vw, 2.5rem); margin-block-end: var(--s-4); }
   .hero p { font-size: .98rem; }
   .hero__meta { margin-block-start: var(--s-5); gap: var(--s-2) var(--s-4); font-size: .76rem; }
