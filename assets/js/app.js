@@ -49,8 +49,66 @@
     });
   })();
 
+  /* ------------------------------------------------------- hero footage */
+  // The hero poster already shows the room, so the video is strictly an
+  // upgrade. It is attached only when the visitor's connection and settings
+  // say it is welcome — a 4MB autoplaying clip on a metered phone connection
+  // is a cost the visitor did not agree to.
+  (function heroVideo() {
+    var video = document.querySelector("[data-hero-video]");
+    if (!video) return;
+    if (reduce) { video.remove(); return; }
+
+    // Dropped rather than left at opacity 0: a transparent <video> stretched
+    // over the hero still sits on top of it and still takes pointer events.
+    function decline() { video.remove(); }
+
+    var net = navigator.connection || {};
+    if (net.saveData) return decline();                        // Data Saver on
+    if (/(^|-)(2g|slow-2g)$/.test(net.effectiveType || "")) return decline();
+
+    // Phones get the photograph, not the footage, for two reasons that point
+    // the same way. The clip is a landscape pan, so a portrait viewport crops
+    // it to its middle — a stretch of ceiling, with the room gone. And it is
+    // 4.3MB on a connection the visitor may be paying for by the megabyte.
+    // The <picture> element already hands a phone a portrait frame that is
+    // composed for that shape, so skipping the video here is an upgrade.
+    if (window.matchMedia("(max-width: 700px)").matches) return decline();
+
+    video.src = video.getAttribute("data-hero-video");
+    video.load();
+
+    // Cross-fade in only once there are real frames to show, otherwise the
+    // poster is replaced by a black box for as long as the first keyframe
+    // takes to arrive.
+    video.addEventListener("canplay", function () {
+      video.classList.add("is-ready");
+    }, { once: true });
+
+    var playing = video.play();
+    if (playing && playing.catch) {
+      // Autoplay refused (some iOS low-power states): drop back to the poster
+      // rather than leaving a frozen first frame on screen.
+      playing.catch(function () { video.remove(); });
+    }
+
+    // Stop decoding while the hero is off-screen. Video decode is the most
+    // expensive thing on this page and it is pure waste once scrolled past.
+    if (hasIO) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { video.play().catch(function () {}); }
+          else { video.pause(); }
+        });
+      }, { threshold: 0.01 }).observe(video);
+    }
+  })();
+
   /* ---------------------------------------------------- reveal on scroll */
-  var revealables = document.querySelectorAll("[data-reveal]");
+  // [data-settle] and [data-rise] are driven by CSS scroll-timelines where the
+  // browser supports them; this observer is their fallback, and adding the
+  // class is a no-op in browsers that took the CSS path.
+  var revealables = document.querySelectorAll("[data-reveal], [data-settle], [data-rise]");
   if (!hasIO || reduce) {
     revealables.forEach(function (el) { el.classList.add("is-visible"); });
   } else {
@@ -127,24 +185,11 @@
     sections.forEach(function (s) { navObserver.observe(s); });
   }
 
-  /* ------------------------------------------------------- mouse tilt */
-  // Skipped on touch devices: there is no pointer to follow, and the listener
-  // would only cost battery.
-  if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    document.querySelectorAll("[data-tilt]").forEach(function (el) {
-      el.addEventListener("mousemove", function (e) {
-        var r = el.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width - 0.5;
-        var py = (e.clientY - r.top) / r.height - 0.5;
-        el.style.setProperty("--ry", (px * 7).toFixed(2) + "deg");
-        el.style.setProperty("--rx", (-py * 7).toFixed(2) + "deg");
-      });
-      el.addEventListener("mouseleave", function () {
-        el.style.setProperty("--ry", "0deg");
-        el.style.setProperty("--rx", "0deg");
-      });
-    });
-  }
+  /* The mouse-tilt effect that used to live here has been removed. It was
+     gated behind `(hover: hover) and (pointer: fine)`, so it never ran on a
+     phone — which is where most of this site is read. Its replacement is the
+     scroll-driven motion in cinematic.css, which runs on every device because
+     scroll is an input everybody has. */
 
   /* ---------------------------------------------------- sticky scene */
   // Each text block owns an index; as it takes the middle of the viewport the

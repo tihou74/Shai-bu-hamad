@@ -1,0 +1,465 @@
+/* ==========================================================================
+   شاي بو حمد — cinematic layer
+   ==========================================================================
+
+   Why this file exists
+   --------------------
+   The first build's motion was calibrated for restraint: 40px of parallax,
+   7deg of tilt. Both are below the threshold where a person notices anything
+   happened, and the tilt was gated behind `(hover: hover)`, so on a phone —
+   where most of the traffic is — there were effectively no effects at all.
+
+   So the rules here are different:
+
+   1. Every effect is driven by SCROLL, never by hover. Scroll is the one input
+      every visitor has. Hover-only polish is polish nobody sees.
+   2. Motion is driven by `animation-timeline: view()` where available, so the
+      browser runs it off the main thread. No scroll listener, no jank, and it
+      works identically on a phone.
+   3. Nothing here is load-bearing. Without scroll-timeline support the page
+      falls back to the IntersectionObserver reveals in styles.css; with
+      JavaScript off it falls back to fully visible content.
+   4. The motifs are traced from the venue, not invented: the perforated ledge
+      light, the backlit round mirrors, the steam off a poured karak. A generic
+      "fade up" says nothing about a tea house in Doha.
+
+   Load order: this file comes after styles.css and scenes.css and overrides
+   both where they disagree.
+   ========================================================================== */
+
+/* -------------------------------------------------------------- 1. tokens */
+:root {
+  --glow:      #F7C86A;             /* the warm lamp behind every lit surface */
+  --glow-deep: #B9762A;
+  --cine-dur:  1.1s;
+}
+
+/* ====================================================== 2. the light bar ===
+   The perforated ledge light that runs through both branches. Used as a
+   section divider so the page is stitched together by the building's own
+   detail instead of a generic hairline rule.
+
+   Three layers: a dark cavity, a warm glow inside it, and the cream frame on
+   top with real holes punched through. The glow is a separate layer purely so
+   it can be animated without touching the frame. */
+.lightbar {
+  position: relative;
+  height: clamp(22px, 3vw, 34px);
+  overflow: hidden;
+  background: var(--brown-dark);
+  isolation: isolate;
+}
+.lightbar::before {                            /* the warm light in the cavity */
+  content: "";
+  position: absolute;
+  inset: -40% 0;
+  background:
+    radial-gradient(60% 150% at 20% 50%, var(--glow), transparent 70%),
+    radial-gradient(60% 150% at 55% 50%, var(--glow), transparent 70%),
+    radial-gradient(60% 150% at 88% 50%, var(--glow), transparent 70%),
+    linear-gradient(var(--glow-deep), var(--glow-deep));
+  opacity: .34;
+}
+.lightbar::after {                             /* the cream frame, holes open */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../img/mashrabiya.svg") 50% 50% / auto 100% repeat-x;
+}
+/* Flush against a hero or band, with no gap to give away the seam. */
+.lightbar--tight { margin-block: 0; }
+
+/* ======================================================= 3. cinema hero ===
+   Full-bleed video of the actual room. A still photograph of a restaurant is
+   a restaurant; a slow pan of one is an invitation — and it is the single
+   biggest upgrade available from assets already in the repo.
+
+   The video is decoration: the poster carries the same frame, so a visitor on
+   a metered connection who never downloads it loses nothing. */
+.cine {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: end;
+  padding-block: var(--s-10) var(--s-8);
+  overflow: hidden;
+  isolation: isolate;
+}
+.cine__media { position: absolute; inset: 0; z-index: -2; background: var(--brown-dark); }
+/* <picture> is an inline wrapper by default, so it has to be told to fill the
+   box before the <img> inside it can be sized against anything. */
+.cine__media picture { display: block; position: absolute; inset: 0; }
+.cine__media img,
+.cine__media > video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 50% 50%;
+}
+/* The poster sits under the video rather than inside it, so the swap from
+   poster to first frame is a cross-fade instead of a flash of black. */
+.cine__media > video {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 1s var(--ease);
+}
+.cine__media > video.is-ready { opacity: 1; }
+
+/* Same two-scrim logic as the old hero: a bottom scrim that the headline sits
+   on, a top scrim that keeps the fixed nav legible, and a warm wash that
+   pulls the footage into the brand palette. One flat overlay cannot do all
+   three — it either kills the picture or fails the text. */
+.cine__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(to top, rgb(26 17 7 / .95) 0%, rgb(26 17 7 / .66) 38%, rgb(26 17 7 / .12) 74%),
+    linear-gradient(to bottom, rgb(26 17 7 / .6), transparent 24%),
+    linear-gradient(rgb(101 67 33 / .3), rgb(101 67 33 / .3));
+}
+
+.cine__inner { position: relative; width: var(--page); margin-inline: auto; }
+
+/* The headline is the saying painted on the wall behind the tea counter in
+   West Walk — media/photos/west-walk/deco-05.jpeg. It is the brand's own
+   voice, and it outperforms anything that could be written for it. */
+.cine__quote {
+  margin: 0 0 var(--s-5);
+  max-width: 20ch;
+  font-size: var(--t-display);
+  font-weight: 200;
+  line-height: 1.12;
+  letter-spacing: -.02em;
+  color: var(--cream);
+  text-wrap: balance;
+}
+/* The one word that carries the sentence. Weight, not colour: a second colour
+   in a headline this size reads as a highlighter pen. */
+.cine__quote b { font-weight: 400; }
+
+.cine__sub {
+  max-width: 40ch;
+  color: color-mix(in srgb, var(--cream) 86%, transparent);
+}
+.cine__kicker {
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-block-end: var(--s-5);
+  font-size: var(--t-small); font-weight: 300; letter-spacing: .24em;
+  color: color-mix(in srgb, var(--glow) 88%, transparent);
+}
+.cine__kicker::before {
+  content: ""; flex: none; width: 2.4rem; height: 1px; background: currentColor;
+}
+
+/* The phone frame needs its own crop, not just its own file.
+   deco-05 is 1200x1600 in a ~375x776 box, so `cover` only crops the sides —
+   the full height stays, and the full height puts the interesting half (the
+   counter, the glasses, the saying on the wall) in the bottom third, exactly
+   where the scrim is darkest and the headline sits. All a visitor sees is
+   ceiling. Zooming about a point above centre lifts that content into the
+   clear upper two-thirds and crops the empty ceiling away instead. */
+@media (max-width: 700px) {
+  /* Origin below centre, not at it. At 46% the band left in frame included
+     the painted saying on the back wall, which collided with the headline
+     quoting that same saying — the sentence appeared twice, once of it cut in
+     half. Dropping to 58% lifts the counter, the samovar and the rope lantern
+     into the clear upper area and carries the wall text out of the top. */
+  .cine__media img { transform: scale(1.3); transform-origin: 50% 58%; }
+}
+
+@media (max-width: 640px) {
+  .cine { padding-block: var(--s-9) var(--s-7); min-height: 92svh; }
+  .cine__quote { font-size: clamp(2.1rem, 11vw, 3.2rem); line-height: 1.18; }
+  .cine__sub { font-size: .98rem; }
+}
+
+/* ================================================= 4. the backlit mirror ===
+   Both branches hang round mirrors cut with Qatari motifs and lit from behind
+   the glass. Reused here as the frame for a photograph: a circle with a warm
+   halo. It is the venue's own geometry, so it reads as considered rather than
+   as a CSS trick. */
+.mirror {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--glow) 40%, transparent),
+    0 0 70px -6px color-mix(in srgb, var(--glow) 46%, transparent),
+    0 40px 80px -40px rgb(26 17 7 / .7);
+}
+.mirror > img { width: 100%; height: 100%; object-fit: cover; }
+/* The glass itself: a faint top-left sheen, the way a lit mirror catches the
+   room. Kept under .06 opacity — any more and it looks like a lens flare. */
+.mirror::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: linear-gradient(145deg, rgb(255 255 255 / .22), transparent 42%);
+  mix-blend-mode: screen;
+}
+.mirror--sm { width: min(72vw, 320px); }
+
+/* ====================================================== 5. the quote band ==
+   Full-bleed calligraphy over a photograph. The proverb is the one painted on
+   the falcon canvas in West Walk, so the type on screen and the type on the
+   wall are saying the same thing. */
+.qband {
+  position: relative;
+  min-height: 86svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: center;
+}
+.qband__media { position: absolute; inset: -14% 0; z-index: -2; }
+.qband__media img { width: 100%; height: 100%; object-fit: cover; }
+/* The centre of this particular frame is the brightest part of it — hanging
+   white and red garments sit directly behind the quote — so the radial is
+   weighted darker in the middle than a vignette normally would be. Checked
+   against the photograph rather than set to a round number. */
+.qband__media::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(74% 74% at 50% 50%, rgb(26 17 7 / .66), rgb(26 17 7 / .9)),
+    linear-gradient(rgb(66 44 19 / .32), rgb(66 44 19 / .32));
+}
+.qband__inner { position: relative; width: var(--page); }
+.qband blockquote {
+  margin: 0 auto;
+  max-width: 24ch;
+  font-size: var(--t-display);
+  font-weight: 200;
+  line-height: 1.16;
+  letter-spacing: -.02em;
+  color: var(--cream);
+  text-wrap: balance;
+}
+.qband cite {
+  display: block;
+  margin-block-start: var(--s-6);
+  font-size: var(--t-small); font-style: normal; letter-spacing: .22em;
+  color: color-mix(in srgb, var(--glow) 80%, transparent);
+}
+
+/* ====================================================== 6. the pour feature =
+   One photograph against one block of text.
+
+   The first attempt put this in .grid--aside, which gave the picture the
+   narrow column: a 413px-wide figure beside a 668px text block that was only
+   191px tall, so about 575px of the row was empty. Measured, not guessed.
+   Equal columns and a capped figure height fix it — the picture gets real
+   presence and the text no longer floats in a void.
+
+   An animated SVG steam overlay also lived here and was deleted: the
+   photograph has actual steam rising off the glass, and a drawn ribbon on top
+   of it was two kinds of steam competing. */
+.feature { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) {
+  .feature {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-8);
+    align-items: center;
+  }
+}
+.feature__body > .statement { margin-block-end: var(--s-2); }
+
+.pourshot {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4 / 5;
+  max-height: 74svh;
+  background: var(--brown-deep);
+}
+.pourshot > img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* The glass sits low in the source frame; without this the crop clips the
+     saucer and keeps the empty wall above it. */
+  object-position: 50% 42%;
+}
+
+/* ====================================================== 7. the swipe rail ==
+   A horizontal rail of photographs. Deliberately native overflow scrolling
+   rather than a JS carousel with a translateX track: in RTL a translated
+   track has to move in the opposite direction to the intuition, which is
+   exactly the bug that shipped on the last project and read to the client as
+   "nothing moves". Native overflow has no direction to get wrong, it has
+   momentum on touch, and it is keyboard and screen-reader accessible for
+   free. */
+.rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(78vw, 420px);
+  gap: var(--s-4);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  padding-block-end: var(--s-4);
+  /* Bleed to both edges so the rail reads as continuing past the viewport,
+     which is what invites the swipe. */
+  margin-inline: calc(50% - 50vw);
+  padding-inline: max(var(--s-5), calc(50vw - var(--page) / 2));
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar { display: none; }
+.rail > figure {
+  margin: 0;
+  scroll-snap-align: center;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--brown-deep);
+}
+.rail > figure img { width: 100%; height: 100%; object-fit: cover; }
+.rail__hint {
+  display: flex; align-items: center; gap: var(--s-3);
+  margin-block-start: var(--s-4);
+  font-size: var(--t-small); letter-spacing: .18em;
+  color: var(--sand-dark);
+}
+.rail__hint::after {
+  content: ""; flex: 1; height: 1px; max-width: 8rem;
+  background: currentColor; opacity: .4;
+}
+
+/* ====================================================== 8. the dish tile ===
+   Food photographs are vertical phone shots, so they are framed 4:5 and the
+   caption sits over the bottom of the image rather than under it — a caption
+   bar below a tall photo pushes the grid to an awkward height on mobile. */
+.plate {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--brown-deep);
+  isolation: isolate;
+}
+.plate > img { width: 100%; height: 100%; object-fit: cover; }
+.plate figcaption {
+  position: absolute;
+  inset-block-end: 0; inset-inline: 0;
+  padding: var(--s-7) var(--s-5) var(--s-5);
+  background: linear-gradient(to top, rgb(26 17 7 / .92), transparent);
+  color: var(--cream);
+}
+.plate h3 { font-size: var(--t-h3); color: var(--cream); }
+.plate .lat { display: block; margin-block-start: var(--s-1); font-size: var(--t-small); color: color-mix(in srgb, var(--glow) 82%, transparent); }
+
+/* ================================================= 9. scroll-driven motion =
+   Everything below is progressive. `animation-timeline: view()` ties an
+   animation's progress to an element's position in the viewport, so the
+   browser drives it off the compositor: no scroll handler, no main-thread
+   work, and the same behaviour on a phone as on a desktop.
+
+   Both guards matter. Outside @supports the element keeps its natural static
+   appearance — it is never left mid-animation or invisible. Inside
+   prefers-reduced-motion: no-preference it is skipped for anyone who asked
+   for less movement. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+
+    /* Parallax with real travel. The old build moved backgrounds 40px, which
+       is under the threshold of noticing; this moves them about a sixth of
+       the viewport, which reads as depth. */
+    .qband__media {
+      animation: drift linear both;
+      animation-timeline: view();
+    }
+    @keyframes drift {
+      from { transform: translateY(-9%) scale(1.1); }
+      to   { transform: translateY(9%)  scale(1.1); }
+    }
+
+    /* The ledge light coming up as it enters the frame. */
+    .lightbar::before {
+      animation: lamp-on linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 34%;
+    }
+    @keyframes lamp-on {
+      from { opacity: .1; }
+      to   { opacity: 1;  }
+    }
+
+    /* The mirror opening. Starting from a circle rather than an opacity fade
+       is the whole point: the shape of the reveal is the motif. */
+    .mirror {
+      animation: mirror-open var(--ease) both;
+      animation-timeline: view();
+      animation-range: entry 6% entry 86%;
+    }
+    @keyframes mirror-open {
+      from { clip-path: circle(16% at 50% 50%); opacity: .25; }
+      to   { clip-path: circle(71% at 50% 50%); opacity: 1; }
+    }
+
+    /* Photographs settling: a touch of scale and lift that resolves as the
+       figure reaches the middle of the screen. */
+    [data-settle] {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 42%;
+    }
+    @keyframes settle {
+      from { transform: translateY(5%) scale(1.07); opacity: .55; }
+      to   { transform: none;                       opacity: 1;   }
+    }
+
+    /* Type arriving a beat after the image it belongs to. */
+    [data-rise] {
+      animation: rise linear both;
+      animation-timeline: view();
+      animation-range: entry 12% cover 30%;
+    }
+    @keyframes rise {
+      from { transform: translateY(2.2rem); opacity: 0; }
+      to   { transform: none;               opacity: 1; }
+    }
+
+    /* The hero footage easing back as the page leaves it — the shot gives way
+       instead of being cut off. */
+    .cine__media {
+      animation: hero-recede linear both;
+      animation-timeline: view();
+      animation-range: exit 0% exit 100%;
+    }
+    @keyframes hero-recede {
+      from { transform: none;                    filter: none; }
+      to   { transform: scale(1.1) translateY(6%); filter: brightness(.55); }
+    }
+
+    /* The rail's leading tile nudging in, which is what tells a thumb there
+       is more to the side. */
+    .rail > figure:first-child img {
+      animation: nudge linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+    }
+    @keyframes nudge {
+      from { transform: scale(1.12); }
+      to   { transform: scale(1);    }
+    }
+  }
+}
+
+/* Without scroll-timeline support these still want the IntersectionObserver
+   reveal from styles.css, so they opt into the same contract. */
+@supports not (animation-timeline: view()) {
+  [data-settle], [data-rise] {
+    opacity: 0; transform: translateY(22px);
+    transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+  }
+  [data-settle].is-visible, [data-rise].is-visible { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cine__media > video { display: none; }   /* the poster is enough */
+  .lightbar::before    { opacity: .9; }     /* lamp already on, never animates */
+}
+
+/* Content survives with JavaScript off: nothing above may leave an element
+   permanently hidden. */
+.no-js [data-settle], .no-js [data-rise] { opacity: 1; transform: none; }

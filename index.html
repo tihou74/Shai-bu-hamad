@@ -7,11 +7,30 @@
 
 <!-- ===========================================================================
      ASSET NOTES
-     Photography: the owner's own, extracted from content/profile/profile-2026.pdf
-     at full resolution and confirmed by the owner as his to use.
-     Five interior renders were stored CMYK-inverted in that file and had to be
-     rebuilt (tools/imgfix.py); their whites stay hot, so they are graded down
-     wherever they appear rather than shown raw.
+
+     Photography: the owner's own photographs of both branches, uploaded
+     October 2026 and living in media/photos/{west-walk,gulf-mall,menu}/.
+     These replace the renders previously extracted from profile-2026.pdf —
+     the renders were CMYK-inverted in the source file and had to be rebuilt
+     (tools/imgfix.py), and they showed a generic interior rather than the
+     rooms that actually exist. The originals stay in media/extracted/ and
+     assets/img/photo/ as a fallback; nothing on this page depends on them.
+
+     Every image was checked against the 2000px rule before being read:
+     `python3 tools/imgguard.py probe media/photos/**/*.jpeg` — the largest is
+     1600px on its long edge. See .kiro/steering/image-safety.md.
+
+     Headline copy: both large statements on this page are quotations of text
+     painted on the venue's own walls (the majlis saying behind the West Walk
+     tea counter, and the falcon proverb on the canvas beside it), not
+     copywriting. Sources: media/photos/west-walk/deco-05.jpeg and deco-04.jpeg.
+
+     RIGHTS: the wide interior shots incidentally include framed portraits,
+     artwork and banknotes hanging in the venue. Incidental capture of your
+     own premises is the normal case, but media/photos/menu/mixed-platter.jpeg
+     is NOT used on this page — it shows an identifiable person and was taken
+     at an event rather than in either branch. See docs/rights.md.
+
      Fonts: Alexandria (Google Fonts, SIL OFL). The brand's own URW Geometric
      Arabic is commercial and still needs a webfont licence — docs/brand.md.
      =========================================================================== -->
@@ -22,7 +41,7 @@
 <meta property="og:locale" content="ar_QA">
 <meta property="og:title" content="شاي بو حمد · Shai Bu Hamad">
 <meta property="og:description" content="تجربة فريدة لا تضاهى — ضيافة قطرية في West Walk و Gulf Mall.">
-<meta property="og:image" content="assets/img/photo/storefront.jpg">
+<meta property="og:image" content="media/photos/gulf-mall/deco-02.jpeg">
 
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
@@ -32,8 +51,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=4">
-<link rel="stylesheet" href="assets/css/scenes.css?v=4">
+<link rel="stylesheet" href="assets/css/styles.css?v=5">
+<link rel="stylesheet" href="assets/css/scenes.css?v=5">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=5">
+
+<!-- The hero photograph is the largest thing above the fold; preloading it is
+     the difference between the first screen appearing at once and appearing
+     in two stages. `media` must match the <picture> breakpoint exactly, or
+     the phone downloads the desktop frame as well and the preload costs more
+     than it saves. The video is deliberately NOT preloaded. -->
+<link rel="preload" as="image" href="media/photos/west-walk/deco-05.jpeg" media="(max-width: 700px)">
+<link rel="preload" as="image" href="media/photos/west-walk/deco-01.jpeg" media="(min-width: 700.01px)">
 </head>
 
 <body>
@@ -72,16 +100,42 @@
 
 <main id="main">
 
-  <!-- ====================================================== 1 · hero (dark) -->
-  <section class="hero" id="top">
-    <div class="hero__media grade--deep">
-      <img src="assets/img/photo/storefront.jpg" alt="واجهة شاي بو حمد" width="1745" height="1062" fetchpriority="high">
+  <!-- ==================================================== 1 · cinema hero -->
+  <!-- The headline is not copywriting. It is the sentence painted on the wall
+       behind the tea counter at West Walk — see media/photos/west-walk/
+       deco-05.jpeg. Nothing written for the brand competes with the brand
+       saying it itself. -->
+  <section class="cine" id="top">
+    <div class="cine__media">
+      <!-- Two different photographs, not one photograph cropped twice.
+           deco-01 is 4:3 landscape; in a phone's portrait viewport object-fit
+           crops it to the middle, which is a stretch of wall with framed
+           banknotes on it — the ceiling textile and the room both disappear
+           and the shot stops being a hero. deco-05 is portrait and is the
+           tea counter with this page's headline painted on the wall behind
+           it, so the phone gets the better frame, not the leftovers. -->
+      <picture>
+        <source media="(max-width: 700px)"
+                srcset="media/photos/west-walk/deco-05.jpeg"
+                width="1200" height="1600">
+        <img src="media/photos/west-walk/deco-01.jpeg"
+             alt="صالة شاي بو حمد في West Walk — سدو معلّق من السقف ومرايا مُضاءة"
+             width="1600" height="1200" fetchpriority="high">
+      </picture>
+      <!-- Added by app.js only when the connection can afford it. The poster
+           above shows the same room, so this is pure enhancement. -->
+      <video data-hero-video="media/video/west-walk-deco-01.mp4"
+             muted loop playsinline preload="none" tabindex="-1"
+             aria-hidden="true"></video>
     </div>
 
-    <div class="hero__inner">
-      <p class="eyebrow eyebrow--light">شاي بو حمد · الدوحة</p>
-      <h1>الشاي عندنا ليس مشروبًا — بل دعوة للجلوس</h1>
-      <p>ضيافة قطرية تجمع عبق التراث الخليجي بأناقة الذوق المعاصر، في قلب الدوحة.</p>
+    <div class="cine__inner">
+      <p class="cine__kicker">شاي بو حمد · الدوحة</p>
+      <h1 class="cine__quote">مجلسٌ <b>مافيه</b> نفسٍ ثقيله</h1>
+      <p class="cine__sub">
+        مكتوبة على جدارنا، ومقصودة: ضيافة قطريّة تجلس فيها على مهلك — في
+        West Walk و Gulf Mall.
+      </p>
       <ul class="hero__meta">
         <li>تأسّس 2025</li>
         <li class="lat">WEST WALK</li>
@@ -91,6 +145,8 @@
 
     <span class="hero__scroll lat" aria-hidden="true">SCROLL</span>
   </section>
+
+  <div class="lightbar" aria-hidden="true"></div>
 
   <!-- =============================================== 2 · marquee (dark band) -->
   <div class="marquee" aria-hidden="true">
@@ -130,22 +186,35 @@
         </p>
       </div>
 
-      <figure class="figure figure--tall inset tilt" data-tilt data-reveal data-delay="1">
-        <img src="assets/img/photo/pour.jpg" alt="صبّ الشاي من الدلّة في كوب زجاجي" width="887" height="1063" loading="lazy">
+      <!-- Framed as one of the venue's own backlit round mirrors. The subject
+           is centred in the source frame, which is what a circular crop
+           needs — a cropped circle over an off-centre subject just looks like
+           a mistake. -->
+      <figure class="mirror" data-reveal data-delay="1">
+        <img src="media/photos/menu/majlis-teapot.jpeg"
+             alt="قوري الشاي على شعلة الحفظ، وخلفه شريط المشربيّة المُضاء"
+             width="1280" height="1600" loading="lazy">
       </figure>
     </div>
   </section>
 
-  <!-- ===================================================== 4 · shout (brown) -->
-  <section class="shout">
-    <div class="shout__inner">
-      <h2 data-reveal>مكان واحد… بأجواء متعدّدة</h2>
-      <p data-reveal data-delay="1">
-        لا تكتمل الجلسة إلا مع كوب من الشاي أو الكرك بنكهته الغنية — لتعيش
-        لحظات من الدفء والذوق الرفيع.
-      </p>
+  <!-- ================================================ 4 · quote band (dark) -->
+  <!-- The proverb is the one on the falcon canvas in West Walk, photographed
+       in media/photos/west-walk/deco-04.jpeg — the same picture it is set
+       over. Type on screen and type on the wall saying the same thing. -->
+  <section class="qband">
+    <div class="qband__media">
+      <img src="media/photos/west-walk/deco-04.jpeg"
+           alt="لوحة الصقر وشعار شاي بو حمد المُضاء على الجدار"
+           width="1200" height="1600" loading="lazy">
+    </div>
+    <div class="qband__inner">
+      <blockquote data-rise>الي ما يعرف الصقر… يشويه</blockquote>
+      <cite data-rise>من لوحة الصقر — فرع West Walk</cite>
     </div>
   </section>
+
+  <div class="lightbar" aria-hidden="true"></div>
 
   <!-- ============================================ 5 · atmosphere (cream) -->
   <section class="sec sec--cream sticky-scene" id="atmosphere">
@@ -158,18 +227,20 @@
       <div class="sticky-scene__grid">
         <!-- The image column holds still while the text beside it scrolls; the
              photograph swaps as each block takes the viewport. -->
+        <!-- All four are the real West Walk room now, not the renders pulled
+             out of the profile PDF. -->
         <div class="sticky-scene__media grade" data-scene-media>
           <figure class="is-active" data-scene="0">
-            <img src="assets/img/photo/interior.jpg" alt="الصالة وسقف الخشب المشرّح" width="846" height="1159" loading="lazy">
+            <img src="media/photos/west-walk/deco-01.jpeg" alt="الصالة، والسدو المعلّق من السقف بشراشيبه" width="1600" height="1200" loading="lazy">
           </figure>
           <figure data-scene="1">
-            <img src="assets/img/photo/majlis-01.jpg" alt="جلسات المجلس والدلال النحاسيّة" width="1600" height="830" loading="lazy">
+            <img src="media/photos/west-walk/deco-02.jpeg" alt="صفّ الجلسات الطويل ومساند السدو" width="1200" height="1600" loading="lazy">
           </figure>
           <figure data-scene="2">
-            <img src="assets/img/photo/majlis-03.jpg" alt="تفاصيل الإضاءة والفوانيس" width="1600" height="830" loading="lazy">
+            <img src="media/photos/west-walk/deco-03.jpeg" alt="مرآة مُضاءة بنقش المها، ودلّة نحاسيّة، وعملات قطريّة قديمة" width="1200" height="1600" loading="lazy">
           </figure>
           <figure data-scene="3">
-            <img src="assets/img/photo/tea-detail.jpg" alt="كوب الشاي والقوري النحاسي" width="1075" height="793" loading="lazy">
+            <img src="media/photos/west-walk/deco-05.jpeg" alt="بار الشاي: أكواب الزجاج مرصوفة، والسموَر بشعار البيت" width="1200" height="1600" loading="lazy">
           </figure>
         </div>
 
@@ -200,10 +271,11 @@
           </div>
           <div data-scene-step="3">
             <p class="step__n lat">04</p>
-            <h3>الصبّة</h3>
+            <h3>بار الشاي</h3>
             <p>
-              ومع كل قصّة من أطباقنا المحضّرة بشغف، ستستشعر تمازج النكهات
-              الأصيلة التي تحكي قصة هذه الوجهة المميزة.
+              الأكواب مرصوفة على صحونها، والسموَر يحمل اسم البيت، والدلال
+              جاهزة — كل شيء مكشوف أمامك، لأن الشاي عندنا يُحضَّر على عينك
+              لا خلف باب.
             </p>
           </div>
         </div>
@@ -211,21 +283,25 @@
     </div>
   </section>
 
-  <!-- ====================================================== 6 · strip (dark) -->
+  <!-- ======================================================= 6 · rail (dark) -->
   <section class="sec sec--darkest">
     <div class="shell">
       <div data-reveal>
         <p class="eyebrow">جولة</p>
         <h2 class="statement">تصاميم تعكس التناغم الثقافي</h2>
       </div>
-      <div class="strip grade" data-reveal>
-        <figure><img src="assets/img/photo/majlis-01.jpg" alt="المجلس — لقطة عامّة" width="1600" height="830" loading="lazy"></figure>
-        <figure><img src="assets/img/photo/majlis-02.jpg" alt="الجلسات الجانبيّة" width="1600" height="830" loading="lazy"></figure>
-        <figure><img src="assets/img/photo/majlis-04.jpg" alt="الكراسي بنقوش السدو" width="1600" height="830" loading="lazy"></figure>
-        <figure><img src="assets/img/photo/majlis-05.jpg" alt="زاوية التحضير" width="1600" height="831" loading="lazy"></figure>
-        <figure><img src="assets/img/photo/storefront.jpg" alt="الواجهة وجدار الصور" width="1745" height="1062" loading="lazy"></figure>
+      <!-- Native overflow scrolling, not a JS track. See the note on .rail in
+           cinematic.css for why a translated track is the wrong tool in RTL. -->
+      <div class="rail grade" role="group" aria-label="جولة في الفرعين" tabindex="0">
+        <figure><img src="media/photos/west-walk/deco-01.jpeg" alt="West Walk — الصالة والسدو المعلّق" width="1600" height="1200" loading="lazy"></figure>
+        <figure><img src="media/photos/west-walk/deco-04.jpeg" alt="West Walk — الشعار المُضاء ولوحة الصقر" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="media/photos/gulf-mall/deco-02.jpeg" alt="Gulf Mall — الواجهة وسقف الخشب المشرّح" width="1600" height="1200" loading="lazy"></figure>
+        <figure><img src="media/photos/west-walk/deco-05.jpeg" alt="West Walk — بار الشاي والسموَر" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="media/photos/gulf-mall/deco-03.jpeg" alt="Gulf Mall — فانوس قديم وشعار البيت خلفه" width="1080" height="1350" loading="lazy"></figure>
+        <figure><img src="media/photos/west-walk/deco-03.jpeg" alt="West Walk — مرآة المها والعملات القديمة" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="media/photos/west-walk/deco-02.jpeg" alt="West Walk — صفّ الجلسات ومساند السدو" width="1200" height="1600" loading="lazy"></figure>
       </div>
-      <p class="strip__hint" data-reveal>اسحب للجانب ←</p>
+      <p class="rail__hint">اسحب للجانب</p>
     </div>
   </section>
 
@@ -242,31 +318,55 @@
         </p>
       </div>
 
-      <div class="grid grid--3" data-reveal>
-        <article class="dish">
-          <img src="assets/img/photo/karak-pour.jpg" alt="" width="552" height="661" loading="lazy">
-          <div class="dish__body">
-            <h3>الكرك</h3>
-            <p class="card__en lat">KARAK</p>
-            <p>كوب الكرك بنكهته الغنية — لا تكتمل الجلسة إلا به.</p>
-          </div>
-        </article>
-        <article class="dish">
-          <img src="assets/img/photo/cappuccino.jpg" alt="" width="487" height="549" loading="lazy">
-          <div class="dish__body">
-            <h3>كابتشينو بو حمد</h3>
-            <p class="card__en lat">CAPPUCCINO</p>
-            <p>بشعار البيت مرسومًا على الرغوة.</p>
-          </div>
-        </article>
-        <article class="dish">
-          <img src="assets/img/photo/tea-detail.jpg" alt="" width="1075" height="793" loading="lazy">
-          <div class="dish__body">
-            <h3>قوري شاي المجلس</h3>
-            <p class="card__en lat">MAJLIS TEA POT</p>
-            <p>يُقدَّم على طريقة المجلس القطري، للجلسات الطويلة والمشاركة.</p>
-          </div>
-        </article>
+      <!-- The pour, given the room it deserves.
+
+           An SVG steam overlay was built for this figure and then removed:
+           the photograph already has real steam coming off the glass, and a
+           drawn ribbon on top of real steam is two kinds of steam arguing.
+           The photo won. -->
+      <div class="feature">
+        <div class="feature__body" data-rise>
+          <h3 class="statement">الكرك</h3>
+          <p class="card__en lat">KARAK</p>
+          <p class="lede">
+            يُصبّ من السموَر مباشرة في كوب الزجاج، على صحن يحمل اسم البيت.
+          </p>
+          <p>
+            لا تكتمل الجلسة إلا به — وهذه ليست عبارة إعلان، هذا سبب وجود
+            المكان. الشاي عندنا يُحضَّر على عينك، لا خلف باب، ويُقدَّم ساخناً
+            في كوبه الزجاجي كما يُشرب في المجلس.
+          </p>
+        </div>
+
+        <figure class="pourshot" data-settle>
+          <img src="media/photos/menu/karak-pour.jpeg"
+               alt="صبّ الكرك الساخن في كوب زجاجي على صحن يحمل شعار البيت"
+               width="900" height="1600" loading="lazy">
+        </figure>
+      </div>
+
+      <div class="grid grid--3" style="margin-block-start: var(--s-8)">
+        <figure class="plate" data-settle>
+          <img src="media/photos/menu/breakfast.jpeg" alt="صينيّة الفطور: رقاق، لبنة، حمّص، حلّوم، سلطة ولحم" width="768" height="1376" loading="lazy">
+          <figcaption>
+            <h3>صينيّة الفطور</h3>
+            <span class="lat">BREAKFAST TRAY</span>
+          </figcaption>
+        </figure>
+        <figure class="plate" data-settle>
+          <img src="media/photos/menu/kabsa-badawi-01.jpeg" alt="كبسة بدوي — أرز وقطعة لحم على البخار" width="768" height="1344" loading="lazy">
+          <figcaption>
+            <h3>كبسة بدوي</h3>
+            <span class="lat">KABSA BADAWI</span>
+          </figcaption>
+        </figure>
+        <figure class="plate" data-settle>
+          <img src="media/photos/menu/balaleet.jpeg" alt="بلاليط — شعيريّة محلّاة وفوقها العجّة" width="768" height="1376" loading="lazy">
+          <figcaption>
+            <h3>بلاليط</h3>
+            <span class="lat">BALALEET</span>
+          </figcaption>
+        </figure>
       </div>
 
       <!-- MENU:START — generated by tools/build_menu.py from data/menu.json.
@@ -374,8 +474,8 @@
 
       <div class="grid grid--2">
         <article class="branch" data-reveal>
-          <div class="branch__media inset grade tilt" data-tilt>
-            <img src="assets/img/photo/storefront.jpg" alt="واجهة الفرع" width="1745" height="1062" loading="lazy">
+          <div class="branch__media inset grade" data-settle>
+            <img src="media/photos/west-walk/deco-01.jpeg" alt="فرع West Walk من الداخل — السدو المعلّق والمرايا المُضاءة" width="1600" height="1200" loading="lazy">
           </div>
           <div class="branch__body">
             <h3>West Walk</h3>
@@ -390,8 +490,8 @@
         </article>
 
         <article class="branch" data-reveal data-delay="1">
-          <div class="branch__media inset grade tilt" data-tilt>
-            <img src="assets/img/photo/majlis-02.jpg" alt="الجلسات الداخلية" width="1600" height="830" loading="lazy">
+          <div class="branch__media inset grade" data-settle>
+            <img src="media/photos/gulf-mall/deco-02.jpeg" alt="فرع Gulf Mall — الواجهة بالشعار المُضاء وسقف الخشب المشرّح" width="1600" height="1200" loading="lazy">
           </div>
           <div class="branch__body">
             <h3>Gulf Mall</h3>
@@ -406,8 +506,10 @@
         </article>
       </div>
 
+      <!-- The placeholder warning that used to sit here is gone: each branch
+           now carries its own photograph, shot in that branch. -->
       <p class="figure__cap" data-reveal>
-        <span class="todo">الصور من أرشيف العلامة — في انتظار صورة خاصّة بكل فرع</span>
+        الصور من الفرعين كما هما — تصوير المالك، أكتوبر 2026.
       </p>
     </div>
   </section>
@@ -428,10 +530,11 @@
         </ul>
       </div>
       <div class="reel">
-        <!-- muted + playsinline are what actually permit autoplay; the clip is
-             480x848, so it is framed vertically on purpose. -->
-        <video src="media/video/deco-03.mp4" muted loop playsinline autoplay
-               preload="none" aria-label="لقطة من أجواء المكان"></video>
+        <!-- muted + playsinline are what actually permit autoplay. Framed
+             vertically and cropped with object-fit, so the clip's own aspect
+             ratio does not have to be known or matched. -->
+        <video src="media/video/west-walk-deco-02.mp4" muted loop playsinline autoplay
+               preload="none" aria-label="لقطة من أجواء فرع West Walk"></video>
       </div>
     </div>
   </div>
@@ -464,6 +567,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=4"></script>
+<script src="assets/js/app.js?v=5"></script>
 </body>
 </html>

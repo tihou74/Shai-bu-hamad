@@ -323,12 +323,24 @@ ul { margin: 0; padding: 0; list-style: none; }
           mask: url("../img/star.svg") center/contain no-repeat;
 }
 
+/* PHYSICAL insets here, deliberately, and this is the one place in the file
+   that breaks the logical-properties rule.
+
+   `writing-mode: vertical-rl` rotates this element's own axes, and logical
+   insets resolve against the element's own writing mode — not the page's. In
+   a vertical-rl box inside dir="rtl", the block axis runs horizontally and
+   the inline axis runs bottom-to-top, so `inset-block-end` resolves to LEFT
+   and `inset-inline-end` resolves to TOP. The cue was measured at top: 0
+   because of exactly that. Physical left/bottom say what is meant.
+
+   Mirrored by hand for LTR below, since physical properties cannot do it. */
 .hero__scroll {
-  position: absolute; inset-block-end: var(--s-5); inset-inline-end: 0;
+  position: absolute; bottom: var(--s-5); left: 0;
   font-size: var(--t-small); letter-spacing: .2em;
   color: color-mix(in srgb, var(--sand) 65%, transparent);
   writing-mode: vertical-rl;
 }
+[dir="ltr"] .hero__scroll { left: auto; right: 0; }
 
 /* --------------------------------------------------------------- 7. media */
 .arch { border-radius: var(--arch); overflow: hidden; }
@@ -468,9 +480,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 [data-reveal][data-delay="2"] { transition-delay: .18s; }
 [data-reveal][data-delay="3"] { transition-delay: .27s; }
 
-/* Subtle mouse tilt on media. Kept small — past 6deg it stops looking
-   expensive and starts looking like a toy. */
-.tilt { transform: perspective(1100px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s var(--ease); }
+/* The mouse-tilt rule (.tilt) is gone with its JavaScript. It only ever ran
+   behind `(hover: hover) and (pointer: fine)`, so on a phone the page had no
+   motion at all beyond these fades. Scroll-driven motion in cinematic.css
+   replaces it and runs everywhere. */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
