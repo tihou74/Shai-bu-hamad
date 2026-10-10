@@ -80,7 +80,7 @@
 .sticky-scene__media {
   position: relative;
   aspect-ratio: 4 / 5;
-  border-radius: var(--arch);
+  border-radius: var(--edge);
   overflow: hidden;
   background: var(--brown-dark);
 }
@@ -122,7 +122,7 @@
    two-column block from reading as two rectangles. */
 .inset {
   position: relative;
-  border-radius: var(--arch);
+  border-radius: var(--edge);
   overflow: hidden;
   box-shadow: 0 30px 70px -34px rgb(26 17 7 / .75);
 }
@@ -144,8 +144,8 @@
    one moment at a size where it is actually beautiful.
 
    So the page opens on a curtain: the logo alone on the darkest brand brown,
-   large, over the star lattice. Then the curtain lifts and the photography
-   takes over. The hero no longer carries a wordmark at all.
+   large, over the house's own sadu cloth. Then the curtain lifts and the
+   photography takes over. The hero no longer carries a wordmark at all.
 
    `display: none` is the default on purpose — JavaScript opts in. A visitor
    without JS must never be left staring at a curtain that cannot lift. */
@@ -161,11 +161,16 @@
   transition: transform 1.1s cubic-bezier(.76, 0, .24, 1),
               opacity .9s ease;
 }
+/* The curtain is the first thing anyone sees, so it carries the house's own
+   cloth. It used to carry lattice.svg — a tiling star field authored to match
+   a panel in the profile PDF, i.e. invented. That file is gone from the
+   project entirely; this was its last use. Held at .14 so it is a texture
+   behind the mark, not a backdrop competing with it. */
 .intro.is-playing::before {
   content: "";
   position: absolute; inset: 0;
-  background: url("../img/lattice.svg") 50% / 170px repeat;
-  opacity: .12;
+  background: url("../../media/photos/sadu-textile.jpeg") 50% 50% / cover;
+  opacity: .14;
 }
 .intro__inner { position: relative; text-align: center; }
 
