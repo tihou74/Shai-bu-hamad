@@ -64,7 +64,14 @@
   --dur:   .8s;
   --quick: .3s;
 
-  --arch: 50% 50% 0 0 / 30% 30% 0 0;
+  /* The dome-topped frame that used to live here (--arch: 50% 50% 0 0 /
+     30% 30% 0 0) is gone. It was a generic "Arabian arch" applied to photo
+     frames, and the owner rejected it outright. Nothing in either branch is
+     shaped like that: the real geometry is circles (the backlit mirrors),
+     the pointed ogee of the perforated ledge light, and plain rectangles.
+     Photo frames are now square-edged and the shaped forms come from the
+     building itself. */
+  --edge: 3px;
 }
 
 /* ------------------------------------------------------------ 2. baseline */
@@ -166,26 +173,29 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ------------------------------------------------- 4. pattern as a dado */
 
-/* The star lattice, and the sadu band closing it off — placed only across the
-   lower third. Tiling it over a whole panel was the mistake that got the last
-   build called tile. `background-position-x: 50%` matters: with a fixed tile
-   width, `0` crops the two edges unevenly and the panel looks off-centre. */
+/* The sadu rail, placed only across the lower third of a panel. Tiling a
+   pattern over a whole panel was the mistake that got an earlier build called
+   tile. `background-position-x: 50%` matters: with a fixed tile width, `0`
+   crops the two edges unevenly and the panel looks off-centre. */
 .dado {
   position: absolute; inset-block-end: 0; inset-inline: 0;
   height: 34%; pointer-events: none;
 }
-.dado::before {
-  content: ""; position: absolute; inset: 0;
-  background: url("../img/lattice.svg") 50% 100% / 140px repeat;
-  opacity: .16;
-  -webkit-mask: linear-gradient(transparent, #000 55%);
-          mask: linear-gradient(transparent, #000 55%);
-}
-.dado::after {                       /* the rail that closes the dado */
+/* The tiling star field that used to fill this (lattice.svg) is gone with the
+   arches. It was authored to match a panel in the profile PDF, which is to
+   say it was invented — and the owner's reaction to invented ornament was the
+   same both times. What is left is the one band that is actually in the
+   building: the sadu rail.
+
+   It is also much taller than before. At 40px the repeat rendered about 51px
+   wide, which turned the comb-and-diamond motif into grey mush; the band read
+   as a smudge rather than as a textile. At ~70px the motif is legible, which
+   is the only reason to put a pattern on a page at all. */
+.dado::after {
   content: ""; position: absolute;
-  inset-block-end: 0; inset-inline: 0; height: 40px;
+  inset-block-end: 0; inset-inline: 0;
+  height: clamp(52px, 7vw, 74px);
   background: url("../img/sadu-band.svg") 50% / auto 100% repeat-x;
-  opacity: .9;
 }
 .dado--quiet::after { display: none; }
 
@@ -323,6 +333,15 @@ ul { margin: 0; padding: 0; list-style: none; }
           mask: url("../img/star.svg") center/contain no-repeat;
 }
 
+/* Dropped on wide screens, where the pearl strand appears. Both sit in the
+   inline-end gutter — the LEFT gutter, since the page is RTL — and they were
+   measured overlapping each other at x≈13 and x≈28. The strand says the same
+   thing better (how far down you are, not merely that down exists), so the
+   word gives way to it rather than the two being nudged apart. */
+@media (min-width: 1100px) {
+  .hero__scroll { display: none; }
+}
+
 /* PHYSICAL insets here, deliberately, and this is the one place in the file
    that breaks the logical-properties rule.
 
@@ -343,7 +362,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 [dir="ltr"] .hero__scroll { left: auto; right: 0; }
 
 /* --------------------------------------------------------------- 7. media */
-.arch { border-radius: var(--arch); overflow: hidden; }
+.arch { border-radius: var(--edge); overflow: hidden; }   /* kept as a plain clipped frame; the dome shape is gone */
 
 .figure { position: relative; }
 .figure img { width: 100%; height: 100%; object-fit: cover; }
@@ -384,7 +403,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    stretched across a desktop hero where it would look soft. */
 .reel {
   width: min(100%, 300px); aspect-ratio: 480/848; margin-inline: auto;
-  border-radius: var(--arch); overflow: hidden; background: var(--brown-dark);
+  border-radius: var(--edge); overflow: hidden; background: var(--brown-dark);
   box-shadow: 0 34px 70px -34px rgb(26 17 7 / .7);
 }
 .reel video { width: 100%; height: 100%; object-fit: cover; }

@@ -51,9 +51,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=5">
-<link rel="stylesheet" href="assets/css/scenes.css?v=5">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=5">
+<link rel="stylesheet" href="assets/css/styles.css?v=6">
+<link rel="stylesheet" href="assets/css/scenes.css?v=6">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=6">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -81,6 +81,22 @@
 <div class="grain" aria-hidden="true"></div>
 <div class="pour" aria-hidden="true"></div>
 
+<!-- Section indicator as a strand of pearls. Before oil, Qatar's living came
+     off the pearl banks, and the Corniche still carries the monument to it.
+     Each pearl lights as its section is reached, so the strand says how far
+     through the page you are and lets you jump — a real control, not a motif
+     stuck on the side. Desktop only: a narrow screen has no gutter to hang it
+     in. -->
+<nav class="strand" aria-label="أقسام الصفحة">
+  <a href="#top"        data-pearl="top"><span>الواجهة</span></a>
+  <a href="#story"      data-pearl="story"><span>القصّة</span></a>
+  <a href="#atmosphere" data-pearl="atmosphere"><span>الأجواء</span></a>
+  <a href="#reels"      data-pearl="reels"><span>من جوّه</span></a>
+  <a href="#menu"       data-pearl="menu"><span>المنيو</span></a>
+  <a href="#vision"     data-pearl="vision"><span>الرؤية</span></a>
+  <a href="#branches"   data-pearl="branches"><span>الفروع</span></a>
+</nav>
+
 <header class="header" id="header">
   <a class="header__logo" href="#top" aria-label="شاي بو حمد — الرئيسية">
     <!-- Arabic-only variant: the full lockup's hairline Latin row is not
@@ -91,6 +107,7 @@
   <nav class="nav" aria-label="التنقّل الرئيسي">
     <a href="#story">القصّة</a>
     <a href="#atmosphere">الأجواء</a>
+    <a href="#reels">من جوّه</a>
     <a href="#menu">المنيو</a>
     <a href="#vision">الرؤية</a>
     <a href="#branches">الفروع</a>
@@ -122,11 +139,12 @@
              alt="صالة شاي بو حمد في West Walk — سدو معلّق من السقف ومرايا مُضاءة"
              width="1600" height="1200" fetchpriority="high">
       </picture>
-      <!-- Added by app.js only when the connection can afford it. The poster
-           above shows the same room, so this is pure enhancement. -->
-      <video data-hero-video="media/video/west-walk-deco-01.mp4"
-             muted loop playsinline preload="none" tabindex="-1"
-             aria-hidden="true"></video>
+      <!-- There is no video here any more, and that is a decision.
+           Every clip in media/video/ is a vertical phone recording; the
+           widest is 720px and most are 480. Stretching one across a 1280px
+           hero upscaled it nearly 3x and the result was, in the owner's
+           words, hollow. The clips are now shown at 9:16 in the reels row
+           below, where they are never enlarged past their native width. -->
     </div>
 
     <div class="cine__inner">
@@ -146,7 +164,12 @@
     <span class="hero__scroll lat" aria-hidden="true">SCROLL</span>
   </section>
 
-  <div class="lightbar" aria-hidden="true"></div>
+  <!-- The house's own cloth, full bleed, straight under the hero. Not a
+       drawing of sadu — the photograph of the piece itself. -->
+  <div class="sadu" role="img" aria-label="نقشة السدو الخاصّة بشاي بو حمد">
+    <div class="sadu__cloth"></div>
+    <div class="sadu__weft" aria-hidden="true"></div>
+  </div>
 
   <!-- =============================================== 2 · marquee (dark band) -->
   <div class="marquee" aria-hidden="true">
@@ -304,6 +327,92 @@
       <p class="rail__hint">اسحب للجانب</p>
     </div>
   </section>
+
+  <!-- ================================================ 6b · reels (brown) -->
+  <!-- The owner's own clips, at the aspect ratio they were filmed in.
+       data-start exists because three of these open on black or on a title
+       card; app.js loops each clip from its own in-point instead of from
+       zero, so the row never shows a black rectangle. -->
+  <section class="sec sec--brown" id="reels">
+    <!-- The tasselled cords that hang off the sadu swags on the West Walk
+         ceiling. They are the first thing in deco-01, so they hang off the
+         top of this panel too, and they sway. -->
+    <!-- Filled by app.js, spaced to the panel width. Empty here on purpose:
+         a fixed count is either too sparse on a desktop or crowded on a
+         phone, and these are decoration, so losing them without JavaScript
+         costs the page nothing. -->
+    <div class="tassels" data-tassels aria-hidden="true"></div>
+
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">من جوّه</p>
+        <h2 class="statement">المكان متحرّكاً — بتصويرنا</h2>
+      </div>
+    </div>
+
+    <!-- These six are exactly the clips whose FIRST frame is already worth
+         looking at, checked frame by frame off a contact sheet.
+
+         An earlier version listed all eight and gave each an in-point, so the
+         three that open on black or on a title card would be skipped past.
+         That was dropped: seeking inside a video depends on the host
+         answering HTTP Range requests, which could not be proven here, and a
+         design that silently degrades to six black rectangles is not worth
+         the cleverness. Choosing clips that open well needs nothing from
+         anybody.
+
+         Left out, and why: deco-03.mp4 (the wall calligraphy — opens on
+         several seconds of black) and menu-nakhi-sambosa.mp4 (the samosa
+         filling — same). Both are good footage. Trim the dead opening off
+         the front of each and they belong here. -->
+    <div class="reels" role="group" aria-label="مقاطع من الفرعين" tabindex="0">
+      <figure class="reel-card reel-card--lead">
+        <video src="media/video/menu-breakfast.mp4"
+               muted loop playsinline preload="none"
+               aria-label="أحد العاملين يحمل صينيّة الطلب إلى الطاولة"></video>
+        <figcaption><strong>الطلب يوصل</strong><span class="lat">ORDER UP</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="media/video/deco-04.mp4"
+               muted loop playsinline preload="none"
+               aria-label="جولة في فرع Gulf Mall"></video>
+        <figcaption><strong>جولة في Gulf Mall</strong><span class="lat">GULF MALL</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="media/video/west-walk-deco-01.mp4"
+               muted loop playsinline preload="none"
+               aria-label="من واجهة West Walk إلى داخل الصالة"></video>
+        <figcaption><strong>من الباب إلى الكوب</strong><span class="lat">WEST WALK</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <!-- 720x1280: the sharpest clip in the set. -->
+        <video src="media/video/west-walk-deco-02.mp4"
+               muted loop playsinline preload="none"
+               aria-label="البشوت والدراعات معلّقة على المشجب"></video>
+        <figcaption><strong>على المشجب</strong><span class="lat">THE HOOKS</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <!-- 720x1280. -->
+        <video src="media/video/menu-mixed-breakfast.mp4"
+               muted loop playsinline preload="none"
+               aria-label="سفرة الفطور من أعلى"></video>
+        <figcaption><strong>سفرة الفطور</strong><span class="lat">THE SPREAD</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="media/video/menu-toast-karak.mp4"
+               muted loop playsinline preload="none"
+               aria-label="توست الجبن مع الكرك"></video>
+        <figcaption><strong>توست جبن بالكرك</strong><span class="lat">TOAST &amp; KARAK</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="shell"><p class="rail__hint">اسحب للجانب</p></div>
+  </section>
+
+  <div class="sadu" role="img" aria-label="نقشة السدو الخاصّة بشاي بو حمد">
+    <div class="sadu__cloth"></div>
+    <div class="sadu__weft" aria-hidden="true"></div>
+  </div>
 
   <!-- ====================================================== 7 · menu (sand) -->
   <section class="sec sec--sand" id="menu">
@@ -529,13 +638,10 @@
           <li><a href="https://snapchat.com/add/shai.buhamad" rel="noopener noreferrer" target="_blank">SNAPCHAT</a></li>
         </ul>
       </div>
-      <div class="reel">
-        <!-- muted + playsinline are what actually permit autoplay. Framed
-             vertically and cropped with object-fit, so the clip's own aspect
-             ratio does not have to be known or matched. -->
-        <video src="media/video/west-walk-deco-02.mp4" muted loop playsinline autoplay
-               preload="none" aria-label="لقطة من أجواء فرع West Walk"></video>
-      </div>
+      <!-- The lone autoplaying clip that used to sit in this corner is gone.
+           The reels row does that job properly now, and a second video
+           playing away in the footer was just another decode running for
+           nobody. -->
     </div>
   </div>
 
@@ -567,6 +673,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=5"></script>
+<script src="assets/js/app.js?v=6"></script>
 </body>
 </html>
