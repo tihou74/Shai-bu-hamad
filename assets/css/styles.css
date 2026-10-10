@@ -104,7 +104,20 @@ h1, h2, h3, h4 {
 
 p { margin: 0 0 var(--s-4); max-width: var(--measure); }
 a { color: inherit; text-decoration: none; }
-img, svg, video { display: block; max-width: 100%; }
+/* `height: auto` is load-bearing, not boilerplate.
+
+   Every <img> on this page carries width and height attributes, which is
+   right — they reserve the box and stop the layout jumping as photographs
+   arrive. But those attributes also act as presentational hints, so an image
+   whose CSS sets a width and no height keeps the attribute's pixel height and
+   is squashed by whatever the two numbers disagree by.
+
+   That is not hypothetical: .intro__logo sets `width: min(74vw, 460px)` and
+   no height, so the curtain logo rendered 289x355 on a phone instead of
+   289x85 — a 1200x355 wordmark crushed to a ratio of 0.81. The owner saw it
+   and reported it. Fixing it here rather than only on that one rule means the
+   next image styled by width alone cannot repeat it. */
+img, svg, video { display: block; max-width: 100%; height: auto; }
 ul { margin: 0; padding: 0; list-style: none; }
 :focus-visible { outline: 2px solid var(--brown-soft); outline-offset: 4px; }
 
