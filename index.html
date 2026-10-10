@@ -51,9 +51,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=6">
-<link rel="stylesheet" href="assets/css/scenes.css?v=6">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=6">
+<link rel="stylesheet" href="assets/css/styles.css?v=7">
+<link rel="stylesheet" href="assets/css/scenes.css?v=7">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=7">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -89,6 +89,7 @@
      in. -->
 <nav class="strand" aria-label="أقسام الصفحة">
   <a href="#top"        data-pearl="top"><span>الواجهة</span></a>
+  <a href="#heritage"   data-pearl="heritage"><span>البداية</span></a>
   <a href="#story"      data-pearl="story"><span>القصّة</span></a>
   <a href="#atmosphere" data-pearl="atmosphere"><span>الأجواء</span></a>
   <a href="#reels"      data-pearl="reels"><span>من جوّه</span></a>
@@ -105,6 +106,7 @@
     <img class="on-light" src="assets/img/mark-brown.png" alt="" width="1000" height="210" aria-hidden="true">
   </a>
   <nav class="nav" aria-label="التنقّل الرئيسي">
+    <a href="#heritage">البداية</a>
     <a href="#story">القصّة</a>
     <a href="#atmosphere">الأجواء</a>
     <a href="#reels">من جوّه</a>
@@ -170,6 +172,98 @@
     <div class="sadu__cloth"></div>
     <div class="sadu__weft" aria-hidden="true"></div>
   </div>
+
+  <!-- ============================================= 1b · heritage (darkest) -->
+  <!-- The beginning the page was missing: four chapters from the desert
+       majlis to a shop in Doha. Each chapter's photograph is the evidence for
+       what the text claims, taken in the owner's own branches — the
+       banquette, the brass dallah, the cloth, the lit shopfront. -->
+  <section class="sec sec--darkest" id="heritage">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">البداية</p>
+        <h2 class="statement">من البرّ… إلى الدوحة</h2>
+        <p class="lede">
+          شاي بوحمد ليس مقهى فُتح سنة 2025. هو عادة عمرها قرون، نُقلت من بيت
+          الشَعر إلى محلّ في المدينة — بنفس الشاي، ونفس النقشة، ونفس الباب
+          الذي لا يُغلق.
+        </p>
+      </div>
+
+      <div class="chapters">
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="media/photos/west-walk/deco-02.jpeg"
+                 alt="صفّ الجلسات الطويل ومساند السدو في فرع West Walk"
+                 width="1200" height="1600" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" aria-hidden="true">01</span>
+            <h3>المجلس — ضيافة بلا باب</h3>
+            <p>
+              في البرّ لم يكن للضيافة موعد ولا دعوة. المجلس مفروش على الأرض،
+              ومن وصل جلس، ولا يُسأل عن حاجته قبل أن يُسقى. هذا الترتيب
+              نفسه — جلسات طويلة متقابلة، لا طاولات منفصلة — هو ما بُني عليه
+              المكان.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="media/photos/west-walk/deco-03.jpeg"
+                 alt="دلّة نحاسيّة ومرآة مُضاءة بنقش المها وعملات قطريّة قديمة"
+                 width="1200" height="1600" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" aria-hidden="true">02</span>
+            <h3>الدلّة — أوّل ما يُقال</h3>
+            <p>
+              قبل الكلام يُصبّ الفنجال. والكمّيّة قليلة بقصد: ليست حصّة
+              تُشبِع، بل إشارة أن تبقى وتُعاد لك. الدلّة على الرفّ عندنا
+              ليست زينة — هي الجملة الأولى التي يقولها المكان لضيفه.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="media/photos/sadu-textile.jpeg"
+                 alt="نسيج السدو: أرضيّة جمليّة وصفوف خرز حمراء وبيضاء وبرتقاليّة وأمشاط سوداء"
+                 width="1383" height="1025" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" aria-hidden="true">03</span>
+            <h3>السدو — جدار يُنسَج</h3>
+            <p>
+              نسجته النساء على النول الأرضي لُحمةً بعد لُحمة، لا للتزيين بل
+              ليكون <strong>جدار البيت</strong> نفسه: يصدّ الشمس ويحجب الريح.
+              فحين ترى النقشة على كراسينا ومساندنا، أنت ترى بقيّة ذلك الجدار.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter chapter--now">
+          <div class="chapter__media" data-settle>
+            <img src="media/photos/gulf-mall/deco-02.jpeg"
+                 alt="واجهة فرع Gulf Mall بالشعار المُضاء وسقف الخشب المشرّح"
+                 width="1600" height="1200" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" aria-hidden="true">04</span>
+            <h3>الحاضر — نفس المجلس، في المدينة</h3>
+            <p>
+              لم نصنع ديكوراً «على الطابع القطري». نقلنا الأصل: الشاي يُصبّ
+              أمامك لا خلف باب، والسدو على المساند لا في إطار، والعبارة على
+              جدارنا لم يكتبها مكتب إعلانات —
+              <strong>«مجلسٌ مافيه نفسٍ ثقيله»</strong>. فرعان في الدوحة،
+              والباب نفسه مفتوح.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
 
   <!-- =============================================== 2 · marquee (dark band) -->
   <div class="marquee" aria-hidden="true">
@@ -334,14 +428,6 @@
        card; app.js loops each clip from its own in-point instead of from
        zero, so the row never shows a black rectangle. -->
   <section class="sec sec--brown" id="reels">
-    <!-- The tasselled cords that hang off the sadu swags on the West Walk
-         ceiling. They are the first thing in deco-01, so they hang off the
-         top of this panel too, and they sway. -->
-    <!-- Filled by app.js, spaced to the panel width. Empty here on purpose:
-         a fixed count is either too sparse on a desktop or crowded on a
-         phone, and these are decoration, so losing them without JavaScript
-         costs the page nothing. -->
-    <div class="tassels" data-tassels aria-hidden="true"></div>
 
     <div class="shell">
       <div data-reveal>
@@ -433,24 +519,39 @@
            the photograph already has real steam coming off the glass, and a
            drawn ribbon on top of real steam is two kinds of steam arguing.
            The photo won. -->
+      <!-- CORRECTION: this photograph was captioned "karak" in an earlier
+           pass. It is not karak — karak is milky and pale. What is being
+           poured here is clear amber black tea: shai al-majlis. The owner
+           caught it; the file is renamed to match
+           (media/photos/menu/majlis-tea-pour.jpeg) so the mistake cannot be
+           reintroduced from the filename. -->
       <div class="feature">
         <div class="feature__body" data-rise>
-          <h3 class="statement">الكرك</h3>
-          <p class="card__en lat">KARAK</p>
+          <h3 class="statement">شاي المجلس</h3>
+          <p class="card__en lat">MAJLIS TEA</p>
           <p class="lede">
-            يُصبّ من السموَر مباشرة في كوب الزجاج، على صحن يحمل اسم البيت.
+            يُصبّ ساخناً في كوب الزجاج، على صحن يحمل اسم البيت.
           </p>
           <p>
-            لا تكتمل الجلسة إلا به — وهذه ليست عبارة إعلان، هذا سبب وجود
-            المكان. الشاي عندنا يُحضَّر على عينك، لا خلف باب، ويُقدَّم ساخناً
-            في كوبه الزجاجي كما يُشرب في المجلس.
+            هذا هو الشاي الذي يبدأ به المجلس وينتهي — صافٍ، قويّ، بلا حليب،
+            يُقدَّم في كوبه الصغير ليُشرب على مهل ويُعاد. والشاي عندنا
+            يُحضَّر على عينك لا خلف باب، وهذا سبب وجود المكان لا عبارة إعلان.
           </p>
         </div>
 
         <figure class="pourshot" data-settle>
-          <img src="media/photos/menu/karak-pour.jpeg"
-               alt="صبّ الكرك الساخن في كوب زجاجي على صحن يحمل شعار البيت"
+          <img src="media/photos/menu/majlis-tea-pour.jpeg"
+               alt="صبّ شاي المجلس الساخن في كوب زجاجي على صحن يحمل شعار البيت"
                width="900" height="1600" loading="lazy">
+          <!-- Steam, put back and this time built to be seen. The owner asked
+               for it moving. The first attempt was three thin SVG strokes at
+               half opacity over a photograph that already has real steam, so
+               it was invisible and was deleted; these are soft blurred plumes
+               that rise, drift and swell, which is what smoke actually does
+               and what survives being laid over a busy photograph. -->
+          <div class="smoke" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
         </figure>
       </div>
 
@@ -673,6 +774,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=6"></script>
+<script src="assets/js/app.js?v=7"></script>
 </body>
 </html>
