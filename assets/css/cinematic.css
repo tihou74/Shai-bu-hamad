@@ -34,6 +34,205 @@
   --cine-dur:  1.1s;
 }
 
+/* ==================================================== 1b. the sadu band ====
+   The house's own cloth, full bleed, as a divider — not a drawing of it.
+   media/photos/sadu-textile.jpeg is the piece the owner photographed.
+
+   The sizing is the whole trick. The stripes in that photograph run top to
+   bottom, so a horizontal slice of it shows the complete stripe sequence
+   across the width, which is exactly how a woven strap reads when it is laid
+   along an edge. `auto 340%` renders each pass about 370px wide: big enough
+   that the bead rows and the black combs are legible, small enough to repeat
+   three or four times across a desktop page instead of being one lonely
+   stretch. Tiling at 100% height would have squeezed a pass into ~108px and
+   lost the pattern entirely — the same mistake the 40px drawn rail made.
+
+   The cloth itself is painted by .sadu__cloth in the loom section below. It
+   is a separate layer for one reason: it gets clipped, and the bright shuttle
+   that rides its growing edge must not be. */
+.sadu {
+  height: clamp(58px, 8vw, 104px);
+  background: var(--brown-dark);     /* the warp showing through, pre-weave */
+  /* Hairlines top and bottom so the band reads as a fitted strap rather than
+     a photograph that happens to be there. */
+  box-shadow:
+    inset 0 1px 0 rgb(23 20 15 / .9),
+    inset 0 -1px 0 rgb(23 20 15 / .9);
+}
+
+/* =============================================== 1c. the loom (weaving) ====
+   Al-Sadu is woven on al-nol al-ardhi, the ground loom: the weaver sits at
+   one end and the cloth grows a weft at a time. So the band is not faded in,
+   it is WOVEN in — revealed thread by thread, from the right, which is both
+   the direction the weaving runs and the direction the page reads.
+
+   Two layers because one cannot do it: .sadu__cloth is clipped, and
+   .sadu__weft is the bright line at the growing edge — the shuttle. If the
+   weft lived inside the clipped layer it would be cut in half by its own
+   clip path.
+
+   RTL note: the reveal is driven by the LEFT inset of inset(), growing from
+   100% down to 0. That uncovers the cloth leftwards from the right edge. No
+   translateX anywhere, so there is no sign to get backwards — which is the
+   mistake that made a scroll-tied strip appear frozen on the last project. */
+.sadu { position: relative; overflow: hidden; isolation: isolate; }
+.sadu__cloth {
+  position: absolute; inset: 0;
+  background-image: url("../../media/photos/sadu-textile.jpeg");
+  background-size: auto 340%;
+  background-position: 50% 50%;
+  background-repeat: repeat-x;
+}
+.sadu__weft {
+  position: absolute; inset-block: 0;
+  inset-inline-start: 0;            /* right edge in RTL: where weaving starts */
+  width: 2px;
+  background: var(--glow);
+  box-shadow: 0 0 14px 3px color-mix(in srgb, var(--glow) 70%, transparent);
+  opacity: 0;
+}
+
+/* ============================================= 1d. the ceiling tassels =====
+   West Walk hangs its sadu swags from the ceiling with black tasselled cords
+   — media/photos/west-walk/deco-01.jpeg. They are the first thing in the
+   frame, so they open a section here too, and they sway.
+
+   Built from two pseudo-elements rather than an image: the skirt is a
+   repeating gradient of threads with a taper mask, which stays crisp at any
+   size and costs nothing. Each tassel gets its own delay so the row never
+   swings in unison, which is what gives a fake away.
+
+   Count is set by app.js from the element's width rather than hard-coded. The
+   first attempt put 14 in the markup, which across a 1265px panel left one
+   every 90px — far too sparse to read as a fringe; it looked like a few
+   stray threads. One every ~34px reads as the real thing. */
+.tassels {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: clamp(44px, 6vw, 68px);
+  padding-inline: var(--s-4);
+  pointer-events: none;
+  overflow: hidden;
+}
+.tassels i {
+  position: relative;
+  flex: 0 0 auto;
+  width: 13px; height: 100%;
+  transform-origin: 50% 0;
+}
+.tassels i::before {                 /* the knot at the top */
+  content: "";
+  position: absolute; inset-block-start: 0; inset-inline-start: 3px;
+  width: 8px; height: 9px;
+  background: #17140F;
+  border-radius: 0 0 4px 4px;
+}
+.tassels i::after {                  /* the threads */
+  content: "";
+  position: absolute;
+  inset-block-start: 8px; inset-inline: 0; inset-block-end: 0;
+  background: repeating-linear-gradient(90deg,
+              #17140F 0 1.5px, transparent 1.5px 3.5px);
+  -webkit-mask: linear-gradient(#000 62%, transparent);
+          mask: linear-gradient(#000 62%, transparent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tassels i { animation: sway 5.5s ease-in-out infinite; }
+  .tassels i:nth-child(3n)   { animation-duration: 6.8s; animation-delay: -1.9s; }
+  .tassels i:nth-child(3n+1) { animation-duration: 4.9s; animation-delay: -3.4s; }
+  .tassels i:nth-child(4n)   { animation-delay: -2.6s; }
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.6deg); }
+  50%      { transform: rotate(2.6deg);  }
+}
+
+/* ============================================== 1e. the pearl strand =======
+   Before oil, Qatar's living was pearl diving — the Corniche still carries
+   the pearl-and-oyster monument for it. So the section indicator is a strand
+   of pearls, and each one lights as its section is reached. It is a real
+   navigation aid, not an ornament: it says how far through the page you are
+   and lets you jump.
+
+   Hidden below 1100px: on a narrow screen there is no gutter to hang it in,
+   and a floating strand over the content would be worse than no strand. */
+.strand {
+  position: fixed;
+  inset-inline-end: var(--s-5);      /* left gutter in RTL */
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  z-index: 55;
+  display: none;
+  flex-direction: column;
+  gap: var(--s-3);
+  align-items: center;
+  isolation: isolate;        /* so ::after can sit behind the pearls */
+}
+@media (min-width: 1100px) {
+  .strand { display: flex; }
+}
+/* A soft column behind the strand. It is fixed, so it passes over whatever
+   happens to be scrolling underneath — including the bleed edge of a bright
+   photograph, where unlit pearls and a sand-coloured cord simply vanished.
+   Blur rather than a solid fill, so it reads as depth and not as a grey bar. */
+.strand::after {
+  content: "";
+  position: absolute; inset: -14px -10px;
+  z-index: -1;
+  border-radius: 999px;
+  background: rgb(26 17 7 / .34);
+  backdrop-filter: blur(6px);
+}
+/* The cord the pearls are strung on. */
+.strand::before {
+  content: "";
+  position: absolute; inset-block: -6px; inset-inline-start: 50%;
+  width: 1px; translate: -50% 0;
+  background: color-mix(in srgb, var(--sand) 40%, transparent);
+}
+.strand a {
+  position: relative;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--sand) 30%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sand) 18%, transparent);
+  transition: background .45s var(--ease), box-shadow .45s var(--ease),
+              transform .45s var(--ease);
+}
+/* A real pearl is not a flat dot: the highlight sits off-centre and the body
+   has a warm underside. Two stops, no gradient library. */
+.strand a.is-lit {
+  background:
+    radial-gradient(circle at 34% 30%, #FFFDF8 0 18%, #EFE4CE 46%, #BFA87F 100%);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / .35),
+    0 0 12px 1px color-mix(in srgb, var(--glow) 42%, transparent);
+  transform: scale(1.18);
+}
+.strand a[aria-current="true"] {
+  transform: scale(1.55);
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / .6),
+    0 0 20px 4px color-mix(in srgb, var(--glow) 62%, transparent);
+}
+.strand a span {                      /* the label, on hover/focus only */
+  position: absolute;
+  inset-inline-start: calc(100% + var(--s-3));
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  white-space: nowrap;
+  font-size: var(--t-small); letter-spacing: .1em;
+  color: var(--cream);
+  background: rgb(26 17 7 / .86);
+  padding: .25em .7em;
+  border-radius: 999px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s var(--ease);
+}
+.strand a:hover span, .strand a:focus-visible span { opacity: 1; }
+
 /* ====================================================== 2. the light bar ===
    The perforated ledge light that runs through both branches. Used as a
    section divider so the page is stitched together by the building's own
@@ -89,20 +288,15 @@
 /* <picture> is an inline wrapper by default, so it has to be told to fill the
    box before the <img> inside it can be sized against anything. */
 .cine__media picture { display: block; position: absolute; inset: 0; }
-.cine__media img,
-.cine__media > video {
+.cine__media img {
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
 }
-/* The poster sits under the video rather than inside it, so the swap from
-   poster to first frame is a cross-fade instead of a flash of black. */
-.cine__media > video {
-  position: absolute; inset: 0;
-  opacity: 0;
-  transition: opacity 1s var(--ease);
-}
-.cine__media > video.is-ready { opacity: 1; }
+/* The hero video rules that used to sit here are gone with the element. Every
+   clip in media/video/ is 480-720px wide and vertical; a full-bleed desktop
+   hero upscaled one of them roughly 3x. They now play at 9:16 in .reels,
+   where nothing is enlarged beyond its native width. */
 
 /* Same two-scrim logic as the old hero: a bottom scrim that the headline sits
    on, a top scrim that keeps the fixed nav legible, and a warm wash that
@@ -281,6 +475,63 @@
   object-position: 50% 42%;
 }
 
+/* ========================================================= 6b. the reels ===
+   The owner's own clips, shown the way they were shot.
+
+   Every one of the eight is a vertical phone video, and the widest is 720px —
+   most are 480. The first build stretched one of them across a 1280px hero,
+   upscaling it almost 3x, and the owner's words for the result were that it
+   looked hollow. He was right, and no amount of grading fixes a 480px source
+   blown up to 1280.
+
+   So they live at 9:16 and are capped at 340px wide, which is below every
+   source's native width. No clip is ever enlarged. The row scrolls with
+   native overflow for the same RTL reason as .rail. */
+.reels {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(66vw, 340px);
+  gap: var(--s-4);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scroll-snap-type: inline mandatory;
+  margin-inline: calc(50% - 50vw);
+  padding: 0 max(var(--s-5), calc(50vw - var(--page) / 2)) var(--s-4);
+  scrollbar-width: none;
+}
+.reels::-webkit-scrollbar { display: none; }
+
+.reel-card {
+  position: relative;
+  margin: 0;
+  scroll-snap-align: center;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  border-radius: var(--edge);
+  background: var(--brown-dark);
+  isolation: isolate;
+}
+.reel-card video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+.reel-card figcaption {
+  position: absolute;
+  inset-block-end: 0; inset-inline: 0;
+  padding: var(--s-8) var(--s-5) var(--s-5);
+  background: linear-gradient(to top, rgb(26 17 7 / .94), transparent);
+  color: var(--cream);
+  pointer-events: none;
+}
+.reel-card figcaption strong { display: block; font-weight: 300; font-size: var(--t-h3); }
+.reel-card figcaption span {
+  display: block; margin-block-start: var(--s-1);
+  font-size: var(--t-small); letter-spacing: .14em;
+  color: color-mix(in srgb, var(--glow) 84%, transparent);
+}
+/* The first card is the one the owner singled out, so it opens the row. */
+.reel-card--lead { outline: 1px solid color-mix(in srgb, var(--glow) 55%, transparent); }
+
 /* ====================================================== 7. the swipe rail ==
    A horizontal rail of photographs. Deliberately native overflow scrolling
    rather than a JS carousel with a translateX track: in RTL a translated
@@ -373,6 +624,30 @@
       to   { transform: translateY(9%)  scale(1.1); }
     }
 
+    /* The loom. The cloth is uncovered leftwards from the right edge while
+       the shuttle travels ahead of it, both on the same timeline so the
+       bright line always sits exactly at the growing edge. */
+    .sadu__cloth {
+      animation: weave linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+    @keyframes weave {
+      from { clip-path: inset(0 0 0 100%); }
+      to   { clip-path: inset(0 0 0 0);    }
+    }
+    .sadu__weft {
+      animation: shuttle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+    @keyframes shuttle {
+      from { inset-inline-start: 0;    opacity: 0; }
+      8%   {                           opacity: 1; }
+      92%  {                           opacity: 1; }
+      to   { inset-inline-start: 100%; opacity: 0; }
+    }
+
     /* The ledge light coming up as it enters the frame. */
     .lightbar::before {
       animation: lamp-on linear both;
@@ -453,11 +728,16 @@
     transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
   }
   [data-settle].is-visible, [data-rise].is-visible { opacity: 1; transform: none; }
+  /* No loom here: the cloth is simply there, whole. A half-woven band left
+     frozen at 40% would be a defect, not a restrained version of the effect. */
+  .sadu__weft { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .cine__media > video { display: none; }   /* the poster is enough */
-  .lightbar::before    { opacity: .9; }     /* lamp already on, never animates */
+  .lightbar::before { opacity: .9; }        /* lamp already on, never animates */
+  .tassels i        { animation: none; }    /* hanging still */
+  /* Reels keep their poster frame; app.js parks each one on its in-point and
+     never calls play(). */
 }
 
 /* Content survives with JavaScript off: nothing above may leave an element

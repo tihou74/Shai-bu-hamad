@@ -49,59 +49,122 @@
     });
   })();
 
-  /* ------------------------------------------------------- hero footage */
-  // The hero poster already shows the room, so the video is strictly an
-  // upgrade. It is attached only when the visitor's connection and settings
-  // say it is welcome — a 4MB autoplaying clip on a metered phone connection
-  // is a cost the visitor did not agree to.
-  (function heroVideo() {
-    var video = document.querySelector("[data-hero-video]");
-    if (!video) return;
-    if (reduce) { video.remove(); return; }
-
-    // Dropped rather than left at opacity 0: a transparent <video> stretched
-    // over the hero still sits on top of it and still takes pointer events.
-    function decline() { video.remove(); }
+  /* ------------------------------------------------------------- reels */
+  // The owner's clips, at 9:16, playing only while they are on screen.
+  //
+  // There was a full-bleed hero video here before. It was removed because
+  // every clip in media/video/ is a vertical phone recording at 480-720px
+  // wide, and stretching one across a desktop hero upscaled it about 3x.
+  //
+  // Two details earn their keep. Nothing is fetched until a card is close to
+  // the viewport, so opening the page costs no video bytes at all. And three
+  // of the clips open on black or on a burnt-in title card, so each carries a
+  // data-start in-point and is looped from there rather than from zero — a
+  // row of black rectangles is what a naive loop would give.
+  (function reels() {
+    var cards = document.querySelectorAll(".reel-card video");
+    if (!cards.length) return;
 
     var net = navigator.connection || {};
-    if (net.saveData) return decline();                        // Data Saver on
-    if (/(^|-)(2g|slow-2g)$/.test(net.effectiveType || "")) return decline();
+    var thrifty = net.saveData ||
+                  /(^|-)(2g|slow-2g)$/.test(net.effectiveType || "");
 
-    // Phones get the photograph, not the footage, for two reasons that point
-    // the same way. The clip is a landscape pan, so a portrait viewport crops
-    // it to its middle — a stretch of ceiling, with the room gone. And it is
-    // 4.3MB on a connection the visitor may be paying for by the megabyte.
-    // The <picture> element already hands a phone a portrait frame that is
-    // composed for that shape, so skipping the video here is an upgrade.
-    if (window.matchMedia("(max-width: 700px)").matches) return decline();
-
-    video.src = video.getAttribute("data-hero-video");
-    video.load();
-
-    // Cross-fade in only once there are real frames to show, otherwise the
-    // poster is replaced by a black box for as long as the first keyframe
-    // takes to arrive.
-    video.addEventListener("canplay", function () {
-      video.classList.add("is-ready");
-    }, { once: true });
-
-    var playing = video.play();
-    if (playing && playing.catch) {
-      // Autoplay refused (some iOS low-power states): drop back to the poster
-      // rather than leaving a frozen first frame on screen.
-      playing.catch(function () { video.remove(); });
+    // A still frame is the whole experience for reduced-motion and metered
+    // connections: fetch metadata so the first frame can be shown, and never
+    // call play().
+    if (reduce || thrifty) {
+      cards.forEach(function (v) {
+        v.removeAttribute("loop");
+        v.preload = "metadata";
+      });
+      return;
     }
 
-    // Stop decoding while the hero is off-screen. Video decode is the most
-    // expensive thing on this page and it is pure waste once scrolled past.
-    if (hasIO) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) { video.play().catch(function () {}); }
-          else { video.pause(); }
-        });
-      }, { threshold: 0.01 }).observe(video);
+    if (!hasIO) return;
+
+    // Decode only what is visible. Six simultaneous video decodes is the
+    // kind of thing that turns a phone into a hand warmer.
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting && !reduce && !thrifty) {
+          v.play().catch(function () { /* autoplay refused: leave the frame */ });
+        } else {
+          v.pause();
+        }
+      });
+    }, { rootMargin: "100px", threshold: 0.35 });
+
+    cards.forEach(function (v) { io.observe(v); });
+  })();
+
+  /* ---------------------------------------------------------- tassels */
+  // The tasselled cords off the West Walk ceiling swags. Spacing is what
+  // makes them read: one every ~34px looks like a fringe, one every 90px
+  // looks like a few threads came loose, which is what a hard-coded 14
+  // across a 1265px panel gave.
+  (function tassels() {
+    var rows = document.querySelectorAll("[data-tassels]");
+    if (!rows.length) return;
+
+    var SPACING = 34;
+
+    function fill(row) {
+      var width = row.clientWidth;
+      if (!width) return;
+      var wanted = Math.max(6, Math.round(width / SPACING));
+      if (row.childElementCount === wanted) return;      // nothing to do
+      row.textContent = "";
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < wanted; i++) frag.appendChild(document.createElement("i"));
+      row.appendChild(frag);
     }
+
+    rows.forEach(fill);
+
+    // Re-space on resize, debounced — rebuilding on every resize event would
+    // thrash the DOM for an ornament.
+    var timer;
+    window.addEventListener("resize", function () {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(function () { rows.forEach(fill); }, 180);
+    }, { passive: true });
+  })();
+
+  /* ------------------------------------------------------ pearl strand */
+  // Lights every pearl up to the section being read, and marks the current
+  // one. Cumulative rather than one-at-a-time: a strand that fills says how
+  // far through the page you are, which a single moving dot does not.
+  (function strand() {
+    var pearls = Array.prototype.slice.call(
+      document.querySelectorAll(".strand a")
+    );
+    if (!pearls.length || !hasIO) return;
+
+    var ids = pearls.map(function (a) { return a.getAttribute("href").slice(1); });
+
+    function lightUpTo(index) {
+      pearls.forEach(function (a, i) {
+        a.classList.toggle("is-lit", i <= index);
+        if (i === index) a.setAttribute("aria-current", "true");
+        else a.removeAttribute("aria-current");
+      });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var i = ids.indexOf(entry.target.id);
+        if (i > -1) lightUpTo(i);
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+
+    ids.forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+
+    lightUpTo(0);
   })();
 
   /* ---------------------------------------------------- reveal on scroll */
