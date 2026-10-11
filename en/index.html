@@ -1,0 +1,922 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- The English twin of the Arabic page.
+     ===========================================================
+     Everything except the words is shared: the same stylesheets, the same
+     app.js, the same photographs and clips. Only the copy and the direction
+     differ, so a design change made once applies to both and cannot drift.
+
+     The layout needs no LTR variant because it was built on logical
+     properties throughout — inset-inline, margin-inline, padding-block — so
+     setting dir="ltr" here is the whole adaptation. The two places that used
+     a visual flip (the outward arrows) are now scoped to [dir="rtl"] in
+     styles.css for exactly this reason.
+
+     Asset paths are root-absolute. This document lives one level down, and
+     relative paths would resolve against /en/.
+
+     What is NOT shared is the copy, which means the two files have to be kept
+     in step by hand. That is the honest cost of a second language on a static
+     site, and it is cheaper than it looks: the sections are in the same order
+     with the same class names, so a change is the same edit twice. -->
+
+<title>Shai Bu Hamad | Qatari Coffee Shop in Doha — West Walk &amp; Gulf Mall</title>
+<meta name="description" content="Shai Bu Hamad is a Qatari coffee shop in Doha serving karak, Arabic coffee and breakfast in majlis seating. Two branches: West Walk in Al Waab and Gulf Mall in Al Gharrafa.">
+
+<meta property="og:type" content="restaurant">
+<meta property="og:locale" content="en_QA">
+<meta property="og:locale:alternate" content="ar_QA">
+<meta property="og:title" content="Shai Bu Hamad · شاي بو حمد">
+<meta property="og:description" content="Qatari hospitality in Doha — karak, Arabic coffee and breakfast, at West Walk and Gulf Mall.">
+<meta property="og:image" content="https://www.shaibuhamad.com/assets/img/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shai Bu Hamad — Qatari hospitality in Doha">
+<meta property="og:url" content="https://www.shaibuhamad.com/en/">
+<meta property="og:site_name" content="Shai Bu Hamad">
+
+<link rel="canonical" href="https://www.shaibuhamad.com/en/">
+
+<!-- Both directions declared on both pages, plus x-default pointing at the
+     Arabic one: this is a Qatari house and Arabic is the original, not a
+     translation of the English. Google needs the pair to be reciprocal or it
+     ignores the annotation entirely. -->
+<link rel="alternate" hreflang="ar" href="https://www.shaibuhamad.com/">
+<link rel="alternate" hreflang="en" href="https://www.shaibuhamad.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://www.shaibuhamad.com/">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shai Bu Hamad · Qatari Coffee Shop in Doha">
+<meta name="twitter:description" content="Karak, Arabic coffee and breakfast in majlis seating — West Walk and Gulf Mall.">
+<meta name="twitter:image" content="https://www.shaibuhamad.com/assets/img/share-card.jpg">
+
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/icon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon-180.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
+<link rel="stylesheet" href="/assets/css/styles.css?v=14">
+<link rel="stylesheet" href="/assets/css/scenes.css?v=14">
+<link rel="stylesheet" href="/assets/css/cinematic.css?v=14">
+
+<link rel="preload" as="image" href="/media/photos/west-walk/deco-05.jpeg" media="(max-width: 700px)">
+<link rel="preload" as="image" href="/media/photos/west-walk/deco-01.jpeg" media="(min-width: 700.01px)">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CafeOrCoffeeShop",
+      "name": "Shai Bu Hamad — West Walk",
+      "inLanguage": "en",
+      "url": "https://www.shaibuhamad.com/en/",
+      "image": "https://www.shaibuhamad.com/media/photos/west-walk/deco-01.jpeg",
+      "telephone": "+974 3037 3888",
+      "servesCuisine": ["Qatari", "Gulf", "Coffee and Tea"],
+      "priceRange": "$$",
+      "hasMenu": "https://shai-bu-hamad.yallaqrcodes.com/branch/1/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Al Sidra Street, Al Waab",
+        "addressLocality": "Doha",
+        "addressCountry": "QA"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Saturday", "Sunday", "Monday", "Tuesday",
+            "Wednesday", "Thursday", "Friday"
+          ],
+          "opens": "07:00",
+          "closes": "01:00"
+        }
+      ]
+    },
+    {
+      "@type": "CafeOrCoffeeShop",
+      "name": "Shai Bu Hamad — Gulf Mall",
+      "inLanguage": "en",
+      "url": "https://www.shaibuhamad.com/en/",
+      "image": "https://www.shaibuhamad.com/media/photos/gulf-mall/deco-02.jpeg",
+      "telephone": "+974 7109 3000",
+      "servesCuisine": ["Qatari", "Gulf", "Coffee and Tea"],
+      "priceRange": "$$",
+      "hasMenu": "https://shai-bu-hamad.yallaqrcodes.com/branch/1/",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Al Gharrafa",
+        "addressLocality": "Doha",
+        "addressCountry": "QA"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": [
+            "Saturday", "Sunday", "Monday",
+            "Tuesday", "Wednesday", "Thursday"
+          ],
+          "opens": "07:00",
+          "closes": "23:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Friday",
+          "opens": "13:00",
+          "closes": "23:00"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.shaibuhamad.com/en/#faq",
+      "inLanguage": "en",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where are the Shai Bu Hamad branches in Doha?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two: West Walk in Al Waab — Al Sidra Street, and Gulf Mall in Al Gharrafa. Both are Qatari coffee shops with majlis seating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the Shai Bu Hamad opening hours?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "West Walk: every day from 7:00 am to 1:00 am, closed during Friday prayer. Gulf Mall: Saturday to Thursday 7:00 am to 11:00 pm, and Friday from 1:00 pm to 11:00 pm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I see the menu and prices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The full menu with prices is on the menu page, and it is the same menu at both branches."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Shai Bu Hamad serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Karak, Arabic coffee from an in-house blend, the majlis teapot, breakfast with regag and labneh, kabsa badawi, balaleet, pastries and cold drinks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I sit and work at Shai Bu Hamad?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — the room is built around long majlis seating rather than quick tables."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="intro__inner">
+    <img class="intro__logo" src="/assets/img/logo-cream.png"
+         alt="" width="1200" height="355">
+    <span class="intro__rule"></span>
+    <p class="intro__tag lat" lang="en">DOHA · QATAR</p>
+  </div>
+</div>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="pour" aria-hidden="true"></div>
+
+<nav class="strand" aria-label="Page sections">
+  <a href="#top"        data-pearl="top"><span>Front</span></a>
+  <a href="#heritage"   data-pearl="heritage"><span>Beginning</span></a>
+  <a href="#story"      data-pearl="story"><span>Story</span></a>
+  <a href="#atmosphere" data-pearl="atmosphere"><span>Atmosphere</span></a>
+  <a href="#reels"      data-pearl="reels"><span>Inside</span></a>
+  <a href="#menu"       data-pearl="menu"><span>Menu</span></a>
+  <a href="#vision"     data-pearl="vision"><span>Vision</span></a>
+  <a href="#branches"   data-pearl="branches"><span>Branches</span></a>
+</nav>
+
+<header class="header" id="header">
+  <a class="header__logo" href="#top" aria-label="Shai Bu Hamad — home">
+    <img class="on-dark" src="/assets/img/mark-cream.png" alt="Shai Bu Hamad" width="1000" height="210">
+    <img class="on-light" src="/assets/img/mark-brown.png" alt="" width="1000" height="210" aria-hidden="true">
+  </a>
+  <nav class="nav" aria-label="Main navigation">
+    <a href="#heritage">Beginning</a>
+    <a href="#story">Story</a>
+    <a href="#atmosphere">Atmosphere</a>
+    <a href="#reels">Inside</a>
+    <a href="#menu">Menu</a>
+    <a href="#branches">Branches</a>
+  </nav>
+  <!-- The switch says العربية in Arabic, not "Arabic" in English. Someone
+       looking for their own language scans for it in its own script. -->
+  <a class="btn btn--light lang-switch" href="/" hreflang="ar" lang="ar">العربية</a>
+  <a class="btn btn--solid" href="#branches">Visit us</a>
+</header>
+
+<main id="main">
+
+  <!-- ==================================================== 1 · cinema hero -->
+  <section class="cine" id="top">
+    <div class="cine__media">
+      <picture>
+        <source media="(max-width: 700px)"
+                srcset="/media/photos/west-walk/deco-05.jpeg"
+                width="1200" height="1600">
+        <img src="/media/photos/west-walk/deco-01.jpeg"
+             alt="The Shai Bu Hamad room at West Walk — sadu cloth hung from the ceiling and backlit mirrors"
+             width="1600" height="1200" fetchpriority="high">
+      </picture>
+    </div>
+
+    <div class="cine__inner">
+      <p class="cine__kicker">Shai Bu Hamad · Qatari Coffee Shop · Doha</p>
+      <!-- The headline is a translation of the sentence painted on the wall
+           behind the tea counter, kept as a translation rather than replaced
+           with English copywriting. A "heavy soul" in Gulf Arabic is tiring
+           company; a majlis without one is a room you can stay in. -->
+      <h1 class="cine__quote">A majlis with <b>no heavy</b> company</h1>
+      <p class="cine__sub">
+        Painted on our wall, and meant: Qatari hospitality you can sit inside
+        at your own pace — karak, Arabic coffee and breakfast, at West Walk
+        and Gulf Mall.
+      </p>
+      <ul class="hero__meta">
+        <li>Est. 2025</li>
+        <li class="lat" lang="en">WEST WALK</li>
+        <li class="lat" lang="en">GULF MALL</li>
+      </ul>
+    </div>
+
+    <span class="hero__scroll lat" lang="en" aria-hidden="true">SCROLL</span>
+  </section>
+
+  <div class="sadu" role="img" aria-label="The Shai Bu Hamad sadu pattern">
+    <div class="sadu__cloth"></div>
+    <div class="sadu__weft" aria-hidden="true"></div>
+  </div>
+
+  <!-- ============================================= 1b · heritage (darkest) -->
+  <section class="sec sec--darkest" id="heritage">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">The beginning</p>
+        <h2 class="statement">From the desert… to Doha</h2>
+        <p class="lede">
+          Shai Bu Hamad is not a cafe that opened in 2025. It is a habit
+          centuries old, carried from the tent of hair into a shop in the
+          city — the same tea, the same weave, and the same door that does
+          not close.
+        </p>
+      </div>
+
+      <div class="chapters">
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="/media/photos/west-walk/deco-02.jpeg"
+                 alt="The long banquette and sadu cushions at the West Walk branch"
+                 width="1200" height="1600" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" lang="en" aria-hidden="true">01</span>
+            <h3>The majlis — hospitality without a door</h3>
+            <p>
+              In the desert, hospitality kept no appointment and needed no
+              invitation. The majlis was laid on the ground; whoever arrived
+              sat down, and no one was asked their business before they were
+              given something to drink. That same arrangement — long facing
+              benches rather than separate tables — is what this place was
+              built on.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="/media/photos/west-walk/deco-03.jpeg"
+                 alt="A brass dallah and a backlit mirror engraved with an oryx, beside old Qatari banknotes"
+                 width="1200" height="1600" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" lang="en" aria-hidden="true">02</span>
+            <h3>The dallah — the first thing said</h3>
+            <p>
+              Before conversation, the cup is poured. The small measure is
+              deliberate: it is not a serving meant to fill you, it is a
+              signal to stay and be poured again. The dallah on our shelf is
+              not an ornament — it is the first sentence the room says to its
+              guest.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter">
+          <div class="chapter__media" data-settle>
+            <img src="/media/photos/sadu-textile.jpeg"
+                 alt="Sadu weave: camel-coloured ground with rows of red, white and orange beading and black combs"
+                 width="1383" height="1025" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" lang="en" aria-hidden="true">03</span>
+            <h3>Sadu — a wall that is woven</h3>
+            <p>
+              Women wove it on the ground loom weft by weft, not for
+              decoration but to be <strong>the wall of the house</strong>
+              itself: it held off the sun and broke the wind. So when you see
+              the pattern on our chairs and cushions, you are seeing the rest
+              of that wall.
+            </p>
+          </div>
+        </article>
+
+        <article class="chapter chapter--now">
+          <div class="chapter__media" data-settle>
+            <img src="/media/photos/gulf-mall/deco-02.jpeg"
+                 alt="The Gulf Mall branch — illuminated sign and slatted timber ceiling"
+                 width="1600" height="1200" loading="lazy">
+          </div>
+          <div class="chapter__body" data-rise>
+            <span class="chapter__n lat" lang="en" aria-hidden="true">04</span>
+            <h3>Now — the same majlis, in the city</h3>
+            <p>
+              We did not design a decor "in the Qatari style". We moved the
+              original: the tea is poured in front of you rather than behind
+              a door, the sadu is on the cushions rather than in a frame, and
+              the sentence on our wall was not written by an advertising
+              office — <strong>"A majlis with no heavy company"</strong>. Two
+              branches in Doha, and the same door standing open.
+            </p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item">Shai Bu Hamad</span>
+      <span class="marquee__item lat" lang="ar">شاي بو حمد</span>
+      <span class="marquee__item">Karak</span>
+      <span class="marquee__item">Arabic Coffee</span>
+      <span class="marquee__item">Majlis Tea Pot</span>
+      <span class="marquee__item lat" lang="en">DOHA</span>
+      <span class="marquee__item">Shai Bu Hamad</span>
+      <span class="marquee__item lat" lang="ar">شاي بو حمد</span>
+      <span class="marquee__item">Karak</span>
+      <span class="marquee__item">Arabic Coffee</span>
+      <span class="marquee__item">Majlis Tea Pot</span>
+      <span class="marquee__item lat" lang="en">DOHA</span>
+    </div>
+  </div>
+
+  <!-- ===================================================== 3 · story (sand) -->
+  <section class="sec sec--sand" id="story">
+    <div class="mark-star" aria-hidden="true"></div>
+    <div class="shell grid grid--aside">
+      <div>
+        <p class="eyebrow" data-reveal>The story</p>
+        <h2 class="statement" data-reveal>A landmark in hospitality in the State of Qatar</h2>
+        <p class="lede" data-reveal data-delay="1">
+          Shai Bu Hamad was founded to serve a blend of Gulf heritage and
+          Qatari taste.
+        </p>
+        <p data-reveal data-delay="2">
+          It gives its guests a high standard of service and food that joins
+          the authenticity of the Qatari kitchen to a contemporary Gulf hand.
+          Warm rooms and comfortable seating, designed to reflect that
+          cultural balance — a place for anyone looking for an exceptional
+          table in the heart of Qatar.
+        </p>
+      </div>
+
+      <figure class="mirror" data-reveal data-delay="1">
+        <img src="/media/photos/menu/majlis-teapot.jpeg"
+             alt="The teapot on its warming flame, with the lit mashrabiya screen behind it"
+             width="1280" height="1600" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================================================ 4 · quote band (dark) -->
+  <section class="qband">
+    <div class="qband__media">
+      <img src="/media/photos/west-walk/deco-04.jpeg"
+           alt="The falcon canvas and the illuminated Shai Bu Hamad sign on the wall"
+           width="1200" height="1600" loading="lazy">
+    </div>
+    <div class="qband__inner">
+      <!-- A Gulf proverb, inherited and unattributed. Rendered close to the
+           literal rather than smoothed into an English idiom: "whoever does
+           not know the falcon, grills it" — a thing of value in the hands of
+           someone who cannot see its worth. -->
+      <blockquote data-rise>Whoever does not know the falcon… grills it</blockquote>
+      <cite data-rise>From the falcon canvas — West Walk</cite>
+    </div>
+  </section>
+
+  <div class="lightbar" aria-hidden="true"></div>
+
+  <!-- ============================================ 5 · atmosphere (cream) -->
+  <section class="sec sec--cream sticky-scene" id="atmosphere">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">Atmosphere</p>
+        <h2 class="statement">International standards in every corner</h2>
+      </div>
+
+      <div class="sticky-scene__grid">
+        <div class="sticky-scene__media grade" data-scene-media>
+          <figure class="is-active" data-scene="0">
+            <img src="/media/photos/west-walk/deco-01.jpeg" alt="The room, with sadu hung from the ceiling and its tassels" width="1600" height="1200" loading="lazy">
+          </figure>
+          <figure data-scene="1">
+            <img src="/media/photos/west-walk/deco-02.jpeg" alt="The long row of seating and sadu cushions" width="1200" height="1600" loading="lazy">
+          </figure>
+          <figure data-scene="2">
+            <img src="/media/photos/west-walk/deco-03.jpeg" alt="A backlit mirror engraved with an oryx, a brass dallah, and old Qatari banknotes" width="1200" height="1600" loading="lazy">
+          </figure>
+          <figure data-scene="3">
+            <img src="/media/photos/west-walk/deco-05.jpeg" alt="The tea bar: glasses lined up, and the samovar carrying the house name" width="1200" height="1600" loading="lazy">
+          </figure>
+        </div>
+
+        <div class="sticky-scene__steps">
+          <div data-scene-step="0">
+            <p class="step__n lat" lang="en">01</p>
+            <h3>Warm authenticity</h3>
+            <p>
+              From the moment you arrive you are met with warm authenticity
+              and a generous welcome, and with details that carry the depth of
+              Gulf heritage and the elegance of Qatari design.
+            </p>
+          </div>
+          <div data-scene-step="1">
+            <p class="step__n lat" lang="en">02</p>
+            <h3>The majlis</h3>
+            <p>
+              Comfortable seating designed around that cultural balance — for
+              a close conversation, or for a corner where some of your work
+              gets done unhurried.
+            </p>
+          </div>
+          <div data-scene-step="2">
+            <p class="step__n lat" lang="en">03</p>
+            <h3>Light and detail</h3>
+            <p>
+              Quiet light and considered decor make the room inviting, so the
+              experience is a visual one before it is a meal.
+            </p>
+          </div>
+          <div data-scene-step="3">
+            <p class="step__n lat" lang="en">04</p>
+            <h3>The tea bar</h3>
+            <p>
+              Glasses set on their saucers, the samovar carrying the name of
+              the house, the dallahs ready — all of it in the open, because
+              tea here is made in front of you and not behind a door.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================= 6 · rail (dark) -->
+  <section class="sec sec--darkest">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">A walk through</p>
+        <h2 class="statement">Design that reflects a cultural balance</h2>
+      </div>
+      <div class="rail grade" role="group" aria-label="A walk through both branches" tabindex="0">
+        <figure><img src="/media/photos/west-walk/deco-01.jpeg" alt="West Walk — the room and the hanging sadu" width="1600" height="1200" loading="lazy"></figure>
+        <figure><img src="/media/photos/line-art-wall.jpeg" alt="A guest standing before a line-drawn sculpture on a slatted timber wall" width="900" height="1600" loading="lazy"></figure>
+        <figure><img src="/media/photos/west-walk/deco-04.jpeg" alt="West Walk — the illuminated sign and the falcon canvas" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="/media/photos/gulf-mall/deco-02.jpeg" alt="Gulf Mall — the frontage and the slatted timber ceiling" width="1600" height="1200" loading="lazy"></figure>
+        <figure><img src="/media/photos/west-walk/deco-05.jpeg" alt="West Walk — the tea bar and the samovar" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="/media/photos/gulf-mall/deco-03.jpeg" alt="Gulf Mall — an old lantern with the house mark behind it" width="1080" height="1350" loading="lazy"></figure>
+        <figure><img src="/media/photos/west-walk/deco-03.jpeg" alt="West Walk — the oryx mirror and the old banknotes" width="1200" height="1600" loading="lazy"></figure>
+        <figure><img src="/media/photos/vintage-telephone-tea.jpeg" alt="An old telephone, a studded incense burner and a glass of tea at the end of the bar" width="598" height="976" loading="lazy"></figure>
+        <figure><img src="/media/photos/west-walk/deco-02.jpeg" alt="West Walk — the row of seating and sadu cushions" width="1200" height="1600" loading="lazy"></figure>
+      </div>
+      <p class="rail__hint">Swipe sideways</p>
+    </div>
+  </section>
+
+  <!-- ================================================ 6b · reels (brown) -->
+  <section class="sec sec--brown" id="reels">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">Inside</p>
+        <h2 class="statement">The place moving — filmed by us</h2>
+      </div>
+    </div>
+
+    <div class="reels" role="group" aria-label="Clips from both branches" tabindex="0">
+      <figure class="reel-card reel-card--lead">
+        <video src="/media/video/menu-breakfast.mp4"
+               poster="/media/photos/menu-breakfast-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="A member of staff carrying the order tray to the table"></video>
+        <figcaption><strong>Order up</strong><span class="lat" lang="ar">الطلب يوصل</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/nostalgia-wall.mp4"
+               poster="/media/photos/nostalgia-wall-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="A hanging lantern, a decorated plate and framed pictures on the memory wall"></video>
+        <figcaption><strong>The memory wall</strong><span class="lat" lang="ar">جدار الذكريات</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/deco-04.mp4"
+               poster="/media/photos/deco-04-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="A walk through the Gulf Mall branch"></video>
+        <figcaption><strong>Through Gulf Mall</strong><span class="lat" lang="en">GULF MALL</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/west-walk-deco-01.mp4"
+               poster="/media/photos/west-walk-deco-01-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="From the West Walk frontage into the room"></video>
+        <figcaption><strong>Door to cup</strong><span class="lat" lang="en">WEST WALK</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/west-walk-deco-02.mp4"
+               poster="/media/photos/west-walk-deco-02-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="Bishts and thobes hanging on the stand"></video>
+        <figcaption><strong>On the hooks</strong><span class="lat" lang="ar">على المشجب</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/menu-mixed-breakfast.mp4"
+               poster="/media/photos/menu-mixed-breakfast-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="The breakfast spread from above"></video>
+        <figcaption><strong>The spread</strong><span class="lat" lang="ar">سفرة الفطور</span></figcaption>
+      </figure>
+      <figure class="reel-card">
+        <video src="/media/video/menu-toast-karak.mp4"
+               poster="/media/photos/menu-toast-karak-poster.jpg"
+               muted loop playsinline preload="none"
+               aria-label="Cheese toast with karak"></video>
+        <figcaption><strong>Toast &amp; karak</strong><span class="lat" lang="en">TOAST &amp; KARAK</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="shell"><p class="rail__hint">Swipe sideways</p></div>
+  </section>
+
+  <!-- ====================================================== 7 · menu (sand) -->
+  <section class="sec sec--sand" id="menu">
+    <div class="dado dado--quiet" aria-hidden="true"></div>
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">The menu</p>
+        <h2 class="statement">Blends chosen by our own team</h2>
+        <p>
+          So the flavours meet properly and sit with our dishes — and for
+          anyone who loves real Arabic coffee, our own blend is made for a
+          careful palate.
+        </p>
+      </div>
+
+      <div class="feature">
+        <div class="feature__body" data-rise>
+          <h3 class="statement">Majlis tea</h3>
+          <p class="card__en lat" lang="ar">شاي المجلس</p>
+          <p class="lede">
+            Poured hot into the glass, on a saucer carrying the name of the
+            house.
+          </p>
+          <p>
+            This is the tea a majlis begins and ends with — clear, strong, no
+            milk, served in its small glass to be drunk slowly and poured
+            again. And our tea is made in front of you, not behind a door;
+            that is why this place exists, not a line of advertising.
+          </p>
+        </div>
+
+        <figure class="pourshot" data-settle>
+          <img src="/media/photos/menu/majlis-tea-pour.jpeg"
+               alt="Majlis tea poured hot into a glass on a saucer bearing the house mark"
+               width="900" height="1600" loading="lazy">
+          <div class="smoke" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </figure>
+      </div>
+
+      <div class="grid grid--3" style="margin-block-start: var(--s-8)">
+        <figure class="plate" data-settle>
+          <img src="/media/photos/menu/breakfast.jpeg" alt="The breakfast tray: regag, labneh, hummus, halloumi, salad and meat" width="768" height="1376" loading="lazy">
+          <figcaption>
+            <h3>Breakfast tray</h3>
+            <span class="lat" lang="ar">صينيّة الفطور</span>
+          </figcaption>
+        </figure>
+        <figure class="plate" data-settle>
+          <img src="/media/photos/menu/kabsa-badawi-01.jpeg" alt="Kabsa badawi — rice and a steamed cut of meat" width="768" height="1344" loading="lazy">
+          <figcaption>
+            <h3>Kabsa badawi</h3>
+            <span class="lat" lang="ar">كبسة بدوي</span>
+          </figcaption>
+        </figure>
+        <figure class="plate" data-settle>
+          <img src="/media/photos/menu/balaleet.jpeg" alt="Balaleet — sweetened vermicelli under an omelette" width="768" height="1376" loading="lazy">
+          <figcaption>
+            <h3>Balaleet</h3>
+            <span class="lat" lang="ar">بلاليط</span>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="feature" style="margin-block-start: var(--s-8)">
+        <figure class="topshot" data-settle>
+          <img src="/media/photos/menu/hayyak-cappuccino.jpeg"
+               alt="A cappuccino with the word hayyak written in cocoa on the foam, beside a dessert on a silver stand and a napkin carrying the house drawing"
+               width="900" height="1600" loading="lazy">
+        </figure>
+        <div class="feature__body" data-rise>
+          <h3 class="statement">"Hayyak" — written on the cup</h3>
+          <p class="card__en lat" lang="ar">حياك</p>
+          <p class="lede">
+            The welcome here is not only said at the door — it is written on
+            the foam before the cup reaches the table.
+          </p>
+          <p>
+            And on the same tray: a dessert on a silver stand, and a napkin
+            carrying the house drawing — a man in a ghutra holding his cup.
+            Small details are what separate a place from the one next door,
+            not the sign on the frontage.
+          </p>
+        </div>
+      </div>
+
+      <aside class="menu-live" data-reveal>
+        <div>
+          <h3>The full menu, with prices</h3>
+          <p>The same menu at both branches — West Walk and Gulf Mall.</p>
+        </div>
+        <a class="btn btn--solid menu-live__cta"
+           href="https://shai-bu-hamad.yallaqrcodes.com/branch/1/"
+           target="_blank" rel="noopener">
+          Open the menu
+          <svg class="menu-live__arrow" viewBox="0 0 16 16" width="13" height="13"
+               fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true" focusable="false">
+            <path d="M5 11 11 5"/><path d="M6 5h5v5"/>
+          </svg>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ==================================================== 8 · vision (brown) -->
+  <section class="sec sec--brown" id="vision">
+    <div class="dado" aria-hidden="true"></div>
+    <div class="shell grid grid--2">
+      <div data-reveal>
+        <p class="eyebrow">Vision</p>
+        <h3 class="statement">A leading destination celebrating Gulf flavour</h3>
+        <p>
+          Our ambition is to hold a place as a leading destination that
+          celebrates the authenticity of Gulf flavour and the warmth of
+          Qatari hospitality, while continuing to offer our guests new and
+          distinctive experiences.
+        </p>
+      </div>
+      <div data-reveal data-delay="1">
+        <p class="eyebrow">Our mission</p>
+        <h3 class="statement">Exceptional service, and a table remembered</h3>
+        <p>
+          We hold to the highest standards of quality in everything we serve,
+          and we meet every guest with attention and respect, so that the
+          meal leaves something behind it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================= 9 · branches (cream) -->
+  <section class="sec sec--cream" id="branches">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">Branches</p>
+        <h2 class="statement">Two branches in Doha</h2>
+      </div>
+
+      <div class="grid grid--2">
+        <article class="branch" data-reveal>
+          <div class="branch__media inset grade" data-settle>
+            <img src="/media/photos/west-walk/deco-01.jpeg" alt="Inside the West Walk branch — hanging sadu and backlit mirrors" width="1600" height="1200" loading="lazy">
+          </div>
+          <div class="branch__body">
+            <h3>West Walk</h3>
+            <p>Al Waab — Al Sidra Street, Doha</p>
+            <dl>
+              <dt>Opening hours</dt>
+              <dd>Every day · 7:00 am — 1:00 am</dd>
+              <dd class="branch__note">Closed during Friday prayer</dd>
+              <dt>Phone</dt>
+              <dd>
+                <a class="branch__tel lat" lang="en" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+              </dd>
+            </dl>
+            <a class="branch__dir"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=Shai+Bu+Hamad%2C+West+Walk%2C+Al+Waab%2C+Doha"
+               target="_blank" rel="noopener">
+              Directions on the map
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"
+                   stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 11 11 5"/><path d="M6 5h5v5"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="branch" data-reveal data-delay="1">
+          <div class="branch__media inset grade" data-settle>
+            <img src="/media/photos/gulf-mall/deco-02.jpeg" alt="The Gulf Mall branch — illuminated sign and slatted timber ceiling" width="1600" height="1200" loading="lazy">
+          </div>
+          <div class="branch__body">
+            <h3>Gulf Mall</h3>
+            <p>Al Gharrafa, Doha</p>
+            <dl>
+              <dt>Opening hours</dt>
+              <dd>Saturday — Thursday · 7:00 am — 11:00 pm</dd>
+              <dd>Friday · 1:00 pm — 11:00 pm</dd>
+              <dt>Phone</dt>
+              <dd>
+                <a class="branch__tel lat" lang="en" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+              </dd>
+            </dl>
+            <a class="branch__dir"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=Shai+Bu+Hamad%2C+Gulf+Mall%2C+Al+Gharrafa%2C+Doha"
+               target="_blank" rel="noopener">
+              Directions on the map
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"
+                   stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 11 11 5"/><path d="M6 5h5v5"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <p class="figure__cap" data-reveal>
+        Photographs of both branches as they are — shot by the owner, October 2026.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== 10 · FAQ (sand) -->
+  <section class="sec sec--sand" id="faq">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">Questions</p>
+        <h2 class="statement">Asked and answered</h2>
+      </div>
+
+      <div class="faq" data-reveal data-delay="1">
+        <details class="faq__item">
+          <summary>Where are the Shai Bu Hamad branches in Doha?</summary>
+          <div class="faq__a">
+            <p>
+              Two: <strong>West Walk</strong> in Al Waab — Al Sidra Street,
+              and <strong>Gulf Mall</strong> in Al Gharrafa. Both are Qatari
+              coffee shops with majlis seating.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What are the opening hours?</summary>
+          <div class="faq__a">
+            <p>
+              <strong>West Walk:</strong> every day from 7:00 am to 1:00 am,
+              closed during Friday prayer.
+            </p>
+            <p>
+              <strong>Gulf Mall:</strong> Saturday to Thursday 7:00 am —
+              11:00 pm, and Friday from 1:00 pm to 11:00 pm.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>How do I see the menu and prices?</summary>
+          <div class="faq__a">
+            <p>
+              The full menu with prices is on the
+              <a href="https://shai-bu-hamad.yallaqrcodes.com/branch/1/"
+                 target="_blank" rel="noopener">menu page</a> —
+              and it is the same menu at both branches.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What do you serve?</summary>
+          <div class="faq__a">
+            <p>
+              Karak, Arabic coffee from our own blend, the majlis teapot,
+              breakfast with regag and labneh, kabsa badawi, balaleet,
+              pastries and cold drinks.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Can I sit and work there?</summary>
+          <div class="faq__a">
+            <p>
+              Yes — the room is built around long majlis seating rather than
+              quick tables, and the sentence on our wall says as much:
+              "A majlis with no heavy company".
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ======================================================= 11 · foot (dark) -->
+<footer class="foot" id="contact">
+  <div class="shell">
+    <div class="grid grid--split foot__top">
+      <div>
+        <h3>Follow us</h3>
+        <ul class="social">
+          <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank" lang="en">INSTAGRAM</a></li>
+          <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank" lang="en">TIKTOK</a></li>
+          <li><a href="https://facebook.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank" lang="en">FACEBOOK</a></li>
+          <li><a href="https://snapchat.com/add/shai.buhamad" rel="noopener noreferrer" target="_blank" lang="en">SNAPCHAT</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell foot__grid">
+    <div>
+      <h3>Shai Bu Hamad</h3>
+      <p>Shai Bu Hamad Restaurants Company for serving meals and beverages — Doha, Qatar.</p>
+    </div>
+    <div>
+      <h3>Branches</h3>
+      <ul>
+        <li>
+          West Walk — Al Waab, Al Sidra Street<br>
+          <a class="lat" lang="en" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+        </li>
+        <li>
+          Gulf Mall — Al Gharrafa<br>
+          <a class="lat" lang="en" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Accounts</h3>
+      <ul>
+        <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank" lang="en">@shaibuhamad.qa</a></li>
+        <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank" lang="en">@shaibuhamadqtr</a></li>
+        <li><a href="https://snapchat.com/add/shai.buhamad" rel="noopener noreferrer" target="_blank" lang="en">@shai.buhamad</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="shell foot__legal">
+    <span>© <span id="year">2026</span> Shai Bu Hamad — all rights reserved</span>
+    <span class="lat" lang="en">DOHA · QATAR</span>
+  </div>
+</footer>
+
+<script src="/assets/js/app.js?v=14"></script>
+</body>
+</html>

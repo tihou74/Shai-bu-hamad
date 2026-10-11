@@ -509,7 +509,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: color var(--quick) var(--ease),
               border-color var(--quick) var(--ease);
 }
-.branch__dir svg { flex: none; transform: scaleX(-1); }
+.branch__dir svg { flex: none; }
+[dir="rtl"] .branch__dir svg { transform: scaleX(-1); }
 .branch__dir:hover,
 .branch__dir:focus-visible {
   color: var(--brown);
@@ -583,6 +584,30 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn--light { color: var(--cream); }
 .btn--light:hover { background: var(--cream); color: var(--brown); }
 
+/* The language switch sits beside the "visit us" button and must not compete
+   with it: same pill, no fill, slightly tighter. It is also the one control
+   in the header that has to stay legible against both header states — the
+   transparent one over the hero photograph and the solid one after scroll —
+   so it borrows the header's own colour rather than setting its own. */
+.lang-switch {
+  padding-inline: var(--s-5);
+  letter-spacing: .1em;
+  color: inherit;
+  border-color: color-mix(in srgb, currentColor 45%, transparent);
+}
+.lang-switch:hover,
+.lang-switch:focus-visible {
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  border-color: currentColor;
+  color: inherit;
+}
+@media (max-width: 760px) {
+  /* The header is already tight on a phone; the switch keeps its place and
+     the "visit us" button is the one that goes, since the branches section
+     it points at is reachable from the nav anyway. */
+  .header .btn--solid:not(.lang-switch) { display: none; }
+}
+
 .social { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .social a {
   font-size: var(--t-small); letter-spacing: .16em;
@@ -597,7 +622,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .foot a:hover { color: var(--cream); }
 .foot__grid { display: grid; gap: var(--s-7); }
 @media (min-width: 780px) { .foot__grid { grid-template-columns: 1.5fr 1fr 1fr; } }
-.foot h4 { font-size: var(--t-small); letter-spacing: .2em; margin-block-end: var(--s-4); color: var(--sand-dark); }
+/* The footer column titles are h3, not h4. They used to be h4 directly after
+   an h2, and a document that jumps h2 -> h4 breaks heading navigation for
+   anyone moving through the page with a screen reader — the level implies a
+   parent heading that is not there. The size is set here, so demoting the tag
+   changed nothing visually. */
+.foot h3 { font-size: var(--t-small); letter-spacing: .2em; margin-block-end: var(--s-4); color: var(--sand-dark); }
 .foot li, .foot p { font-size: var(--t-small); color: color-mix(in srgb, var(--sand) 76%, transparent); margin-block-end: var(--s-2); }
 .foot__legal {
   margin-block-start: var(--s-7); padding-block-start: var(--s-5);
@@ -658,10 +688,15 @@ ul { margin: 0; padding: 0; list-style: none; }
    renders as an empty box. */
 .menu-live__arrow {
   display: inline-block; flex: none;
-  transform: scaleX(-1);
   transition: transform var(--quick) var(--ease);
 }
-.menu-live__cta:hover .menu-live__arrow { transform: scaleX(-1) translate(2px, -2px); }
+.menu-live__cta:hover .menu-live__arrow { transform: translate(-2px, -2px); }
+/* The glyph is drawn pointing up and to the right. "Outward" is up-right in
+   English and up-left in Arabic, so the flip is scoped to the direction
+   rather than baked into the rule — /en/ reuses this stylesheet verbatim and
+   an unscoped scaleX would have it pointing back into its own sentence. */
+[dir="rtl"] .menu-live__arrow { transform: scaleX(-1); }
+[dir="rtl"] .menu-live__cta:hover .menu-live__arrow { transform: scaleX(-1) translate(2px, -2px); }
 @media (max-width: 560px) {
   /* Full width on a phone: a pill floated beside a two-line heading ends up
      narrower than the thumb that has to hit it. */

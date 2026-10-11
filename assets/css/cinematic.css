@@ -341,13 +341,24 @@
   color: color-mix(in srgb, var(--cream) 86%, transparent);
 }
 .cine__kicker {
-  display: flex; align-items: center; gap: var(--s-3);
+  /* flex-start, not center.
+     The rule and the text are flex siblings, so `align-items: center` centred
+     the 1px rule against the whole text block. That was invisible while the
+     kicker was one line and became a defect the moment it was two: the rule
+     settled between the lines and read as a strikethrough across the second
+     one. Caught on the English page, where "Shai Bu Hamad · Qatari Coffee
+     Shop · Doha" wraps at 1280px — but the Arabic kicker wraps on a phone
+     too, so this was a latent bug in both. */
+  display: flex; align-items: flex-start; gap: var(--s-3);
   margin-block-end: var(--s-5);
   font-size: var(--t-small); font-weight: 300; letter-spacing: .24em;
   color: color-mix(in srgb, var(--glow) 88%, transparent);
 }
 .cine__kicker::before {
   content: ""; flex: none; width: 2.4rem; height: 1px; background: currentColor;
+  /* Pinned to the optical middle of the FIRST line, whatever the text does
+     below it. Half the line box, by eye against the lowercase x-height. */
+  margin-block-start: .68em;
 }
 
 /* The phone frame needs its own crop, not just its own file.
