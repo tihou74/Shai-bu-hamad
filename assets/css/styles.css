@@ -497,6 +497,79 @@ ul { margin: 0; padding: 0; list-style: none; }
 .branch__tel:hover,
 .branch__tel:focus-visible { border-block-end-color: currentColor; }
 
+/* Directions. Secondary to the phone number, so it is a quiet link with an
+   icon rather than a second button competing with it. */
+.branch__dir {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  margin-block-start: var(--s-4);
+  padding-block: var(--s-2);
+  font-size: var(--t-small); letter-spacing: .08em;
+  color: var(--brown-soft);
+  border-block-end: 1px solid transparent;
+  transition: color var(--quick) var(--ease),
+              border-color var(--quick) var(--ease);
+}
+.branch__dir svg { flex: none; transform: scaleX(-1); }
+.branch__dir:hover,
+.branch__dir:focus-visible {
+  color: var(--brown);
+  border-block-end-color: currentColor;
+}
+
+/* ------------------------------------------------------------- 10c. the FAQ
+   Native <details>/<summary>: it opens with no JavaScript, it is keyboard
+   operable and announced correctly by screen readers without a single aria
+   attribute, and find-in-page can reach inside closed sections in modern
+   browsers. A hand-built accordion would have cost script and markup to end
+   up worse. */
+.faq {
+  margin-block-start: var(--s-6);
+  border-block-start: 1px solid color-mix(in srgb, var(--brown) 18%, transparent);
+}
+/* Clear the pearl strand, exactly as .menu-live has to.
+   The +/- marker is pushed to the inline end of each row by margin-inline-
+   start: auto, which lands it around 23px from the viewport edge — inside the
+   14-43px band .strand occupies from 1100px up. .strand is position: fixed
+   and vertically centred, so it does not overlap any one row permanently; it
+   overlaps whichever row is scrolled to the middle of the screen, which is a
+   worse bug than a static collision because it only appears while moving.
+   Second time this has come up, so the strand's footprint is now written
+   down in both places. */
+@media (min-width: 1100px) {
+  .faq { padding-inline-end: var(--s-6); }
+}
+.faq__item {
+  border-block-end: 1px solid color-mix(in srgb, var(--brown) 18%, transparent);
+}
+.faq__item > summary {
+  /* The default disclosure triangle is removed in favour of the +/- drawn
+     below, because the native marker sits on the wrong side in RTL in some
+     engines and cannot be repositioned. */
+  list-style: none;
+  cursor: pointer;
+  display: flex; align-items: baseline; gap: var(--s-4);
+  padding-block: var(--s-5);
+  font-size: var(--t-h3); font-weight: 300;
+  transition: color var(--quick) var(--ease);
+}
+.faq__item > summary::-webkit-details-marker { display: none; }
+.faq__item > summary:hover { color: var(--brown); }
+.faq__item > summary::after {
+  content: "+";
+  margin-inline-start: auto;
+  font-size: var(--t-h3); font-weight: 200;
+  color: var(--brown-soft);
+  transition: transform var(--quick) var(--ease);
+}
+.faq__item[open] > summary::after { content: "−"; }
+.faq__a {
+  padding-block-end: var(--s-5);
+  color: var(--fg-muted);
+  max-width: 68ch;
+}
+.faq__a p + p { margin-block-start: var(--s-3); }
+.faq__a a { border-block-end: 1px solid currentColor; }
+
 /* ---------------------------------------------------------------- 9. CTAs */
 .btn {
   display: inline-flex; align-items: center; gap: var(--s-3);

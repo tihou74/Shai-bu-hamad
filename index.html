@@ -86,9 +86,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=11">
-<link rel="stylesheet" href="assets/css/scenes.css?v=11">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=11">
+<link rel="stylesheet" href="assets/css/styles.css?v=12">
+<link rel="stylesheet" href="assets/css/scenes.css?v=12">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=12">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -202,6 +202,52 @@
           "closes": "23:00"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.shaibuhamad.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "وين فروع شاي بو حمد في الدوحة؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "فرعان: West Walk في الوعب — شارع السدر، و Gulf Mall في الغرافة. وكلاهما مقهى وكافيه قطري بجلسات مجلس."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ما هي أوقات عمل شاي بو حمد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "West Walk: كل أيام الأسبوع من 7:00 صباحاً إلى 1:00 بعد منتصف الليل، ومغلق وقت صلاة الجمعة. Gulf Mall: من السبت إلى الخميس 7:00 صباحاً — 11:00 مساءً، والجمعة من 1:00 ظهراً إلى 11:00 مساءً."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "كيف أشوف المنيو والأسعار؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "المنيو الكامل بالأسعار على صفحة المنيو، ونفس المنيو في الفرعين."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "شنو يقدّم شاي بو حمد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "كرك، وقهوة عربية بخلطة خاصة، وقوري شاي المجلس، وفطور وصينيّة رقاق ولبنة، وكبسة بدوي، وبلاليط، ومعجنات ومشروبات باردة."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "أقدر أجلس وأشتغل في شاي بو حمد؟",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "نعم — المكان مبني على جلسات المجلس الطويلة لا على طاولات سريعة."
+          }
+        }
+      ]
     }
   ]
 }
@@ -294,11 +340,25 @@
     </div>
 
     <div class="cine__inner">
-      <p class="cine__kicker">شاي بو حمد · الدوحة</p>
+      <!-- The kicker carries what the H1 deliberately does not.
+
+           The headline is the sentence painted on the wall, and it stays that
+           way — it is the best line on the page and it was not written by a
+           marketing office. But measured as a search signal it is empty: no
+           brand name, no category, no city, in the most heavily weighted tag
+           on the document.
+
+           Rather than spoil it, or hide keyword text behind CSS and hope
+           Google reads that as supplementary instead of as cloaking, the
+           words go in the line directly above it, visible and true. "مقهى
+           وكافيه قطري" is what the place is, and "كافيه" appeared nowhere on
+           the page before this despite being one of the most common ways
+           people search for one in Doha. -->
+      <p class="cine__kicker">شاي بو حمد · مقهى وكافيه قطري · الدوحة</p>
       <h1 class="cine__quote">مجلسٌ <b>مافيه</b> نفسٍ ثقيله</h1>
       <p class="cine__sub">
-        مكتوبة على جدارنا، ومقصودة: ضيافة قطريّة تجلس فيها على مهلك — في
-        West Walk و Gulf Mall.
+        مكتوبة على جدارنا، ومقصودة: ضيافة قطريّة تجلس فيها على مهلك — كرك
+        وقهوة عربية وفطور، في فرعَي West Walk و Gulf Mall.
       </p>
       <ul class="hero__meta">
         <li>تأسّس 2025</li>
@@ -883,6 +943,29 @@
                 <a class="branch__tel lat" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
               </dd>
             </dl>
+            <!-- Directions, which the page had none of.
+
+                 A visitor reading an address on a phone does not want to read
+                 it, they want it opened. The URL is Google's documented
+                 universal form, so it works on the Maps app where it is
+                 installed and the browser where it is not — no API key and
+                 nothing to expire.
+
+                 The destination is the brand plus the mall in Latin rather
+                 than a place ID: the malls are certainly in Maps, so the
+                 search resolves even before the branches have their own
+                 Business Profiles. Once those exist, replace these with the
+                 profile links and the pin becomes exact. -->
+            <a class="branch__dir"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=Shai+Bu+Hamad%2C+West+Walk%2C+Al+Waab%2C+Doha"
+               target="_blank" rel="noopener">
+              الاتجاهات على الخريطة
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"
+                   stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 11 11 5"/><path d="M6 5h5v5"/>
+              </svg>
+            </a>
           </div>
         </article>
 
@@ -902,6 +985,16 @@
                 <a class="branch__tel lat" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
               </dd>
             </dl>
+            <a class="branch__dir"
+               href="https://www.google.com/maps/dir/?api=1&amp;destination=Shai+Bu+Hamad%2C+Gulf+Mall%2C+Al+Gharrafa%2C+Doha"
+               target="_blank" rel="noopener">
+              الاتجاهات على الخريطة
+              <svg viewBox="0 0 16 16" width="12" height="12" fill="none"
+                   stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                   stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M5 11 11 5"/><path d="M6 5h5v5"/>
+              </svg>
+            </a>
           </div>
         </article>
       </div>
@@ -911,6 +1004,94 @@
       <p class="figure__cap" data-reveal>
         الصور من الفرعين كما هما — تصوير المالك، أكتوبر 2026.
       </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== 10 · FAQ (sand) -->
+  <!-- The questions a visitor actually arrives with: where, when, what, and
+       can I sit a while. They were all answerable from this page already, but
+       only by reading it — and somebody checking whether a cafe is open right
+       now does not read a page, they scan for the answer.
+
+       Built on <details>/<summary>, which is native: it opens without
+       JavaScript, it is keyboard operable and screen-reader labelled for
+       free, and it is searchable by the browser's own find-in-page in modern
+       browsers. A hand-rolled accordion would have cost JS and accessibility
+       work to be worse.
+
+       On the structured data below it: Google withdrew FAQ rich results for
+       ordinary sites, so this is not a snippet play and should not be sold as
+       one. It stays because it is accurate machine-readable description of
+       the page, which still helps search engines and answer engines
+       understand the place — and because the words here ("أوقات العمل",
+       "وين", "كافيه", "جلسات") are real queries that appeared nowhere on the
+       page before. -->
+  <section class="sec sec--sand" id="faq">
+    <div class="shell">
+      <div data-reveal>
+        <p class="eyebrow">أسئلة شائعة</p>
+        <h2 class="statement">السؤال وجوابه</h2>
+      </div>
+
+      <div class="faq" data-reveal data-delay="1">
+        <details class="faq__item">
+          <summary>وين فروع شاي بو حمد في الدوحة؟</summary>
+          <div class="faq__a">
+            <p>
+              فرعان: <strong>West Walk</strong> في الوعب — شارع السدر،
+              و<strong>Gulf Mall</strong> في الغرافة. وكلاهما مقهى وكافيه
+              قطري بجلسات مجلس.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>ما هي أوقات العمل؟</summary>
+          <div class="faq__a">
+            <p>
+              <strong>West Walk:</strong> كل أيام الأسبوع من 7:00 صباحاً إلى
+              1:00 بعد منتصف الليل، ومغلق وقت صلاة الجمعة.
+            </p>
+            <p>
+              <strong>Gulf Mall:</strong> من السبت إلى الخميس 7:00 صباحاً —
+              11:00 مساءً، والجمعة من 1:00 ظهراً إلى 11:00 مساءً.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>كيف أشوف المنيو والأسعار؟</summary>
+          <div class="faq__a">
+            <p>
+              المنيو الكامل بالأسعار على
+              <a href="https://shai-bu-hamad.yallaqrcodes.com/branch/1/"
+                 target="_blank" rel="noopener">صفحة المنيو</a> —
+              ونفس المنيو في الفرعين.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>شنو تقدّمون؟</summary>
+          <div class="faq__a">
+            <p>
+              كرك، وقهوة عربية بخلطتنا الخاصة، وقوري شاي المجلس، وفطور
+              وصينيّة رقاق ولبنة، وكبسة بدوي، وبلاليط، ومعجنات ومشروبات باردة.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>أقدر أجلس وأشتغل عندكم؟</summary>
+          <div class="faq__a">
+            <p>
+              نعم — المكان مبني على جلسات المجلس الطويلة لا على طاولات
+              سريعة، والعبارة على جدارنا تقول ذلك:
+              «مجلسٌ مافيه نفسٍ ثقيله».
+            </p>
+          </div>
+        </details>
+      </div>
     </div>
   </section>
 
@@ -970,6 +1151,6 @@
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=11"></script>
+<script src="assets/js/app.js?v=12"></script>
 </body>
 </html>
