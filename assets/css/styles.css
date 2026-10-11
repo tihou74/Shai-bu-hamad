@@ -497,11 +497,41 @@ ul { margin: 0; padding: 0; list-style: none; }
 .branch__tel:hover,
 .branch__tel:focus-visible { border-block-end-color: currentColor; }
 
+/* The two actions on a branch card: message it, or drive to it.
+   Wrapping gap, so on a narrow phone they stack instead of being squeezed
+   into one line of unhittable targets. */
+.branch__actions {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s-3) var(--s-5);
+  margin-block-start: var(--s-4);
+}
+
+/* WhatsApp, in the brand's brown rather than WhatsApp's green.
+   The green is instantly recognisable and that is exactly the problem: on a
+   page built out of sand, brown and cream it reads as something pasted on
+   from another site. The mark itself is recognisable enough to carry the
+   meaning without the colour, and the label says so in words as well. */
+.branch__wa {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-5);
+  border: 1px solid color-mix(in srgb, var(--brown) 40%, transparent);
+  border-radius: 999px;
+  font-size: var(--t-small); letter-spacing: .08em;
+  color: var(--brown);
+  transition: background var(--quick) var(--ease),
+              border-color var(--quick) var(--ease);
+}
+.branch__wa svg { flex: none; }
+.branch__wa:hover,
+.branch__wa:focus-visible {
+  background: color-mix(in srgb, var(--brown) 8%, transparent);
+  border-color: var(--brown);
+}
+
 /* Directions. Secondary to the phone number, so it is a quiet link with an
    icon rather than a second button competing with it. */
 .branch__dir {
   display: inline-flex; align-items: center; gap: var(--s-2);
-  margin-block-start: var(--s-4);
   padding-block: var(--s-2);
   font-size: var(--t-small); letter-spacing: .08em;
   color: var(--brown-soft);
