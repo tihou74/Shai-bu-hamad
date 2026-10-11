@@ -66,6 +66,17 @@
      trusting neither. -->
 <link rel="canonical" href="https://www.shaibuhamad.com/">
 
+<!-- The two language versions, declared on both pages. The annotation has to
+     be reciprocal — each page listing itself and its counterpart — or Google
+     discards it rather than guessing.
+
+     x-default points at the Arabic page: this is a Qatari house, Arabic is
+     the original and English is the translation, so a visitor whose language
+     matches neither should land on the original. -->
+<link rel="alternate" hreflang="ar" href="https://www.shaibuhamad.com/">
+<link rel="alternate" hreflang="en" href="https://www.shaibuhamad.com/en/">
+<link rel="alternate" hreflang="x-default" href="https://www.shaibuhamad.com/">
+
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="شاي بو حمد · Shai Bu Hamad">
 <meta name="twitter:description" content="ضيافة قطرية في West Walk و Gulf Mall — الدوحة.">
@@ -86,9 +97,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css?v=12">
-<link rel="stylesheet" href="assets/css/scenes.css?v=12">
-<link rel="stylesheet" href="assets/css/cinematic.css?v=12">
+<link rel="stylesheet" href="assets/css/styles.css?v=14">
+<link rel="stylesheet" href="assets/css/scenes.css?v=14">
+<link rel="stylesheet" href="assets/css/cinematic.css?v=14">
 
 <!-- The hero photograph is the largest thing above the fold; preloading it is
      the difference between the first screen appearing at once and appearing
@@ -264,7 +275,7 @@
     <img class="intro__logo" src="assets/img/logo-cream.png"
          alt="" width="1200" height="355">
     <span class="intro__rule"></span>
-    <p class="intro__tag lat">DOHA · QATAR</p>
+    <p class="intro__tag lat" lang="en">DOHA · QATAR</p>
   </div>
 </div>
 
@@ -304,6 +315,10 @@
     <a href="#vision">الرؤية</a>
     <a href="#branches">الفروع</a>
   </nav>
+  <!-- The switch reads "English", in English. Someone looking for their own
+       language scans for it in its own script, not for its name translated
+       into a language they cannot read. -->
+  <a class="btn btn--light lang-switch" href="/en/" hreflang="en" lang="en">English</a>
   <a class="btn btn--solid" href="#branches">زورنا</a>
 </header>
 
@@ -362,12 +377,12 @@
       </p>
       <ul class="hero__meta">
         <li>تأسّس 2025</li>
-        <li class="lat">WEST WALK</li>
-        <li class="lat">GULF MALL</li>
+        <li class="lat" lang="en">WEST WALK</li>
+        <li class="lat" lang="en">GULF MALL</li>
       </ul>
     </div>
 
-    <span class="hero__scroll lat" aria-hidden="true">SCROLL</span>
+    <span class="hero__scroll lat" aria-hidden="true" lang="en">SCROLL</span>
   </section>
 
   <!-- The house's own cloth, full bleed, straight under the hero. Not a
@@ -402,7 +417,7 @@
                  width="1200" height="1600" loading="lazy">
           </div>
           <div class="chapter__body" data-rise>
-            <span class="chapter__n lat" aria-hidden="true">01</span>
+            <span class="chapter__n lat" aria-hidden="true" lang="en">01</span>
             <h3>المجلس — ضيافة بلا باب</h3>
             <p>
               في البرّ لم يكن للضيافة موعد ولا دعوة. المجلس مفروش على الأرض،
@@ -420,7 +435,7 @@
                  width="1200" height="1600" loading="lazy">
           </div>
           <div class="chapter__body" data-rise>
-            <span class="chapter__n lat" aria-hidden="true">02</span>
+            <span class="chapter__n lat" aria-hidden="true" lang="en">02</span>
             <h3>الدلّة — أوّل ما يُقال</h3>
             <p>
               قبل الكلام يُصبّ الفنجال. والكمّيّة قليلة بقصد: ليست حصّة
@@ -437,7 +452,7 @@
                  width="1383" height="1025" loading="lazy">
           </div>
           <div class="chapter__body" data-rise>
-            <span class="chapter__n lat" aria-hidden="true">03</span>
+            <span class="chapter__n lat" aria-hidden="true" lang="en">03</span>
             <h3>السدو — جدار يُنسَج</h3>
             <p>
               نسجته النساء على النول الأرضي لُحمةً بعد لُحمة، لا للتزيين بل
@@ -454,7 +469,7 @@
                  width="1600" height="1200" loading="lazy">
           </div>
           <div class="chapter__body" data-rise>
-            <span class="chapter__n lat" aria-hidden="true">04</span>
+            <span class="chapter__n lat" aria-hidden="true" lang="en">04</span>
             <h3>الحاضر — نفس المجلس، في المدينة</h3>
             <p>
               لم نصنع ديكوراً «على الطابع القطري». نقلنا الأصل: الشاي يُصبّ
@@ -474,17 +489,17 @@
     <!-- The list is repeated twice so the -50% keyframe lands on the seam. -->
     <div class="marquee__track">
       <span class="marquee__item">شاي بو حمد</span>
-      <span class="marquee__item lat">SHAI BU HAMAD</span>
+      <span class="marquee__item lat" lang="en">SHAI BU HAMAD</span>
       <span class="marquee__item">كرك</span>
       <span class="marquee__item">قهوة عربية</span>
       <span class="marquee__item">قوري المجلس</span>
-      <span class="marquee__item lat">DOHA</span>
+      <span class="marquee__item lat" lang="en">DOHA</span>
       <span class="marquee__item">شاي بو حمد</span>
-      <span class="marquee__item lat">SHAI BU HAMAD</span>
+      <span class="marquee__item lat" lang="en">SHAI BU HAMAD</span>
       <span class="marquee__item">كرك</span>
       <span class="marquee__item">قهوة عربية</span>
       <span class="marquee__item">قوري المجلس</span>
-      <span class="marquee__item lat">DOHA</span>
+      <span class="marquee__item lat" lang="en">DOHA</span>
     </div>
   </div>
 
@@ -567,7 +582,7 @@
 
         <div class="sticky-scene__steps">
           <div data-scene-step="0">
-            <p class="step__n lat">01</p>
+            <p class="step__n lat" lang="en">01</p>
             <h3>الأصالة الدافئة</h3>
             <p>
               منذ لحظة وصولك ستغمرك أجواء من الأصالة الدافئة والترحاب الحار،
@@ -575,7 +590,7 @@
             </p>
           </div>
           <div data-scene-step="1">
-            <p class="step__n lat">02</p>
+            <p class="step__n lat" lang="en">02</p>
             <h3>المجلس</h3>
             <p>
               جلسات مريحة بتصاميم تعكس التناغم الثقافي — للقاء حميم، أو
@@ -583,7 +598,7 @@
             </p>
           </div>
           <div data-scene-step="2">
-            <p class="step__n lat">03</p>
+            <p class="step__n lat" lang="en">03</p>
             <h3>الإضاءة والتفاصيل</h3>
             <p>
               إضاءة هادئة وديكورات أنيقة تخلق أجواءً جذّابة، فتكون التجربة
@@ -591,7 +606,7 @@
             </p>
           </div>
           <div data-scene-step="3">
-            <p class="step__n lat">04</p>
+            <p class="step__n lat" lang="en">04</p>
             <h3>بار الشاي</h3>
             <p>
               الأكواب مرصوفة على صحونها، والسموَر يحمل اسم البيت، والدلال
@@ -690,7 +705,7 @@
                poster="media/photos/menu-breakfast-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="أحد العاملين يحمل صينيّة الطلب إلى الطاولة"></video>
-        <figcaption><strong>الطلب يوصل</strong><span class="lat">ORDER UP</span></figcaption>
+        <figcaption><strong>الطلب يوصل</strong><span class="lat" lang="en">ORDER UP</span></figcaption>
       </figure>
       <!-- Uploaded as media/photos/3.mp4; renamed on the way into
            media/video/ because a bare number tells the next person nothing.
@@ -700,21 +715,21 @@
                poster="media/photos/nostalgia-wall-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="فانوس معلّق وطبق مزخرف ومعلّقات على جدار الذكريات"></video>
-        <figcaption><strong>جدار الذكريات</strong><span class="lat">THE WALL</span></figcaption>
+        <figcaption><strong>جدار الذكريات</strong><span class="lat" lang="en">THE WALL</span></figcaption>
       </figure>
       <figure class="reel-card">
         <video src="media/video/deco-04.mp4"
                poster="media/photos/deco-04-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="جولة في فرع Gulf Mall"></video>
-        <figcaption><strong>جولة في Gulf Mall</strong><span class="lat">GULF MALL</span></figcaption>
+        <figcaption><strong>جولة في Gulf Mall</strong><span class="lat" lang="en">GULF MALL</span></figcaption>
       </figure>
       <figure class="reel-card">
         <video src="media/video/west-walk-deco-01.mp4"
                poster="media/photos/west-walk-deco-01-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="من واجهة West Walk إلى داخل الصالة"></video>
-        <figcaption><strong>من الباب إلى الكوب</strong><span class="lat">WEST WALK</span></figcaption>
+        <figcaption><strong>من الباب إلى الكوب</strong><span class="lat" lang="en">WEST WALK</span></figcaption>
       </figure>
       <figure class="reel-card">
         <!-- 720x1280: the sharpest clip in the set. -->
@@ -722,7 +737,7 @@
                poster="media/photos/west-walk-deco-02-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="البشوت والدراعات معلّقة على المشجب"></video>
-        <figcaption><strong>على المشجب</strong><span class="lat">THE HOOKS</span></figcaption>
+        <figcaption><strong>على المشجب</strong><span class="lat" lang="en">THE HOOKS</span></figcaption>
       </figure>
       <figure class="reel-card">
         <!-- 720x1280. -->
@@ -730,14 +745,14 @@
                poster="media/photos/menu-mixed-breakfast-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="سفرة الفطور من أعلى"></video>
-        <figcaption><strong>سفرة الفطور</strong><span class="lat">THE SPREAD</span></figcaption>
+        <figcaption><strong>سفرة الفطور</strong><span class="lat" lang="en">THE SPREAD</span></figcaption>
       </figure>
       <figure class="reel-card">
         <video src="media/video/menu-toast-karak.mp4"
                poster="media/photos/menu-toast-karak-poster.jpg"
                muted loop playsinline preload="none"
                aria-label="توست الجبن مع الكرك"></video>
-        <figcaption><strong>توست جبن بالكرك</strong><span class="lat">TOAST &amp; KARAK</span></figcaption>
+        <figcaption><strong>توست جبن بالكرك</strong><span class="lat" lang="en">TOAST &amp; KARAK</span></figcaption>
       </figure>
     </div>
 
@@ -777,7 +792,7 @@
       <div class="feature">
         <div class="feature__body" data-rise>
           <h3 class="statement">شاي المجلس</h3>
-          <p class="card__en lat">MAJLIS TEA</p>
+          <p class="card__en lat" lang="en">MAJLIS TEA</p>
           <p class="lede">
             يُصبّ ساخناً في كوب الزجاج، على صحن يحمل اسم البيت.
           </p>
@@ -809,21 +824,21 @@
           <img src="media/photos/menu/breakfast.jpeg" alt="صينيّة الفطور: رقاق، لبنة، حمّص، حلّوم، سلطة ولحم" width="768" height="1376" loading="lazy">
           <figcaption>
             <h3>صينيّة الفطور</h3>
-            <span class="lat">BREAKFAST TRAY</span>
+            <span class="lat" lang="en">BREAKFAST TRAY</span>
           </figcaption>
         </figure>
         <figure class="plate" data-settle>
           <img src="media/photos/menu/kabsa-badawi-01.jpeg" alt="كبسة بدوي — أرز وقطعة لحم على البخار" width="768" height="1344" loading="lazy">
           <figcaption>
             <h3>كبسة بدوي</h3>
-            <span class="lat">KABSA BADAWI</span>
+            <span class="lat" lang="en">KABSA BADAWI</span>
           </figcaption>
         </figure>
         <figure class="plate" data-settle>
           <img src="media/photos/menu/balaleet.jpeg" alt="بلاليط — شعيريّة محلّاة وفوقها العجّة" width="768" height="1376" loading="lazy">
           <figcaption>
             <h3>بلاليط</h3>
-            <span class="lat">BALALEET</span>
+            <span class="lat" lang="en">BALALEET</span>
           </figcaption>
         </figure>
       </div>
@@ -850,7 +865,7 @@
         </figure>
         <div class="feature__body" data-rise>
           <h3 class="statement">«حياك» — مكتوبة على الكوب</h3>
-          <p class="card__en lat">HAYYAK</p>
+          <p class="card__en lat" lang="en">HAYYAK</p>
           <p class="lede">
             الترحيب عندنا لا يُقال على الباب فقط — يُكتب على الرغوة قبل أن
             يوصل الكوب الطاولة.
@@ -940,7 +955,7 @@
               <dd class="branch__note">مغلق وقت صلاة الجمعة</dd>
               <dt>الهاتف</dt>
               <dd>
-                <a class="branch__tel lat" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+                <a class="branch__tel lat" href="tel:+97430373888" dir="ltr" lang="en">+974 3037 3888</a>
               </dd>
             </dl>
             <!-- Directions, which the page had none of.
@@ -982,7 +997,7 @@
               <dd>الجمعة · 1:00 ظهراً — 11:00 مساءً</dd>
               <dt>الهاتف</dt>
               <dd>
-                <a class="branch__tel lat" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+                <a class="branch__tel lat" href="tel:+97471093000" dir="ltr" lang="en">+974 7109 3000</a>
               </dd>
             </dl>
             <a class="branch__dir"
@@ -1102,7 +1117,7 @@
   <div class="shell">
     <div class="grid grid--split foot__top">
       <div>
-        <h4>تابعنا</h4>
+        <h3>تابعنا</h3>
         <ul class="social">
           <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">INSTAGRAM</a></li>
           <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank">TIKTOK</a></li>
@@ -1119,24 +1134,24 @@
 
   <div class="shell foot__grid">
     <div>
-      <h4>شاي بو حمد</h4>
+      <h3>شاي بو حمد</h3>
       <p>شركة مطاعم شاي بو حمد لتقديم الوجبات و المشروبات — الدوحة، قطر.</p>
     </div>
     <div>
-      <h4>الفروع</h4>
+      <h3>الفروع</h3>
       <ul>
         <li>
           West Walk — الوعب، شارع السدر<br>
-          <a class="lat" href="tel:+97430373888" dir="ltr">+974 3037 3888</a>
+          <a class="lat" href="tel:+97430373888" dir="ltr" lang="en">+974 3037 3888</a>
         </li>
         <li>
           Gulf Mall — الغرافة<br>
-          <a class="lat" href="tel:+97471093000" dir="ltr">+974 7109 3000</a>
+          <a class="lat" href="tel:+97471093000" dir="ltr" lang="en">+974 7109 3000</a>
         </li>
       </ul>
     </div>
     <div>
-      <h4>حسابات</h4>
+      <h3>حسابات</h3>
       <ul>
         <li><a href="https://instagram.com/shaibuhamad.qa" rel="noopener noreferrer" target="_blank">@shaibuhamad.qa</a></li>
         <li><a href="https://tiktok.com/@shaibuhamadqtr" rel="noopener noreferrer" target="_blank">@shaibuhamadqtr</a></li>
@@ -1147,10 +1162,10 @@
 
   <div class="shell foot__legal">
     <span>© <span id="year">2026</span> شاي بو حمد — جميع الحقوق محفوظة</span>
-    <span class="lat">DOHA · QATAR</span>
+    <span class="lat" lang="en">DOHA · QATAR</span>
   </div>
 </footer>
 
-<script src="assets/js/app.js?v=12"></script>
+<script src="assets/js/app.js?v=14"></script>
 </body>
 </html>
