@@ -1,0 +1,45 @@
+/* ============================================================ 404 page ====
+   An external file rather than a <style> block in 404.html, and not by
+   preference: the CSP sets `style-src 'self'` with no 'unsafe-inline', so an
+   inline block is dropped by the browser and the page arrives unstyled.
+
+   It shipped that way for one review cycle and the screenshot caught it — the
+   wordmark rendered at the full 390px viewport width instead of the 242px the
+   rule asked for, because the only rule reaching it was `max-width: 100%`
+   from the base stylesheet. The same reason is already noted in styles.css
+   for the helper classes; this is the second time that CSP has bitten, so it
+   is worth stating twice.
+
+   Loaded only by 404.html. The home page never pays for these bytes. */
+
+.lost {
+  min-height: 100svh;
+  display: grid; place-items: center;
+  background: var(--brown-dark); color: var(--cream);
+  text-align: center;
+  padding: var(--s-6);
+}
+
+.lost__mark { width: min(62vw, 300px); height: auto; margin-inline: auto; }
+
+.lost__code {
+  margin-block-start: var(--s-7);
+  font-size: var(--t-small); letter-spacing: .34em;
+  color: color-mix(in srgb, var(--sand) 52%, transparent);
+}
+
+.lost h1 {
+  font-size: var(--t-h2); font-weight: 300;
+  margin-block-start: var(--s-4);
+}
+
+.lost p {
+  margin-block-start: var(--s-4);
+  color: color-mix(in srgb, var(--sand) 76%, transparent);
+  max-width: 44ch; margin-inline: auto;
+}
+
+.lost__actions {
+  margin-block-start: var(--s-7);
+  display: flex; flex-wrap: wrap; gap: var(--s-3); justify-content: center;
+}

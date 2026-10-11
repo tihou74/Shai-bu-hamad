@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  One page, one entry.
+
+  The site is a single document and the sections are fragments of it —
+  #menu, #branches, #heritage. Fragments are not separate URLs and listing
+  them here would be telling a crawler about pages that do not exist, which
+  is worse than a short sitemap.
+
+  404.html is deliberately absent: it is reachable but must never be indexed,
+  and it carries its own noindex.
+
+  lastmod is the date of the content, not of the deploy. Bumping it on every
+  push teaches crawlers to ignore it.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.shaibuhamad.com/</loc>
+    <lastmod>2026-10-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

@@ -6,3 +6,7 @@ Thumbs.db
 .preview/
 .palette-*.html
 docs/evidence/rights-review.md
+
+# Python bytecode from tools/
+__pycache__/
+*.pyc

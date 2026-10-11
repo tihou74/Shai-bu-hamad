@@ -1,0 +1,21 @@
+# https://www.shaibuhamad.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Reference material that ships with the site because deploying from Git puts
+# the whole repository in the web root. It is not secret — it is public on
+# GitHub — but an internal note or a held-back photograph appearing in search
+# results under the brand's name does the brand no good. .htaccess already
+# returns 404 for these on Apache hosts; this covers crawlers that arrive
+# before, or instead of, that.
+Disallow: /docs/
+Disallow: /tools/
+Disallow: /content/
+Disallow: /brand/
+Disallow: /media/photos/_review/
+Disallow: /media/photos/_originals/
+Disallow: /media/extracted/
+Disallow: /.kiro/
+
+Sitemap: https://www.shaibuhamad.com/sitemap.xml

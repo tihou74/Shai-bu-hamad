@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الصفحة غير موجودة | شاي بو حمد</title>
+<meta name="robots" content="noindex">
+
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'none'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'">
+
+<link rel="icon" href="/brand/logo/logo-primary.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
+<!-- Root-relative paths, not relative. A 404 is served for a URL that did not
+     exist, and that URL can be at any depth — /menu/karak/whatever. With
+     relative paths the stylesheet and the logo would resolve against that
+     imaginary folder and the page would arrive unstyled, which is the one
+     moment a visitor is already unsure the site works.
+
+     The page styles are in an external file because `style-src 'self'` has no
+     'unsafe-inline': a <style> block here is dropped and the page renders
+     naked. That is not theory — it happened, and the review screenshot caught
+     the wordmark at full viewport width. -->
+<link rel="stylesheet" href="/assets/css/styles.css?v=11">
+<link rel="stylesheet" href="/assets/css/404.css?v=11">
+</head>
+
+<body>
+<main class="lost">
+  <div>
+    <img class="lost__mark" src="/assets/img/logo-cream.png" alt="شاي بو حمد"
+         width="1200" height="355">
+
+    <p class="lost__code lat">404</p>
+    <h1>هذي الصفحة ما لقيناها</h1>
+    <p>
+      يمكن الرابط قديم، أو فيه حرف ناقص. والباب مفتوح على كل حال —
+      ارجع للرئيسيّة أو شوف المنيو.
+    </p>
+
+    <div class="lost__actions">
+      <a class="btn btn--solid" href="/">الرئيسيّة</a>
+      <a class="btn btn--light" href="/#branches">الفروع وأرقام التواصل</a>
+    </div>
+  </div>
+</main>
+</body>
+</html>

@@ -41,13 +41,48 @@
 <meta property="og:locale" content="ar_QA">
 <meta property="og:title" content="شاي بو حمد · Shai Bu Hamad">
 <meta property="og:description" content="تجربة فريدة لا تضاهى — ضيافة قطرية في West Walk و Gulf Mall.">
-<meta property="og:image" content="media/photos/gulf-mall/deco-02.jpeg">
+<meta property="og:image" content="https://www.shaibuhamad.com/assets/img/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="شاي بو حمد — ضيافة قطرية في الدوحة">
+<meta property="og:url" content="https://www.shaibuhamad.com/">
+<meta property="og:site_name" content="شاي بو حمد">
+
+<!-- Absolute, and that is the whole point.
+
+     og:image was a relative path, and the sharing platforms require a full
+     URL — so sending the site in WhatsApp produced a preview with no image at
+     all. For a restaurant whose link travels by WhatsApp more than by search,
+     that was the single most expensive defect on the page.
+
+     The image is a purpose-built 1200x630 card rather than one of the room
+     photographs. A 4:3 photograph gets centre-cropped by every platform to
+     its own ratio, which cut the lit shopfront sign out of the frame. Built
+     by tools/socialimg.py so it can be rebuilt when the photography changes.
+
+     One canonical host, declared the same way everywhere: www, matching the
+     301 in .htaccess. A canonical tag that points somewhere the server
+     redirects away from is a contradiction, and crawlers resolve it by
+     trusting neither. -->
+<link rel="canonical" href="https://www.shaibuhamad.com/">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="شاي بو حمد · Shai Bu Hamad">
+<meta name="twitter:description" content="ضيافة قطرية في West Walk و Gulf Mall — الدوحة.">
+<meta name="twitter:image" content="https://www.shaibuhamad.com/assets/img/share-card.jpg">
 
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self'; img-src 'self' data:; media-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 
-<link rel="icon" href="brand/logo/logo-primary.png">
+<!-- The favicon used to be brand/logo/logo-primary.png, which is 1554x460.
+     A favicon is drawn into a square, so a 3.4:1 wordmark was squeezed into an
+     illegible smear in the tab — the same mistake as the curtain logo, in a
+     slot where it cannot be fixed with CSS. These are square files with the
+     mark alone on the brand brown, built by tools/socialimg.py. -->
+<link rel="icon" type="image/png" sizes="512x512" href="/assets/img/icon-512.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon-180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;200;300;400;500&display=swap">
@@ -97,7 +132,8 @@
       "alternateName": "Shai Bu Hamad",
       "legalName": "شركة مطاعم شاي بو حمد لتقديم الوجبات و المشروبات",
       "foundingDate": "2025",
-      "logo": "brand/logo/logo-primary.png",
+      "url": "https://www.shaibuhamad.com/",
+      "logo": "https://www.shaibuhamad.com/assets/img/icon-512.png",
       "sameAs": [
         "https://instagram.com/shaibuhamad.qa",
         "https://tiktok.com/@shaibuhamadqtr",
@@ -109,7 +145,8 @@
       "@type": "CafeOrCoffeeShop",
       "name": "شاي بو حمد — West Walk",
       "parentOrganization": { "@id": "#org" },
-      "image": "media/photos/west-walk/deco-01.jpeg",
+      "url": "https://www.shaibuhamad.com/#branches",
+      "image": "https://www.shaibuhamad.com/media/photos/west-walk/deco-01.jpeg",
       "telephone": "+974 3037 3888",
       "servesCuisine": ["قطري", "خليجي", "قهوة وشاي"],
       "priceRange": "$$",
@@ -136,7 +173,8 @@
       "@type": "CafeOrCoffeeShop",
       "name": "شاي بو حمد — Gulf Mall",
       "parentOrganization": { "@id": "#org" },
-      "image": "media/photos/gulf-mall/deco-02.jpeg",
+      "url": "https://www.shaibuhamad.com/#branches",
+      "image": "https://www.shaibuhamad.com/media/photos/gulf-mall/deco-02.jpeg",
       "telephone": "+974 7109 3000",
       "servesCuisine": ["قطري", "خليجي", "قهوة وشاي"],
       "priceRange": "$$",

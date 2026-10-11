@@ -1,0 +1,132 @@
+# Apache / LiteSpeed configuration — for Hostinger and any cPanel host.
+#
+# Why this file exists next to _headers: they do the same job for different
+# servers and neither host reads the other's format.
+#
+#   _headers   → Cloudflare Pages, Netlify
+#   .htaccess  → Hostinger, cPanel, any Apache or LiteSpeed host
+#   GitHub Pages reads NEITHER, which is why the <meta> CSP in index.html is
+#   the only protection there and why HSTS is impossible on it.
+#
+# So moving to Hostinger is the thing that finally switches the security work
+# in this repo on. Keep the two files in step: change one, change the other.
+
+# ---------------------------------------------------------------- security
+<IfModule mod_headers.c>
+  # Same policy as the <meta> CSP in index.html and as _headers. A real header
+  # beats the meta tag: it covers responses the parser never reaches, and
+  # frame-ancestors is ignored entirely when delivered by meta.
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data:; media-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+
+  # Only meaningful as a real header, which is the whole point of this file.
+  # Tells browsers never to try this site over plain HTTP again.
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+
+  # Hostinger's stack can add this on PHP responses; nothing here is PHP.
+  Header always unset X-Powered-By
+</IfModule>
+
+# ------------------------------------------------------------------- HTTPS
+# The canonical host is one thing, not four. Left alone, a domain answers on
+# four combinations — plain and secure, with and without the www prefix — and
+# each one is a separate address serving identical pages. That splits search
+# ranking between them and undermines the CSP's own 'self'.
+#
+# (Spelled out in words rather than as example URLs on purpose: tools/
+# set_domain.py scans these files for the site's own host, and an
+# illustrative URL in a comment reads to it as a second, conflicting domain.
+# It did, and it reported the clash correctly.)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # HTTPS first. %{HTTPS} is unreliable behind Hostinger's proxy, so the
+  # forwarded-proto header is checked as well.
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP:X-Forwarded-Proto} =http
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Then force www, because www.shaibuhamad.com is the form the owner uses and
+  # the one thing that must not vary is which form is canonical. Every URL the
+  # site declares about itself — og:url, canonical, the sitemap, the
+  # structured data — says www, and this redirect is what makes that true
+  # rather than merely claimed.
+  #
+  # Printing it without the www is still fine: shaibuhamad.com lands here and
+  # is redirected, so a cup or a menu can carry the shorter form.
+  #
+  # To switch to the apex instead, reverse this block and re-run
+  # tools/set_domain.py with the bare host. Do not change one without the
+  # other: a canonical tag pointing at a URL that 301s away from it is a
+  # self-contradiction crawlers resolve by ignoring both.
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteCond %{HTTP_HOST} !^localhost [NC]
+  RewriteCond %{HTTP_HOST} !^127\. [NC]
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# ------------------------------------------------------------------ caching
+# Mirrors _headers: fingerprinted assets cached hard, the HTML never.
+#
+# index.html must NOT be cached. The ?v=N query on the stylesheets only busts
+# the cache for those files — it cannot bust the cache for the document that
+# contains the query. A cached index.html is exactly how an owner ends up
+# reviewing a version that no longer exists.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css                "access plus 1 year"
+  ExpiresByType application/javascript  "access plus 1 year"
+  ExpiresByType image/jpeg              "access plus 1 year"
+  ExpiresByType image/png               "access plus 1 year"
+  ExpiresByType image/svg+xml           "access plus 1 year"
+  ExpiresByType image/webp              "access plus 1 year"
+  ExpiresByType video/mp4               "access plus 1 year"
+  ExpiresByType text/html               "access plus 0 seconds"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|jpe?g|png|svg|webp|mp4|woff2?)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# -------------------------------------------------------------- compression
+# Text compresses by roughly two thirds. Images and video are already
+# compressed — running them through again spends CPU to add bytes.
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml application/ld+json
+</IfModule>
+
+# ------------------------------------------------------------------ privacy
+# Deploying from Git puts the whole repository in the web root, including
+# folders that are reference material rather than part of the site. They are
+# already public on GitHub so this is not secrecy — it is about keeping them
+# out of search results, where a held-back photograph or an internal note
+# appearing under the brand's name does no good.
+RedirectMatch 404 ^/\.git
+RedirectMatch 404 ^/\.kiro
+RedirectMatch 404 ^/tools/
+RedirectMatch 404 ^/docs/
+RedirectMatch 404 ^/media/photos/_review/
+RedirectMatch 404 ^/media/photos/_originals/
+RedirectMatch 404 ^/\.preview/
+
+# Directory listings off: without this, any folder without an index file
+# hands a visitor a browsable list of everything in it.
+Options -Indexes
+
+# ------------------------------------------------------------------- errors
+# Arabic 404 in the brand's own voice, not the host's English default.
+ErrorDocument 404 /404.html
+
+# ------------------------------------------------------------------- charset
+AddDefaultCharset UTF-8
